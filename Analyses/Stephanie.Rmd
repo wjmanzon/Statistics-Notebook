@@ -51,7 +51,7 @@ Thanks for reaching out! Your budget of around $300 per month for housing sums u
 
 Here's a scatterplot that shows the relationship between distance to the Manwaring Center and the semester rent. Please note that the size and color of the dots represent the number of residents in that apartment complex, meaning, the larger and lighter the dot is, the more residents they have.
 
-Based on this chart, it looks like Royal Crest is your best option. Their rent per semester is $995, which fits your budget. It is also only $427 crow fly meters away to the MC. On top of that, thy have the largest number of residents in this price range.
+Based on this chart, it looks like Royal Crest is your best option. Their rent per semester is $995, which fits your budget. It is also only 427 crow fly meters away to the MC. On top of that, thy have the largest number of residents in this price range.
 
 ```{r}
 rent_subset2 = subset(Rent, Rent$Gender == 'F')
