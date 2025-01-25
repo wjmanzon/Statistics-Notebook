@@ -1,11 +1,4 @@
 ---
-output: 
-  html_document:
-    code_folding: hide
-editor_options: 
-  chunk_output_type: console
----
-  ---
 title: "Stephanie's Housing Request"
 output: 
   html_document:
@@ -17,23 +10,11 @@ output:
 
 **Week 2 Analysis**
 
-```{r, message=FALSE, warning=FALSE}
-library(mosaic)
-library(tidyverse)
-library(pander)
-library(DT) # If you get an error stating: 
-            # Error in library(DT): there is no package called 'DT'
-            # You will need to run: install.packages("DT") 
-            # in your Console, then try "Knit HTML" again.
-library(plotly)
-Rent <- read_csv("../Data/Rent.csv")
-```
-
 <br />
 
 ## Background
 
-Stephanie[^1] is a student that will be starting school at BYU-Idaho next semester. Suppose she sent you the following email.
+Stephanie is a student that will be starting school at BYU-Idaho next semester. Suppose she sent you the following email.
 
 ----
 
@@ -41,70 +22,74 @@ Stephanie[^1] is a student that will be starting school at BYU-Idaho next semest
 
 ----
 
-Write your response to Stephanie below. Use the "Rent" dataset, good statistical analysis, and clear writing to make some well supported suggestions to her about apartments that meet her stated criteria. You are free to use other criterion that you think she might find more meaningful as well.
+Write your response to Stephanie below. Use the "Rent" dataset, good statistical analysis, and clear writing to make some well-supported suggestions to her about apartments that meet her stated criteria. You are free to use other criteria that you think she might find meaningful as well.
 
 ## Response
 
 Dear Stephanie,
 
-Thanks for reaching out! Your budget of around $300 per month for housing sums up to $1050 per semester. It's great that you also want to live close to campus and be around more people. I did an analysis of all approved women housing in Rexburg to see what options you have.
+Thanks for reaching out! Your budget of around $300 per month for housing sums up to $1050 per semester. It's great that you also want to live close to campus and be around more people. I analyzed all approved women's housing in Rexburg to find the best options for you.
 
-Here's a scatterplot that shows the relationship between distance to the Manwaring Center and the semester rent. Please note that the size and color of the dots represent the number of residents in that apartment complex, meaning, the larger and lighter the dot is, the more residents they have.
+Here's a scatterplot that shows the relationship between distance to the Manwaring Center and the semester rent. The size of the dots represents the number of residents in the apartment complex, and the labels show the names of each complex.
 
-Based on this chart, it looks like Royal Crest is your best option. Their rent per semester is $995, which fits your budget. It is also only 427 crow fly meters away to the MC. On top of that, thy have the largest number of residents in this price range.
+```{r, message=FALSE, warning=FALSE}
+library(mosaic)
+library(tidyverse)
+library(pander)
+library(DT)
+library(plotly)
 
-```{r}
-rent_subset2 = subset(Rent, Rent$Gender == 'F')
+# Load dataset
+Rent <- read_csv("../Data/Rent.csv")
 
-rentplotly <- ggplot(data = rent_subset2, mapping = aes(x = CrowFlyMetersToMC, y = AvgFloorPlanCost, size = Residents, color = Residents, label = Name)) +
-  geom_point() +
-  theme_minimal()+
-  labs(title = "Approved Women's Housing in Rexburg (Cost, Distance, & Population)", x = "Distance to MC", y = "Semester Rent")
+# Filter data for women's housing
+rent_subset2 <- Rent %>%
+  filter(Gender == 'F')
+
+# Create scatterplot
+rentplotly <- ggplot(data = rent_subset2, mapping = aes(x = CrowFlyMetersToMC, y = AvgFloorPlanCost, size = Residents, label = Name)) +
+  geom_point(color = "blue") +
+  theme_minimal() +
+  labs(title = "BYU-I Approved Women's Housing", x = "Distance to MC (meters)", y = "Semester Rent")
 
 ggplotly(rentplotly)
 ```
 
-<!-- Hint, you should probably subset the Rent dataset to only show the "Approved Women's Housing" since Stephanie won't be interested in Male Housing options. Notice how this text in green doesn't show up in the HTML output because we used the HTML comment tags around this text. --> 
+## Key Insights
 
-Let's compare Royal Crest to the rest of approved women's housing by looking at their statistics below:
+The analysis suggests that Royal Crest is the best option for you:
 
-The average cost of approved women's housing in Rexburg is $1340, with an average distance of 618 and an average population of 151 tenants. As you can see, Royal Crest is cheaper by $345 per semester, closer by 191 meters, and have 151 more tenants than the average. 
+- __Affordability:__ At $995 per semester, Royal Crest is $345 cheaper than the average housing cost of $1,340.
+- __Proximity:__ Located just 427 meters from the MC (as measured in a straight line), it is 191 meters closer than the average housing distance of 618 meters.
+- __Community:__ With 302 residents, Royal Crest offers the largest resident population among apartments in this price range, making it ideal for socializing and meeting new people.
 
-```{r}
-rent_subset = subset(Rent, Rent$Gender == 'F')
-
-cat("Summary of Semester Rent:\n")
-print(summary(rent_subset$AvgFloorPlanCost))
-
-cat("\nSummary of Distance to MC:\n")
-print(summary(rent_subset$CrowFlyMetersToMC))
-
-cat("\nSummary of Number of Residents:\n")
-print(summary(rent_subset$Residents))
-```
-
-If you are interested in other options, here's a list of all apartments that meet your criteria:
+Here's a summary of the statistics for approved women's housing:
 
 ```{r}
+# Summary statistics
+summary_stats <- rent_subset2 %>%
+  summarize(
+    avg_rent = mean(AvgFloorPlanCost),
+    avg_distance = mean(CrowFlyMetersToMC),
+    avg_residents = mean(Residents)
+  )
 
-rent_subset = subset(Rent, Rent$AvgFloorPlanCost <= 1050)
+summary_stats %>% pander()
 
-rent_subset = subset(rent_subset, rent_subset$Gender == 'F')
-
-rent_subset = subset(rent_subset, rent_subset$CrowFlyMetersToRicks < 1000)
-
-datatable(rent_subset[c('Name', 'AvgFloorPlanCost', 'CrowFlyMetersToMC', 'Residents')], options=list(lengthMenu = c(12,30)), extensions="Responsive")
 ```
 
+If you're interested in other options, here's a table of apartments that meet your criteria:
+
+```{r}
+# Filter for apartments within budget and proximity
+filtered_rent <- Rent %>%
+  filter(Gender == 'F', AvgFloorPlanCost <= 1050, CrowFlyMetersToRicks < 1000)
+
+datatable(filtered_rent[c('Name', 'AvgFloorPlanCost', 'CrowFlyMetersToMC', 'Residents')], 
+          options = list(lengthMenu = c(12, 30)), extensions = "Responsive")
+```
+
+## Interpretation
+Royal Crest stands out as the best option based on affordability, proximity, and community size. If you need help exploring other options or have further questions, feel free to ask!
 
 
-
-
-
-
-
-
-
-
-
-[^1]: Note that Stephanie is a fictional character who is based on real experiences of many faculty and staff here at BYU-Idaho.
