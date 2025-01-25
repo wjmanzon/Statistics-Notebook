@@ -1,0 +1,45 @@
+---
+title: "Week3_Assessment"
+format: html
+editor: visual
+---
+
+# Question 1
+__Use the mtcars dataset in R to compute the mean "Gross horsepower" of both automatic and manual transmission 1974 Motor Trend vehicles.__
+
+```{r}
+library(tidyverse)
+
+#View(mtcars)
+
+auto <- mtcars %>%
+  filter(am == 0)
+
+mean(auto$hp)
+
+manual <- mtcars %>%
+  filter(am == 1)
+
+mean(manual$hp)
+```
+# Question 2
+__Use the mtcars dataset in R to make a graph that allows you to see how the quarter mile time (qsec) of 1974 Motor Trend vehicles is effected by the number of carburetors (carb) in the vehicle. Select the statement below that correctly describes this relationship.__
+```{r}
+plot(qsec ~ carb, data=mtcars)
+```
+Since both qsec and carb are quantitative, a scatterplot is the best graphic.
+
+> plot(qsec ~ carb, data=mtcars)
+
+This helps show that the average qsec time (remember, average is the middle of the dots) drops (or gets faster) as the number of carburetors increases.
+
+
+# Question 3
+__Run the following codes in R. Then select the statement that most appropriately interprets the resulting graph.__
+```{r}
+ palette(c("skyblue","firebrick"))
+
+  plot(mpg ~ qsec, data=mtcars, col=as.factor(am), pch=16, xlab="Quarter Mile Time (seconds)", ylab="Miles per Gallon", main="1974 Motor Trend Vehicles")
+  legend("topright", pch=16, legend=c("automatic","manual"), title="Transmission", bty='n', col=palette())
+```
+The graph suggests that if you want a vehicle that gets really good gas mileage, you should go with a manual transmission that has a really slow quarter mile time.
