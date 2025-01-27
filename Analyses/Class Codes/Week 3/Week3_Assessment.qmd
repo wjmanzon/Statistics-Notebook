@@ -43,3 +43,5 @@ __Run the following codes in R. Then select the statement that most appropriatel
   legend("topright", pch=16, legend=c("automatic","manual"), title="Transmission", bty='n', col=palette())
 ```
 The graph suggests that if you want a vehicle that gets really good gas mileage, you should go with a manual transmission that has a really slow quarter mile time.
+
+WM
