@@ -1,0 +1,33 @@
+---
+title: "W4 Assessment"
+output: 
+  html_document:
+    theme: cerulean
+    code_folding: hide
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(mosaic)
+library(tidyverse)
+
+Births <- Births78 %>%
+  filter(year == 1978)
+
+View(Births)
+
+ggplot(Births, aes(x = wday, stat="count")) +
+  geom_bar()
+```
+
+```{r}
+View(Births78)
+
+BirthsWedThu <- filter(Births78, wday %in% c("Wed","Thu"))
+
+t.test(births ~ wday, data=BirthsWedThu, mu=0, alternative="two.sided", conf.level=0.95)
+
+```
+
+
