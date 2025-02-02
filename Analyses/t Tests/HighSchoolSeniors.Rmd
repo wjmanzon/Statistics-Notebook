@@ -8,6 +8,16 @@ editor_options:
   chunk_output_type: console
 ---
 
+### Context
+This study examines whether there is a difference in reaction times between male and female high school seniors. The data comes from the Census at School survey, a project that collects real-world data from students to help them learn about statistics. Participants in this study answered various questions, including their reaction time, which was measured through an interactive test.
+
+Since reaction time is an important factor in activities like sports, driving, and video games, I wanted to see if there was a significant difference between genders. By analyzing the reaction time data, we can determine whether males and females tend to respond at different speeds and whether this difference is meaningful.
+
+### Null and Alternative Hypotheses
+Ho: There is no difference in reaction time between two genders
+
+Ha: There is a difference in reaction time between two genders
+
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(DT)
@@ -15,28 +25,71 @@ library(pander)
 library(readr)
 
 HSS <- read_csv("../../Data/HighSchoolSeniors.csv")
-#If this code does not work: 
-#Use the top menu from RStudio's window to select "Session, Set Working Directory, To Source File Location", and then play this R-chunk into your console to read the HSS data into R. 
-
-## In your Console run View(HSS) to ensure the data has loaded correctly.
-
-View(HSS)
 
 HSS2 <- HSS %>%
   filter(!is.na(Reaction_time), !is.na(Gender)) %>%
-  select(Gender, Reaction_time) 
+  filter(Reaction_time < 1.0) %>%
+  select(Gender, Reaction_time)
+```
 
-View(HSS2)
+### Numerical and Graphical Summaries
+```{r, message=FALSE, warning=FALSE}
+HSS2 %>%
+  group_by(Gender) %>%
+  summarise(
+    Count = n(),
+    Mean = mean(Reaction_time, na.rm = TRUE),
+    Median = median(Reaction_time, na.rm = TRUE),
+    SD = sd(Reaction_time, na.rm = TRUE),
+    Min = min(Reaction_time, na.rm = TRUE),
+    Max = max(Reaction_time, na.rm = TRUE)
+  ) %>%
+  pander()
+
+```
+
+```{r}
+ggplot(HSS2, aes(x = Gender, y = Reaction_time)) +
+  geom_boxplot() +
+  theme_minimal()
+```
+
+
+
+### Requirements
+
+1. Both samples are representative of the population.
+
+2. Since both groups have sample sizes of greater than 30, we assume that the distribution of the difference of the sample means is normal.
+
+### Test Results
+```{r, message=FALSE, warning=FALSE}
 
 # independent t test
 t.test(Reaction_time ~ Gender, HSS2, mu = 0, alternative = "two.sided", conf.level = 0.95)
 ```
 
-```{r}
-library(mosaic)
 
-favstats(HSS2$Reaction_time)
-```
+### Interpretation
+The study looked at whether there is a difference in reaction times between male and female high school seniors. The null hypothesis stated that there is no difference, while the alternative hypothesis suggested that there is a difference.
+
+The data included 208 females and 239 males, with females having an average reaction time of 0.455 seconds and males having an average of 0.387 seconds. An independent t-test was used to compare the two groups. The test resulted in a p-value of 0.000000363, which is much smaller than 0.05. This means that the difference in reaction times between males and females is very unlikely to be due to random chance.
+
+
+### Conclusion
+Since the p-value is so small, we reject the null hypothesis. This means there is sufficient evidence to conclude that there is a difference in reaction times between males and females. In simple terms, this study found that females tend to have slightly slower reaction times compared to males, and this difference is statistically significant.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- Instructions
@@ -62,21 +115,5 @@ HSS <- HSS %>%
 
 
 -->
-
-
-Context
-Ho/Ha - Level of Significance
-Numerical Summary
-Graphical Summary
-T-Test
-Requirements
-Conclusion
-
-
-
-
-
-
-
 
 
