@@ -21,7 +21,8 @@ library(mosaic)
 
 ----
 
-Wilcoxon tests allow for the testing of hypotheses about the value of the the *median* without assuming the test statistic follows any parametric distribution. They are often seen as nonparametric alternatives to the various t tests. However, they can also be used on ordinal data (data that is not quite quantitative, but is ordered) unlike t tests which require quantitative data.
+Wilcoxon tests allow for the __testing of hypotheses about the value of the the *median* without assuming the test statistic follows any parametric distribution__. They are often seen as 
+__nonparametric alternatives to the various t tests__. However, they can also be used on ordinal data (data that is not quite quantitative, but is ordered) unlike t tests which require quantitative data.
 
 ----
 
