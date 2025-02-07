@@ -21,8 +21,8 @@ library(mosaic)
 
 ----
 
-Wilcoxon tests allow for the __testing of hypotheses about the value of the the *median* without assuming the test statistic follows any parametric distribution__. They are often seen as 
-__nonparametric alternatives to the various t tests__. However, they can also be used on ordinal data (data that is not quite quantitative, but is ordered) unlike t tests which require quantitative data.
+Wilcoxon tests allow for the testing of hypotheses about the value of the the __*median*__ when the test statistic doesn't follow any parametric distribution. They are often seen as 
+nonparametric alternatives to the various t tests. However, they can also be used on ordinal data (data that is not quite quantitative, but is ordered) unlike t tests which require quantitative data.
 
 ----
 
@@ -33,16 +33,20 @@ __nonparametric alternatives to the various t tests__. However, they can also be
 <img src="./Images/QuantY.png" width=35px;>
 </div>
 
-For testing hypotheses about the value of the median of (1) one sample of quantitative data or (2) one set of differences from paired data. 
+For testing hypotheses about the value of the median of 
+
+(1) __one sample__ of __quantitative data__ or 
+
+(2) one set of differences from __paired data.__ 
 
 #### Overview 
 
 <div style="padding-left:125px;">
-The nonparametric equivalent of the paired-samples t test as well as the one-sample t test. 
+The nonparametric equivalent of the __paired-samples t test__ as well as the __one-sample t test__. 
 
-Best for smaller sample sizes where the distribution of the data is not normal. The t test is more appropriate when the data is normal or when the sample size is large. 
+__Wilcoxon Test is best for smaller sample sizes where the distribution of the data is not normal__ while the t test is more appropriate when the data is normal or when the sample size is large. 
 
-While the test will work in most scenarios it suffers slightly when ties (repeated values) are present in the data. If *many* ties are present in the data, the test is not appropriate. If only a few ties are present, the test is still appropriate.
+While the test will work in most scenarios it suffers slightly when ties (repeated values) are present in the data. __If *many* ties are present in the data, the Wilcoxon Test is not appropriate. If only a few ties are present, the test is still appropriate.__
 
 **Hypotheses**
 
@@ -639,23 +643,23 @@ Notice that when the sample size is large the distribution of the test statistic
 <img src="./Images/QuantYQualXg2.png" width=58px;>
 </div>
 
-For testing the equality of the medians of two (possibly different) distributions of a quantitative variable. 
+For testing the equality of the medians of __two (possibly different) distributions__ of a __quantitative__ variable. 
 
 
 #### Overview 
 
 <div style="padding-left:125px;">
 
-The nonparametric equivalent of the Independent Samples t Test. Can also be used when data is ordered (ordinal) but does not have an exact measurement. For example, first place, second place, and so on. 
+The nonparametric __equivalent of the Independent Samples t Test__. __Can also be used when data is ordered (ordinal) but does not have an exact measurement__. For example, first place, second place, and so on. 
 
 The Independent Samples t Test is more appropriate when the distributions are normal, or when the sample size for each sample is large. 
 
-The test is negatively affected when there are ties (repeated values) present in the data, but the results are still useful if there are relatively few ties. 
+The test is negatively affected __when there are ties__ (repeated values) present in the data, but the results are still useful if there are relatively __few ties__. 
 
 
 **Hypotheses**
 
-Originally designed to test for the equality of medians from two identically shaped distributions. 
+Originally designed to __test for the equality of medians from two identically shaped distributions__. 
 
 <div style="padding-left:15px;">
 

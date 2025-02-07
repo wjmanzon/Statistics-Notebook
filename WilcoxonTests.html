@@ -372,13 +372,12 @@ $(document).ready(function () {
  }
 </script>
 <hr />
-<p>Wilcoxon tests allow for the <strong>testing of hypotheses about the
-value of the the <em>median</em> without assuming the test statistic
-follows any parametric distribution</strong>. They are often seen as
-<strong>nonparametric alternatives to the various t tests</strong>.
-However, they can also be used on ordinal data (data that is not quite
-quantitative, but is ordered) unlike t tests which require quantitative
-data.</p>
+<p>Wilcoxon tests allow for the testing of hypotheses about the value of
+the the <strong><em>median</em></strong> when the test statistic doesn’t
+follow any parametric distribution. They are often seen as nonparametric
+alternatives to the various t tests. However, they can also be used on
+ordinal data (data that is not quite quantitative, but is ordered)
+unlike t tests which require quantitative data.</p>
 <hr />
 <div id="wilcoxon-signed-rank-test"
 class="section level3 tabset tabset-fade tabset-pills">
@@ -387,21 +386,26 @@ Test</h3>
 <div style="float:left;width:125px;" align="center">
 <p><img src="Images/QuantY.png" width=35px;></p>
 </div>
-<p>For testing hypotheses about the value of the median of (1) one
-sample of quantitative data or (2) one set of differences from paired
-data.</p>
+<p>For testing hypotheses about the value of the median of</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>one sample</strong> of <strong>quantitative data</strong>
+or</p></li>
+<li><p>one set of differences from <strong>paired
+data.</strong></p></li>
+</ol>
 <div id="overview" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
-<p>The nonparametric equivalent of the paired-samples t test as well as
-the one-sample t test.</p>
-<p>Best for smaller sample sizes where the distribution of the data is
-not normal. The t test is more appropriate when the data is normal or
-when the sample size is large.</p>
+<p>The nonparametric equivalent of the <strong>paired-samples t
+test</strong> as well as the <strong>one-sample t test</strong>.</p>
+<p><strong>Wilcoxon Test is best for smaller sample sizes where the
+distribution of the data is not normal</strong> while the t test is more
+appropriate when the data is normal or when the sample size is
+large.</p>
 <p>While the test will work in most scenarios it suffers slightly when
-ties (repeated values) are present in the data. If <em>many</em> ties
-are present in the data, the test is not appropriate. If only a few ties
-are present, the test is still appropriate.</p>
+ties (repeated values) are present in the data. <strong>If <em>many</em>
+ties are present in the data, the Wilcoxon Test is not appropriate. If
+only a few ties are present, the test is still appropriate.</strong></p>
 <p><strong>Hypotheses</strong></p>
 <p>Originally created to test hypotheses about the value of the median,
 but works as well for the mean when the distribution of the data is
@@ -1094,23 +1098,25 @@ class="section level3 tabset tabset-fade tabset-pills">
 <div style="float:left;width:125px;" align="center">
 <p><img src="Images/QuantYQualXg2.png" width=58px;></p>
 </div>
-<p>For testing the equality of the medians of two (possibly different)
-distributions of a quantitative variable.</p>
+<p>For testing the equality of the medians of <strong>two (possibly
+different) distributions</strong> of a <strong>quantitative</strong>
+variable.</p>
 <div id="overview-1" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
-<p>The nonparametric equivalent of the Independent Samples t Test. Can
-also be used when data is ordered (ordinal) but does not have an exact
-measurement. For example, first place, second place, and so on.</p>
+<p>The nonparametric <strong>equivalent of the Independent Samples t
+Test</strong>. <strong>Can also be used when data is ordered (ordinal)
+but does not have an exact measurement</strong>. For example, first
+place, second place, and so on.</p>
 <p>The Independent Samples t Test is more appropriate when the
 distributions are normal, or when the sample size for each sample is
 large.</p>
-<p>The test is negatively affected when there are ties (repeated values)
-present in the data, but the results are still useful if there are
-relatively few ties.</p>
+<p>The test is negatively affected <strong>when there are ties</strong>
+(repeated values) present in the data, but the results are still useful
+if there are relatively <strong>few ties</strong>.</p>
 <p><strong>Hypotheses</strong></p>
-<p>Originally designed to test for the equality of medians from two
-identically shaped distributions.</p>
+<p>Originally designed to <strong>test for the equality of medians from
+two identically shaped distributions</strong>.</p>
 <div style="padding-left:15px;">
 <div
 style="float:right;font-size:.8em;background-color:lightgray;padding:5px;border-radius:4px;">
