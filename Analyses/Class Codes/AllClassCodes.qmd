@@ -1,0 +1,120 @@
+---
+title: "All Class Codes"
+execute:
+  keep-md: true
+  df-print: paged
+  warning: false
+format:
+  html:
+    code-fold: false
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Week 2 Day 1
+__Group 1__
+```{r}
+library(mosaic)
+library(pander)
+library(tidyverse)
+View(KidsFeet)
+```
+
+```{r}
+boxplot(length~sex,data=KidsFeet)
+```
+
+```{r}
+KidsFeet %>% 
+  group_by(sex) %>% 
+  summarise(min = min(length), Q1=quantile(length,0.25), median=median(length),Q3=quantile(length,0.75),
+            max=max(length))
+```
+
+```{r}
+favstats(length~sex,data=KidsFeet)
+```
+
+__Group 2__
+
+```{r}
+barplot(table(KidsFeet$sex))
+
+table(KidsFeet$sex)
+```
+
+__Group 3__
+```{r}
+plot(length~width, data=KidsFeet)
+       
+KidsFeet %>% 
+  summarise(Correlation=cor(width,length))
+
+#Add any notes to your Index file in the Statistics Notebook
+```
+
+# Week 2 Day 2
+```{r}
+library(mosaic)
+library(tidyverse)
+
+View(airquality)
+?airquality
+```
+
+```{r}
+#Histograms (length)
+hist(airquality$Wind,main="La Guardia Airport from May to September, 1973", 
+     xlab="Daily Average Wind Speeds (mph)",ylab="Frequency",col="steelblue",breaks = 22)
+
+ggplot(airquality,aes(x=Wind))+
+  geom_histogram(fill="steelblue")+
+  labs(title="La Guardia Airport from May to September, 1973",
+       x="Daily Average Wind Speeds (mph)",
+       y="Frequency")
+```
+
+```{r}
+#boxplots
+boxplot(Wind~Month,main="Wind by Month", xlab="Month",
+     ylab="Wind",col=c("steelblue1",
+                       "steelblue2", 
+                       "steelblue3",
+                       "steelblue3",
+                       "steelblue2"),
+                data=airquality)
+
+ggplot(data=airquality,aes(y=Wind,x=Month,group=Month))+
+  geom_boxplot(fill=c("steelblue1", 
+                      "steelblue2", 
+                      "steelblue3",
+                      "steelblue3",
+                      "steelblue2"))+
+  labs(title = "Wind by Month",
+       y="Wind",
+       x="Month")
+```
+
+```{r}
+#scatterplots 
+
+plot(Ozone~Temp, data=airquality, main="Relationship Between Ozone and Temperature",
+     xlab="Temp", 
+     ylab="Ozone",
+     pch = 19, 
+     col="blue")
+
+ggplot(airquality,aes(x=Temp,y=Ozone))+
+  geom_point(color="blue")+
+  labs(title="Relationship Between Ozone and Temperature", 
+       x="Temp", 
+       y="Ozone")
+
+
+## Go over the Stephanie analysis
+```
+
+
+
+
