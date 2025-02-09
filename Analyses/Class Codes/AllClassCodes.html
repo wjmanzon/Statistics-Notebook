@@ -102,28 +102,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="week-2-day-1" class="level1">
 <h1>Week 2 Day 1</h1>
-<p><strong>Group 1</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(mosaic)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(pander)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">View</span>(KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="making-inference" class="level2">
+<h2 class="anchored" data-anchor-id="making-inference">Making Inference</h2>
+<section id="define-inference" class="level3">
+<h3 class="anchored" data-anchor-id="define-inference">Define Inference</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">boxplot</span>(length<span class="sc">~</span>sex,<span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Define inference first in class and then with the group.</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># Do not use the textbook when going over this. Use the script below as your guide.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h3>
+</section>
+</section>
+<section id="type-i-error-vs-type-ii-error-examples-flip-flops-vs-medicine" class="level2">
+<h2 class="anchored" data-anchor-id="type-i-error-vs-type-ii-error-examples-flip-flops-vs-medicine">Type I Error vs Type II Error – Examples (Flip flops vs medicine)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Type I error: False positive (rejecting a true null hypothesis)</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># Type II error: False negative (failing to reject a false null hypothesis)</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Example:</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Imagine a scenario where you are testing the effectiveness of a new medicine.</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># - Null hypothesis (H0): The medicine has no effect.</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># - Type I error: You conclude that the medicine is effective when it actually isn't. </span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#   This can lead to unnecessary side effects and costs.</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># - Type II error: You conclude that the medicine is not effective when it actually is.</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#   This means a useful treatment is rejected, possibly harming patients who need it.</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Another Example:</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># Suppose you are testing if flip-flops are waterproof.</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># - Null hypothesis (H0): Flip-flops are waterproof.</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># - Type I error: You conclude that flip-flops are not waterproof when they actually are.</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co"># - Type II error: You conclude that flip-flops are waterproof when they actually aren’t.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="type-i-error-and-level-of-significance" class="level2">
+<h2 class="anchored" data-anchor-id="type-i-error-and-level-of-significance">Type I Error and Level of Significance</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Type I error = Level of significance = 1 – level of confidence</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># The significance level (alpha) represents the probability of making a Type I error.</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Example: If the confidence level is 95%, then the significance level (alpha) is 0.05.</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># This means there is a 5% chance of rejecting a true null hypothesis.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="type-ii-errors-and-power" class="level2">
+<h2 class="anchored" data-anchor-id="type-ii-errors-and-power">Type II Errors and Power</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Power = 1 - Type II error rate</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># The power of a test is the probability of correctly rejecting a false null hypothesis.</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># A higher power means a lower probability of making a Type II error.</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># Increasing sample size, effect size, or significance level can improve statistical power.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sufficient-evidence-not-proof" class="level2">
+<h2 class="anchored" data-anchor-id="sufficient-evidence-not-proof">Sufficient Evidence – Not Proof</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Hypothesis testing does not provide absolute proof but rather sufficient statistical evidence.</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># - A statistically significant result suggests that an effect exists, but it does not confirm it with certainty.</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># - External factors, assumptions, and sample limitations must be considered.</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># - Scientific conclusions should be drawn cautiously based on the strength of the evidence.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="p-value-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="p-value-calculation">P-value Calculation</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># P-value needs two things: a test statistic and a sampling distribution of the test statistic</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># - The test statistic is calculated based on sample data (e.g., t-score, z-score, F-statistic).</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># - The sampling distribution describes how the test statistic behaves under the null hypothesis.</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># - The p-value measures how extreme the observed test statistic is, assuming the null hypothesis is true.</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># - A small p-value suggests evidence against the null hypothesis, leading to potential rejection of H0.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="peer-review-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="peer-review-analysis">Peer Review Analysis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># 1) Go to the Analysis Menu and open Good Example Analysis</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># 2) Summary of Student Peer Reviews for the Good Example Analysis</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># 3) Identify at least one student who you would like feedback from</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># 4) Identify at least one student that you would NOT like to give you feedback on future assignments.</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># 5) Find an example of Good Specific Feedback</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># To practice, locate at least one student feedback where the feedback</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># is specific enough that if it were given to the wrong student</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co"># that student wouldn't find it useful, but the right student would find it useful.</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co"># 6) With Peers, identify things you should avoid doing</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co"># 7) With Peers, identify principles that would make for a good critique</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="data-exploration">Data Exploration</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">View</span>(KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="group-1-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="group-1-analysis">Group 1 Analysis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">boxplot</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>KidsFeet <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">summarise</span>(<span class="at">min =</span> <span class="fu">min</span>(length), <span class="at">Q1=</span><span class="fu">quantile</span>(length,<span class="fl">0.25</span>), <span class="at">median=</span><span class="fu">median</span>(length),<span class="at">Q3=</span><span class="fu">quantile</span>(length,<span class="fl">0.75</span>),</span>
-<span id="cb3-4"><a href="#cb3-4"></a>            <span class="at">max=</span><span class="fu">max</span>(length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>KidsFeet <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">summarise</span>(<span class="at">min =</span> <span class="fu">min</span>(length), <span class="at">Q1=</span><span class="fu">quantile</span>(length, <span class="fl">0.25</span>), <span class="at">median=</span><span class="fu">median</span>(length), <span class="at">Q3=</span><span class="fu">quantile</span>(length, <span class="fl">0.75</span>),</span>
+<span id="cb11-4"><a href="#cb11-4"></a>            <span class="at">max=</span><span class="fu">max</span>(length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -133,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">favstats</span>(length<span class="sc">~</span>sex,<span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">favstats</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -142,35 +234,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>Group 2</strong></p>
+</section>
+<section id="group-2-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="group-2-analysis">Group 2 Analysis</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  B  G 
 20 19 </code></pre>
 </div>
 </div>
-<p><strong>Group 3</strong></p>
+</section>
+<section id="group-3-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="group-3-analysis">Group 3 Analysis</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">plot</span>(length<span class="sc">~</span>width, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">plot</span>(length<span class="sc">~</span>width, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>KidsFeet <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">summarise</span>(<span class="at">Correlation=</span><span class="fu">cor</span>(width,length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>KidsFeet <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">summarise</span>(<span class="at">Correlation=</span><span class="fu">cor</span>(width, length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -178,104 +278,1275 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#Add any notes to your Index file in the Statistics Notebook</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="notes" class="level3">
+<h3 class="anchored" data-anchor-id="notes">Notes</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Add any notes to your Index file in the Statistics Notebook</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
 </section>
 <section id="week-2-day-2" class="level1">
 <h1>Week 2 Day 2</h1>
+</section>
+<section id="day-1" class="level1">
+<h1>Day 1</h1>
+<section id="a-take-a-few-moments-to-knit-your-index.rmd-file" class="level2">
+<h2 class="anchored" data-anchor-id="a-take-a-few-moments-to-knit-your-index.rmd-file">A) Take a few moments to knit your index.rmd file</h2>
+</section>
+<section id="b-do-the-good-graphics-question-in-the-quiz" class="level2">
+<h2 class="anchored" data-anchor-id="b-do-the-good-graphics-question-in-the-quiz">B) Do the Good Graphics question in the quiz</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">library</span>(mosaic)</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-3"><a href="#cb11-3"></a></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="fu">View</span>(airquality)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>?airquality</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#Histograms (length)</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">hist</span>(airquality<span class="sc">$</span>Wind,<span class="at">main=</span><span class="st">"La Guardia Airport from May to September, 1973"</span>, </span>
-<span id="cb12-3"><a href="#cb12-3"></a>     <span class="at">xlab=</span><span class="st">"Daily Average Wind Speeds (mph)"</span>,<span class="at">ylab=</span><span class="st">"Frequency"</span>,<span class="at">col=</span><span class="st">"steelblue"</span>,<span class="at">breaks =</span> <span class="dv">22</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>(airquality,<span class="fu">aes</span>(<span class="at">x=</span>Wind))<span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill=</span><span class="st">"steelblue"</span>)<span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"La Guardia Airport from May to September, 1973"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4"></a>       <span class="at">x=</span><span class="st">"Daily Average Wind Speeds (mph)"</span>,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#boxplots</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">boxplot</span>(Wind<span class="sc">~</span>Month,<span class="at">main=</span><span class="st">"Wind by Month"</span>, <span class="at">xlab=</span><span class="st">"Month"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3"></a>     <span class="at">ylab=</span><span class="st">"Wind"</span>,<span class="at">col=</span><span class="fu">c</span>(<span class="st">"steelblue1"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>                       <span class="st">"steelblue2"</span>, </span>
-<span id="cb14-5"><a href="#cb14-5"></a>                       <span class="st">"steelblue3"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6"></a>                       <span class="st">"steelblue3"</span>,</span>
-<span id="cb14-7"><a href="#cb14-7"></a>                       <span class="st">"steelblue2"</span>),</span>
-<span id="cb14-8"><a href="#cb14-8"></a>                <span class="at">data=</span>airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">View</span>(airquality)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co"># ?airquality</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="histograms-length" class="level2">
+<h2 class="anchored" data-anchor-id="histograms-length">Histograms (length)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">hist</span>(airquality<span class="sc">$</span>Wind,<span class="at">main=</span><span class="st">"La Guardia Airport from May to September, 1973"</span>, </span>
+<span id="cb21-2"><a href="#cb21-2"></a>     <span class="at">xlab=</span><span class="st">"Daily Average Wind Speeds (mph)"</span>,<span class="at">ylab=</span><span class="st">"Frequency"</span>,<span class="at">col=</span><span class="st">"steelblue"</span>,<span class="at">breaks =</span> <span class="dv">22</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>airquality,<span class="fu">aes</span>(<span class="at">y=</span>Wind,<span class="at">x=</span>Month,<span class="at">group=</span>Month))<span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"steelblue1"</span>, </span>
-<span id="cb15-3"><a href="#cb15-3"></a>                      <span class="st">"steelblue2"</span>, </span>
-<span id="cb15-4"><a href="#cb15-4"></a>                      <span class="st">"steelblue3"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5"></a>                      <span class="st">"steelblue3"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6"></a>                      <span class="st">"steelblue2"</span>))<span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wind by Month"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8"></a>       <span class="at">y=</span><span class="st">"Wind"</span>,</span>
-<span id="cb15-9"><a href="#cb15-9"></a>       <span class="at">x=</span><span class="st">"Month"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">#scatterplots </span></span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="fu">plot</span>(Ozone<span class="sc">~</span>Temp, <span class="at">data=</span>airquality, <span class="at">main=</span><span class="st">"Relationship Between Ozone and Temperature"</span>,</span>
-<span id="cb16-4"><a href="#cb16-4"></a>     <span class="at">xlab=</span><span class="st">"Temp"</span>, </span>
-<span id="cb16-5"><a href="#cb16-5"></a>     <span class="at">ylab=</span><span class="st">"Ozone"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb16-7"><a href="#cb16-7"></a>     <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(airquality,<span class="fu">aes</span>(<span class="at">x=</span>Wind))<span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill=</span><span class="st">"steelblue"</span>)<span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"La Guardia Airport from May to September, 1973"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>       <span class="at">x=</span><span class="st">"Daily Average Wind Speeds (mph)"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(airquality,<span class="fu">aes</span>(<span class="at">x=</span>Temp,<span class="at">y=</span>Ozone))<span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"blue"</span>)<span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Relationship Between Ozone and Temperature"</span>, </span>
-<span id="cb17-4"><a href="#cb17-4"></a>       <span class="at">x=</span><span class="st">"Temp"</span>, </span>
-<span id="cb17-5"><a href="#cb17-5"></a>       <span class="at">y=</span><span class="st">"Ozone"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="go-through-the-four-questions-below-for-question-3" class="level2">
+<h2 class="anchored" data-anchor-id="go-through-the-four-questions-below-for-question-3">Go through the four questions below for Question 3</h2>
+</section>
+<section id="boxplots" class="level2">
+<h2 class="anchored" data-anchor-id="boxplots">Boxplots</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">boxplot</span>(Wind<span class="sc">~</span>Month,<span class="at">main=</span><span class="st">"Wind by Month"</span>, <span class="at">xlab=</span><span class="st">"Month"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2"></a>     <span class="at">ylab=</span><span class="st">"Wind"</span>,<span class="at">col=</span><span class="fu">c</span>(<span class="st">"steelblue1"</span>, <span class="st">"steelblue2"</span>, <span class="st">"steelblue3"</span>,<span class="st">"steelblue3"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>                       <span class="st">"steelblue2"</span>),<span class="at">data=</span>airquality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="do">## Go over the Stephanie analysis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>airquality,<span class="fu">aes</span>(<span class="at">y=</span>Wind,<span class="at">x=</span>Month,<span class="at">group=</span>Month))<span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"steelblue1"</span>, <span class="st">"steelblue2"</span>, <span class="st">"steelblue3"</span>,<span class="st">"steelblue3"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>                      <span class="st">"steelblue2"</span>))<span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wind by Month"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>       <span class="at">y=</span><span class="st">"Wind"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6"></a>       <span class="at">x=</span><span class="st">"Month"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplots">Scatterplots</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">plot</span>(Ozone<span class="sc">~</span>Temp,<span class="at">data=</span>airquality,<span class="at">main=</span><span class="st">"Relationship Between Ozone and Temperature"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2"></a>     <span class="at">xlab=</span><span class="st">"Temp"</span>, <span class="at">ylab=</span><span class="st">"Ozone"</span>,<span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(airquality,<span class="fu">aes</span>(<span class="at">x=</span>Temp,<span class="at">y=</span>Ozone))<span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"blue"</span>)<span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Relationship Between Ozone and Temperature"</span>, </span>
+<span id="cb26-4"><a href="#cb26-4"></a>       <span class="at">x=</span><span class="st">"Temp"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5"></a>       <span class="at">y=</span><span class="st">"Ozone"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="go-over-the-stephanie-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="go-over-the-stephanie-analysis">Go over the Stephanie analysis</h2>
+</section>
+</section>
+<section id="week-3" class="level1">
+<h1>Week 3</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">library</span>(pander)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="day-1-1" class="level2">
+<h2 class="anchored" data-anchor-id="day-1-1">Day 1</h2>
+<section id="a-quantitative-vs-categorical-data---kidsfeet" class="level3">
+<h3 class="anchored" data-anchor-id="a-quantitative-vs-categorical-data---kidsfeet">A) Quantitative vs Categorical Data - KidsFeet</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># One Quantitative Response Variable Y - length</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">summary</span>(KidsFeet<span class="sc">$</span>length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  21.60   24.00   24.50   24.72   25.60   27.50 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Quantitative Y | Categorical X (2 Groups) - length by sex</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">tapply</span>(KidsFeet<span class="sc">$</span>length, KidsFeet<span class="sc">$</span>sex, summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$B
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  22.90   24.35   24.95   25.11   25.80   27.50 
+
+$G
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  21.60   23.65   24.20   24.32   25.10   26.70 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Quantitative Y | Categorical X (3+ Groups) - Nothing in the data with 3+ groups</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Quantitative Y | Multiple Categorical X - length by sex and biggerfoot</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">tapply</span>(KidsFeet<span class="sc">$</span>length, <span class="fu">list</span>(KidsFeet<span class="sc">$</span>sex, KidsFeet<span class="sc">$</span>biggerfoot), summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  L                R               
+B summaryDefault,6 summaryDefault,6
+G summaryDefault,6 summaryDefault,6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Quantitative Y | Quantitative X - length and width</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="fu">cor</span>(KidsFeet<span class="sc">$</span>length, KidsFeet<span class="sc">$</span>width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6410961</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># Quantitative Y | Multiple X  - length and width and sex</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">lm</span>(length <span class="sc">~</span> width <span class="sc">+</span> sex, <span class="at">data =</span> KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = length ~ width + sex, data = KidsFeet)
+
+Coefficients:
+(Intercept)        width         sexG  
+    10.3609       1.6044      -0.1329  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># Binomial Y | Quantitative X - sex and length - opposite x and y </span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">glm</span>(sex <span class="sc">~</span> length, <span class="at">data =</span> KidsFeet, <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:  glm(formula = sex ~ length, family = binomial, data = KidsFeet)
+
+Coefficients:
+(Intercept)       length  
+    12.4860      -0.5074  
+
+Degrees of Freedom: 38 Total (i.e. Null);  37 Residual
+Null Deviance:      54.04 
+Residual Deviance: 50.34    AIC: 54.34</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># Binomial Y | Multiple X - Don't worry about it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Categorical Y | Categorical X - biggerfoot and domhand</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">table</span>(KidsFeet<span class="sc">$</span>biggerfoot, KidsFeet<span class="sc">$</span>domhand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+     L  R
+  L  2 20
+  R  6 11</code></pre>
+</div>
+</div>
+</section>
+<section id="b---summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="b---summary-statistics">B - Summary Statistics</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># group_by() - categorical</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>KidsFeet <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">summarise</span>(<span class="at">mean_length =</span> <span class="fu">mean</span>(length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sex"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_length"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"B","2":"25.10500"},{"1":"G","2":"24.32105"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="c---visualization" class="level3">
+<h3 class="anchored" data-anchor-id="c---visualization">C - Visualization</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Histogram - quantitative</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="fu">hist</span>(KidsFeet<span class="sc">$</span>length, <span class="at">main=</span><span class="st">"Histogram of Kids Feet Length"</span>, <span class="at">xlab=</span><span class="st">"Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># Boxplot - quantitative</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="fu">boxplot</span>(KidsFeet<span class="sc">$</span>length, <span class="at">main=</span><span class="st">"Boxplot of Kids Feet Length"</span>, <span class="at">xlab=</span><span class="st">"Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Dot plot - quantitative</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="fu">stripchart</span>(KidsFeet<span class="sc">$</span>length, <span class="at">method =</span> <span class="st">"jitter"</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">main =</span> <span class="st">"Dot Plot of Kids Feet Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># Scatterplot - quantitative</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">plot</span>(KidsFeet<span class="sc">$</span>width, KidsFeet<span class="sc">$</span>length, <span class="at">main=</span><span class="st">"Scatterplot of Length vs Width"</span>, <span class="at">xlab=</span><span class="st">"Width"</span>, <span class="at">ylab=</span><span class="st">"Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Bar plot - categorical</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">barplot</span>(<span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex), <span class="at">main=</span><span class="st">"Barplot of Gender Count"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"pink"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="d---answering-specific-questions" class="level3">
+<h3 class="anchored" data-anchor-id="d---answering-specific-questions">D - Answering Specific Questions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="co"># How many boys and how many girls are in the KidsFeet dataset?</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ B  G 
+20 19 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(KidsFeet<span class="sc">$</span>sex), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"pink"</span>), <span class="at">main=</span><span class="st">"Count of Boys and Girls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># What is the average length of feet in the KidsFeet dataset?</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">favstats</span>(KidsFeet<span class="sc">$</span>length) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 6%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">25.6</td>
+<td style="text-align: center;">27.5</td>
+<td style="text-align: center;">24.72</td>
+<td style="text-align: center;">1.318</td>
+<td style="text-align: center;">39</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">boxplot</span>(KidsFeet<span class="sc">$</span>length, <span class="at">main=</span><span class="st">"Length of Kids Feet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="co"># Do boys or girls have longer feet, on average?</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="fu">favstats</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">sex</th>
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">22.9</td>
+<td style="text-align: center;">24.35</td>
+<td style="text-align: center;">24.95</td>
+<td style="text-align: center;">25.8</td>
+<td style="text-align: center;">27.5</td>
+<td style="text-align: center;">25.11</td>
+<td style="text-align: center;">1.217</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">G</td>
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">23.65</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">26.7</td>
+<td style="text-align: center;">24.32</td>
+<td style="text-align: center;">1.33</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">boxplot</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet, <span class="at">main=</span><span class="st">"Comparing Length of Feet Across Gender"</span>, </span>
+<span id="cb56-2"><a href="#cb56-2"></a>        <span class="at">xlab=</span><span class="st">"Gender"</span>, <span class="at">ylab=</span><span class="st">"Length of Foot"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"pink"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># Are there certain months of the year associated with longer feet?</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="fu">favstats</span>(length<span class="sc">~</span>birthmonth, <span class="at">data=</span>KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">birthmonth</th>
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">22.5</td>
+<td style="text-align: center;">23.4</td>
+<td style="text-align: center;">24.3</td>
+<td style="text-align: center;">25.2</td>
+<td style="text-align: center;">23.4</td>
+<td style="text-align: center;">2.546</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">25.6</td>
+<td style="text-align: center;">26.1</td>
+<td style="text-align: center;">26.1</td>
+<td style="text-align: center;">26.1</td>
+<td style="text-align: center;">25.77</td>
+<td style="text-align: center;">0.5774</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">22.9</td>
+<td style="text-align: center;">24.65</td>
+<td style="text-align: center;">25.15</td>
+<td style="text-align: center;">25.77</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">25.14</td>
+<td style="text-align: center;">1.218</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">23.6</td>
+<td style="text-align: center;">23.65</td>
+<td style="text-align: center;">23.7</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">24.7</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">0.6083</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">23.6</td>
+<td style="text-align: center;">23.8</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">24.4</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">0.5657</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">23.75</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.68</td>
+<td style="text-align: center;">26.7</td>
+<td style="text-align: center;">24.43</td>
+<td style="text-align: center;">1.588</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">22.5</td>
+<td style="text-align: center;">23.45</td>
+<td style="text-align: center;">24.4</td>
+<td style="text-align: center;">25.75</td>
+<td style="text-align: center;">27.1</td>
+<td style="text-align: center;">24.67</td>
+<td style="text-align: center;">2.312</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">23.9</td>
+<td style="text-align: center;">24.45</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25.55</td>
+<td style="text-align: center;">26.1</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">1.556</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">22.9</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">24.6</td>
+<td style="text-align: center;">27.5</td>
+<td style="text-align: center;">24.7</td>
+<td style="text-align: center;">1.704</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">24.8</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">25.4</td>
+<td style="text-align: center;">24.8</td>
+<td style="text-align: center;">0.8485</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">24.65</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">25.55</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">1.273</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.25</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">25.5</td>
+<td style="text-align: center;">24.67</td>
+<td style="text-align: center;">0.7638</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">boxplot</span>(length<span class="sc">~</span>birthmonth, <span class="at">data=</span>KidsFeet, <span class="at">col=</span><span class="st">"navy"</span>,</span>
+<span id="cb58-2"><a href="#cb58-2"></a>        <span class="at">xlab =</span> <span class="st">"Numerical Birth Month"</span>, <span class="at">ylab=</span><span class="st">"Feet Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co"># Is there a relationship between foot length and width?</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="fu">cor</span>(KidsFeet<span class="sc">$</span>length, KidsFeet<span class="sc">$</span>width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6410961</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">plot</span>(length<span class="sc">~</span>width, <span class="at">data=</span>KidsFeet, <span class="at">main=</span><span class="st">"Relationship Between Length and Width of Kids Feet"</span>, </span>
+<span id="cb61-2"><a href="#cb61-2"></a>     <span class="at">xlab=</span><span class="st">"Width of Foot"</span>, <span class="at">ylab =</span> <span class="st">"Length of Foot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co"># Is one gender more likely to be born in certain seasons?</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>Kids3 <span class="ot">&lt;-</span> KidsFeet <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb62-4"><a href="#cb62-4"></a>    <span class="at">season =</span> <span class="fu">case_when</span>(</span>
+<span id="cb62-5"><a href="#cb62-5"></a>      birthmonth <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">2</span>) <span class="sc">~</span> <span class="st">"Winter"</span>,</span>
+<span id="cb62-6"><a href="#cb62-6"></a>      birthmonth <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>) <span class="sc">~</span> <span class="st">"Spring"</span>,</span>
+<span id="cb62-7"><a href="#cb62-7"></a>      birthmonth <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>) <span class="sc">~</span> <span class="st">"Summer"</span>,</span>
+<span id="cb62-8"><a href="#cb62-8"></a>      birthmonth <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">11</span>) <span class="sc">~</span> <span class="st">"Fall"</span></span>
+<span id="cb62-9"><a href="#cb62-9"></a>    )</span>
+<span id="cb62-10"><a href="#cb62-10"></a>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">pander</span>(<span class="fu">table</span>(Kids3<span class="sc">$</span>season, KidsFeet<span class="sc">$</span>sex))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">&nbsp;</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Fall</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Spring</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Summer</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Winter</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(Kids3<span class="sc">$</span>sex, Kids3<span class="sc">$</span>season), <span class="at">beside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb64-2"><a href="#cb64-2"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"pink"</span>), <span class="at">legend.text=</span><span class="cn">TRUE</span>, </span>
+<span id="cb64-3"><a href="#cb64-3"></a>        <span class="at">xlab=</span><span class="st">"Season"</span>, <span class="at">ylab=</span><span class="st">"Frequency"</span>, <span class="at">main=</span><span class="st">"Count of Gender by Season"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="week-4-day-1" class="level1">
+<h1>Week 4 Day 1</h1>
+<section id="making-inference-1" class="level2">
+<h2 class="anchored" data-anchor-id="making-inference-1">Making Inference</h2>
+<section id="define-inference-1" class="level3">
+<h3 class="anchored" data-anchor-id="define-inference-1">Define Inference</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="co"># Define inference first in class and then with the group.</span></span>
+<span id="cb65-2"><a href="#cb65-2"></a><span class="co"># Do not use the textbook when going over this. Use the script below as your guide.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="hypothesis-testing-1" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-1">Hypothesis Testing</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="co"># a. Type I error vs Type II error – Give an example (Flip flops vs medicine)</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="co"># Type I error: False positive (rejecting a true null hypothesis)</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a><span class="co"># Type II error: False negative (failing to reject a false null hypothesis)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co"># b. Type I error = Level of significance = 1 – level of confidence</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="co"># Example: If confidence level is 95%, significance level is 0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># c. Type II errors and Power</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a><span class="co"># Power = 1 - Type II error rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="co"># d. Sufficient evidence – not proof</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a><span class="co"># Hypothesis testing does not prove anything; it only provides sufficient evidence to support/reject a hypothesis.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="co"># e. P-value needs two things: a test statistic and a sampling distribution of test statistic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="parametric-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-distributions">Parametric Distributions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="co"># Find the four parametric distributions (types of tests that are run in 221)</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a><span class="co"># 1. Normal distribution</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a><span class="co"># 2. t-distribution</span></span>
+<span id="cb71-4"><a href="#cb71-4"></a><span class="co"># 3. Chi-square distribution</span></span>
+<span id="cb71-5"><a href="#cb71-5"></a><span class="co"># 4. F-distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="parametric-vs-non-parametric-methods" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-vs-non-parametric-methods">Parametric vs Non-Parametric Methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="co"># Parametric methods compared to non-parametric methods</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="co"># Non-parametric tests are still powerful and are likely more powerful than parametric tests </span></span>
+<span id="cb72-3"><a href="#cb72-3"></a><span class="co"># if the requirements for a parametric test are not met.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-of-a-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-t-test">Example of a t-Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="co"># Conducting a one-sample t-test</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a><span class="fu">t.test</span>(KidsFeet<span class="sc">$</span>length, <span class="at">mu=</span><span class="fl">25.1</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  KidsFeet$length
+t = -1.7865, df = 38, p-value = 0.082
+alternative hypothesis: true mean is not equal to 25.1
+95 percent confidence interval:
+ 24.29597 25.15019
+sample estimates:
+mean of x 
+ 24.72308 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="co"># Ho: mu = 25.1, Ha: mu ≠ 25.1</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="co"># Level of significance = 0.05</span></span>
+<span id="cb75-3"><a href="#cb75-3"></a><span class="co"># Test Statistic t = -1.7865, df = 38, p-value = 0.082</span></span>
+<span id="cb75-4"><a href="#cb75-4"></a><span class="co"># p-value &gt; alpha, therefore we fail to reject the Ho</span></span>
+<span id="cb75-5"><a href="#cb75-5"></a><span class="co"># We have insufficient evidence to say that the mean is different than 25.1.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">pander</span>(<span class="fu">t.test</span>(KidsFeet<span class="sc">$</span>length, <span class="at">mu=</span><span class="fl">25.1</span>, <span class="at">alternative=</span><span class="st">"less"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>One Sample t-test: <code>KidsFeet$length</code></caption>
+<colgroup>
+<col style="width: 23%">
+<col style="width: 6%">
+<col style="width: 13%">
+<col style="width: 34%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Test statistic</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">P value</th>
+<th style="text-align: center;">Alternative hypothesis</th>
+<th style="text-align: center;">mean of x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-1.787</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">0.041 *</td>
+<td style="text-align: center;">less</td>
+<td style="text-align: center;">24.72</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="co"># Ho: mu = 25.1, Ha: mu &lt; 25.1</span></span>
+<span id="cb77-2"><a href="#cb77-2"></a><span class="co"># Level of significance = 0.05</span></span>
+<span id="cb77-3"><a href="#cb77-3"></a><span class="co"># Test Statistic t = -1.7865, df = 38, p-value = 0.041</span></span>
+<span id="cb77-4"><a href="#cb77-4"></a><span class="co"># p-value &lt; alpha, therefore we reject the Ho</span></span>
+<span id="cb77-5"><a href="#cb77-5"></a><span class="co"># We have sufficient evidence to say that the mean is less than 25.1.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co"># Note: Because of the Central Limit Theorem, we can assume the distribution</span></span>
+<span id="cb78-2"><a href="#cb78-2"></a><span class="co"># of sample means is normal because we have a large sample size (n &gt;= 30).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="two-sample-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="two-sample-t-test">Two-Sample t-Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">t.test</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">alternative=</span><span class="st">"greater"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  length by sex
+t = 1.9174, df = 36.275, p-value = 0.03154
+alternative hypothesis: true difference in means between group B and group G is greater than 0
+95 percent confidence interval:
+ 0.09382502        Inf
+sample estimates:
+mean in group B mean in group G 
+       25.10500        24.32105 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb81-2"><a href="#cb81-2"></a><span class="fu">library</span>(pander)</span>
+<span id="cb81-3"><a href="#cb81-3"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb81-4"><a href="#cb81-4"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="making-inference-2" class="level2">
+<h2 class="anchored" data-anchor-id="making-inference-2">Making Inference</h2>
+<section id="define-inference-2" class="level3">
+<h3 class="anchored" data-anchor-id="define-inference-2">Define Inference</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="co"># Define inference first in class and then with the group.</span></span>
+<span id="cb82-2"><a href="#cb82-2"></a><span class="co"># Do not use the textbook when going over this. Use the script below as your guide.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="hypothesis-testing-2" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-2">Hypothesis Testing</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="co"># a. Type I error vs Type II error – Give an example (Flip flops vs medicine)</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a><span class="co"># Type I error: False positive (rejecting a true null hypothesis)</span></span>
+<span id="cb83-3"><a href="#cb83-3"></a><span class="co"># Type II error: False negative (failing to reject a false null hypothesis)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="co"># b. Type I error = Level of significance = 1 – level of confidence</span></span>
+<span id="cb84-2"><a href="#cb84-2"></a><span class="co"># Example: If confidence level is 95%, significance level is 0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="co"># c. Type II errors and Power</span></span>
+<span id="cb85-2"><a href="#cb85-2"></a><span class="co"># Power = 1 - Type II error rate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="co"># d. Sufficient evidence – not proof</span></span>
+<span id="cb86-2"><a href="#cb86-2"></a><span class="co"># Hypothesis testing does not prove anything; it only provides sufficient evidence to support/reject a hypothesis.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="co"># e. P-value needs two things: a test statistic and a sampling distribution of test statistic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="parametric-distributions-1" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-distributions-1">Parametric Distributions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="co"># Find the four parametric distributions (types of tests that are run in 221)</span></span>
+<span id="cb88-2"><a href="#cb88-2"></a><span class="co"># 1. Normal distribution</span></span>
+<span id="cb88-3"><a href="#cb88-3"></a><span class="co"># 2. t-distribution</span></span>
+<span id="cb88-4"><a href="#cb88-4"></a><span class="co"># 3. Chi-square distribution</span></span>
+<span id="cb88-5"><a href="#cb88-5"></a><span class="co"># 4. F-distribution</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="parametric-vs-non-parametric-methods-1" class="level3">
+<h3 class="anchored" data-anchor-id="parametric-vs-non-parametric-methods-1">Parametric vs Non-Parametric Methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="co"># Parametric methods compared to non-parametric methods</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a><span class="co"># Non-parametric tests are still powerful and are likely more powerful than parametric tests </span></span>
+<span id="cb89-3"><a href="#cb89-3"></a><span class="co"># if the requirements for a parametric test are not met.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-of-a-one-sample-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-one-sample-t-test">Example of a One-Sample t-Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">pander</span>(<span class="fu">t.test</span>(KidsFeet<span class="sc">$</span>length, <span class="at">mu=</span><span class="dv">28</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>One Sample t-test: <code>KidsFeet$length</code></caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 6%">
+<col style="width: 23%">
+<col style="width: 32%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Test statistic</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">P value</th>
+<th style="text-align: center;">Alternative hypothesis</th>
+<th style="text-align: center;">mean of x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-15.53</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">4.806e-18 * * *</td>
+<td style="text-align: center;">two.sided</td>
+<td style="text-align: center;">24.72</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="co"># Ho: mu = 28, Ha: mu ≠ 28</span></span>
+<span id="cb91-2"><a href="#cb91-2"></a><span class="co"># Level of significance = 0.05</span></span>
+<span id="cb91-3"><a href="#cb91-3"></a><span class="co"># Test Statistic t = -15.532, df = 38, p-value &lt; 2.2e-16</span></span>
+<span id="cb91-4"><a href="#cb91-4"></a><span class="co"># p-value &lt; alpha, therefore we reject the Ho</span></span>
+<span id="cb91-5"><a href="#cb91-5"></a><span class="co"># We have sufficient evidence to say that the mean is different than 28.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-of-a-paired-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-paired-t-test">Example of a Paired t-Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>KidsFeet3 <span class="ot">&lt;-</span> KidsFeet <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="#cb92-2"></a>  <span class="fu">mutate</span>(<span class="at">width3 =</span> <span class="dv">3</span><span class="sc">*</span>width, <span class="at">difference =</span> length <span class="sc">-</span> width3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">t.test</span>(KidsFeet3<span class="sc">$</span>length, KidsFeet3<span class="sc">$</span>width3, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">paired=</span><span class="cn">TRUE</span>,</span>
+<span id="cb93-2"><a href="#cb93-2"></a>       <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  KidsFeet3$length and KidsFeet3$width3
+t = -11.529, df = 38, p-value = 5.668e-14
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -2.649596 -1.858096
+sample estimates:
+mean difference 
+      -2.253846 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a><span class="co"># Ho: mu_d = 0, Ha: mu_d ≠ 0</span></span>
+<span id="cb95-2"><a href="#cb95-2"></a><span class="co"># Level of significance = 0.05</span></span>
+<span id="cb95-3"><a href="#cb95-3"></a><span class="co"># t = -11.529, df = 38, p-value = 5.668e-14</span></span>
+<span id="cb95-4"><a href="#cb95-4"></a><span class="co"># p-value &lt; alpha, therefore we reject the Ho</span></span>
+<span id="cb95-5"><a href="#cb95-5"></a><span class="co"># We have sufficient evidence to say that there is a difference between width*3 and length.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-of-an-independent-samples-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-an-independent-samples-t-test">Example of an Independent Samples t-Test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">t.test</span>(length<span class="sc">~</span>sex, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">data=</span>KidsFeet, <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  length by sex
+t = 1.9174, df = 36.275, p-value = 0.06308
+alternative hypothesis: true difference in means between group B and group G is not equal to 0
+95 percent confidence interval:
+ -0.04502067  1.61291541
+sample estimates:
+mean in group B mean in group G 
+       25.10500        24.32105 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="co"># Ho: mu_boy = mu_girl, Ha: mu_boy ≠ mu_girl</span></span>
+<span id="cb98-2"><a href="#cb98-2"></a><span class="co"># Level of significance = 0.05</span></span>
+<span id="cb98-3"><a href="#cb98-3"></a><span class="co"># t = 1.9174, df = 36.275, p-value = 0.06308</span></span>
+<span id="cb98-4"><a href="#cb98-4"></a><span class="co"># p-value &gt; alpha, therefore we fail to reject the Ho</span></span>
+<span id="cb98-5"><a href="#cb98-5"></a><span class="co"># We have insufficient evidence to say that the length is different between boys and girls.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="checking-requirements" class="level3">
+<h3 class="anchored" data-anchor-id="checking-requirements">Checking Requirements</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="co"># One Sample t-Test</span></span>
+<span id="cb99-2"><a href="#cb99-2"></a><span class="fu">qqPlot</span>(KidsFeet<span class="sc">$</span>length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 38 11</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="co"># Paired t-Test</span></span>
+<span id="cb101-2"><a href="#cb101-2"></a><span class="fu">qqPlot</span>(KidsFeet3<span class="sc">$</span>length <span class="sc">-</span> KidsFeet3<span class="sc">$</span>width3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-86-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="co"># Independent Samples t-Test</span></span>
+<span id="cb103-2"><a href="#cb103-2"></a><span class="fu">qqPlot</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="graphics" class="level3">
+<h3 class="anchored" data-anchor-id="graphics">Graphics</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a><span class="co"># One Sample t-Test</span></span>
+<span id="cb104-2"><a href="#cb104-2"></a><span class="fu">boxplot</span>(KidsFeet<span class="sc">$</span>length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>KidsFeet, <span class="fu">aes</span>(<span class="at">x=</span>length)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-88-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="co"># Paired t-Test</span></span>
+<span id="cb106-2"><a href="#cb106-2"></a><span class="fu">boxplot</span>(KidsFeet3<span class="sc">$</span>length <span class="sc">-</span> KidsFeet3<span class="sc">$</span>width3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-89-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>KidsFeet3, <span class="fu">aes</span>(<span class="at">x=</span>difference)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-89-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="co"># Independent Samples t-Test</span></span>
+<span id="cb108-2"><a href="#cb108-2"></a><span class="fu">boxplot</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-90-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>KidsFeet, <span class="fu">aes</span>(<span class="at">y=</span>length, <span class="at">x=</span>sex)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"pink"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="AllClassCodes_files/figure-html/unnamed-chunk-90-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-summaries" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-summaries">Numerical Summaries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="co"># One Sample t-Test</span></span>
+<span id="cb110-2"><a href="#cb110-2"></a><span class="fu">pander</span>(<span class="fu">favstats</span>(KidsFeet<span class="sc">$</span>length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 6%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">24.5</td>
+<td style="text-align: center;">25.6</td>
+<td style="text-align: center;">27.5</td>
+<td style="text-align: center;">24.72</td>
+<td style="text-align: center;">1.318</td>
+<td style="text-align: center;">39</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="co"># Paired t-Test</span></span>
+<span id="cb111-2"><a href="#cb111-2"></a><span class="fu">pander</span>(<span class="fu">favstats</span>(KidsFeet3<span class="sc">$</span>length <span class="sc">-</span> KidsFeet3<span class="sc">$</span>width3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-4.6</td>
+<td style="text-align: center;">-3.35</td>
+<td style="text-align: center;">-2.1</td>
+<td style="text-align: center;">-1.25</td>
+<td style="text-align: center;">-3.553e-15</td>
+<td style="text-align: center;">-2.254</td>
+<td style="text-align: center;">1.221</td>
+<td style="text-align: center;">39</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="co"># Independent Samples t-Test</span></span>
+<span id="cb112-2"><a href="#cb112-2"></a><span class="fu">pander</span>(<span class="fu">favstats</span>(length<span class="sc">~</span>sex, <span class="at">data=</span>KidsFeet))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">sex</th>
+<th style="text-align: center;">min</th>
+<th style="text-align: center;">Q1</th>
+<th style="text-align: center;">median</th>
+<th style="text-align: center;">Q3</th>
+<th style="text-align: center;">max</th>
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+<th style="text-align: center;">n</th>
+<th style="text-align: center;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">22.9</td>
+<td style="text-align: center;">24.35</td>
+<td style="text-align: center;">24.95</td>
+<td style="text-align: center;">25.8</td>
+<td style="text-align: center;">27.5</td>
+<td style="text-align: center;">25.11</td>
+<td style="text-align: center;">1.217</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">G</td>
+<td style="text-align: center;">21.6</td>
+<td style="text-align: center;">23.65</td>
+<td style="text-align: center;">24.2</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">26.7</td>
+<td style="text-align: center;">24.32</td>
+<td style="text-align: center;">1.33</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
 </section>
 
 </main>
