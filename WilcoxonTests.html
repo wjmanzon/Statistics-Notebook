@@ -1150,6 +1150,44 @@ be identically distributed.</p>
 <p>(Note: Men’s heights are <em>stochastically greater</em> than women’s
 heights because men are generally taller than women, but not all men are
 taller than all women.)</p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="68%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Signed-Rank Test</th>
+<th>Rank-Sum Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Data</strong></td>
+<td>One sample or paired data</td>
+<td>Two independent samples</td>
+</tr>
+<tr class="even">
+<td><strong>Focus</strong></td>
+<td>Median of a single distribution or differences</td>
+<td>Comparing medians of two distributions</td>
+</tr>
+<tr class="odd">
+<td><strong>Analogy</strong></td>
+<td>Non-parametric version of one sample or paired t-test</td>
+<td>Non-parametric version of an independent samples t-test</td>
+</tr>
+<tr class="even">
+<td><strong>R Function</strong></td>
+<td><code>wilcox.test()</code> using <code>paired = TRUE</code> for
+paired data or a single vector for one sample.</td>
+<td><code>wilcox.test()</code> using <code>Y ~ X</code> or two separate
+vectors</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples</strong>: <a
 href="./Analyses/Wilcoxon%20Tests/Examples/BugSprayWilcoxonRankSum.html">BugSpray</a>,
 <a

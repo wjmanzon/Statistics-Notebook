@@ -661,6 +661,8 @@ The test is negatively affected __when there are ties__ (repeated values) presen
 
 Originally designed to __test for the equality of medians from two identically shaped distributions__. 
 
+
+
 <div style="padding-left:15px;">
 
 
@@ -698,6 +700,14 @@ $H_a: \text{one distribution is stochastically greater than the other}$
 If these hypotheses are used, then the distributions do not have to be identically distributed.
 
 (Note: Men's heights are *stochastically greater* than women's heights because men are generally taller than women, but not all men are taller than all women.) 
+
+Feature         | Signed-Rank Test                                                | Rank-Sum Test
+-------------- | --------------------------------------------------------------- | ---------------
+**Data**       | One sample or paired data                                       | Two independent samples
+**Focus**      | Median of a single distribution or differences                  | Comparing medians of two distributions
+**Analogy**    | Non-parametric version of one sample or paired t-test           | Non-parametric version of an independent samples t-test
+**R Function** | `wilcox.test()` using `paired = TRUE` for paired data or a single vector for one sample. | `wilcox.test()` using `Y ~ X` or two separate vectors
+
 
 
 **Examples**: [BugSpray](./Analyses/Wilcoxon Tests/Examples/BugSprayWilcoxonRankSum.html), [MoralIntegration](./Analyses/Wilcoxon Tests/Examples/MoralIntegration.html)
