@@ -4,16 +4,18 @@ output:
   html_document:
     theme: cerulean
     code_folding: hide
+editor_options: 
+  chunk_output_type: console
 ---
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(mosaic)
 library(car)
 library(pander)
 library(DT) #You may need to run: install.packages("DT") 
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 # Play the chunk above and this one to get the data into your Console
 # Note the eval=FALSE statement in this R-chunk will exclude this code
 # from running when you Knit and will only work in the Console.
@@ -77,12 +79,97 @@ datatable(Friendly, options=list(lengthMenu = c(3,10,30)))
 ```
 
 
-## Analysis
-
-
 <!-- Begin writing your analysis below here. -->
 
 <!-- Note that your goal is to use the Friendly data to show whether or not the Meshed or Before methods have any positive benefit on memory recall. -->
 
+## Analysis
+
+### Introduction
+Understanding how information is best retained is a crucial area of research in cognitive psychology and education. Educators and researchers have long debated the effectiveness of different teaching methodologies in improving memory recall. This study examines two primary instructional approaches: the Meshed Approach, where new content is introduced while simultaneously reviewing previously learned material, and the Before Approach, where a thorough review of old material precedes the introduction of new content.
+
+To evaluate the impact of these approaches on memory recall, participants were presented with a structured word recall task, where they were exposed to a series of words in a controlled environment. This experiment aimed to determine whether either approach offers a significant advantage in enhancing memory retention. The findings from this study have implications for optimizing learning strategies in academic and professional settings.
+
+### Hypotheses for the t test
+$$
+  H_0: \mu_\text{meshed} = \mu_\text{before}
+$$
+
+$$
+  H_a: \mu_\text{meshed} \neq \mu_\text{before}
+$$
+
+### Graphical and Numerical Summaries
+
+```{r}
+Friendly <- Friendly %>%
+  filter(condition %in% c("Before", "Meshed")) %>%
+  droplevels()
+```
+
+
+```{r}
+# Independent Samples t-Test Numerical Summary
+pander(favstats(correct~condition, data=Friendly))
+```
+At a first glance, it looks like there is no difference in the two methods' means. Both of them have 36.6 mean.
+
+```{r}
+# Independent Samples t-Test Graphic
+ggplot(data=Friendly, aes(y=correct, x=condition)) + 
+  geom_boxplot() +
+  labs(title="Is there a difference between Meshed method
+and Before method in memory recall?",
+      x = "Method",
+      y = "Number of Correctly Recalled Words (over 40)")
+```
+
+To see if there really is no difference, let's conduct a two-tailed independent t-Test.
+
+### t-Test
+```{r}
+statresult <- t.test(correct~condition, data=Friendly, mu=0, alternative="two.sided", conf.level=0.95)
+
+pander(statresult)
+```
+Oops... the p-value is 1, which is way higher than our significance level of 0.05, which indicates that their is no difference between the two.
+
+But wait, let's back up of a second here to make sure that doing a t-Test is appropriate for this analysis. To do that, let's take a look at the distribution of the data.
+
+### Checking Requirements (qqPlot)
+```{r}
+qqPlot(correct~condition, data=Friendly)
+```
+
+It looks like some of our data points don't follow the blue line, which means the data is not normally distributed. In this case, let's do a Wilcoxon test for two independent samples, called Mann Whitney test.
+
+### Wilcoxon Test 
+
+__Hypotheses for the Wilcoxon__
+
+$$
+  H_0: \text{difference in medians} = 0
+$$
+
+$$
+  H_a: \text{difference in medians} \neq 0
+$$
+
+
+__Wilcoxon Test__
+```{r}
+# Wilcoxon rank-sum test (Mann-Whitney U test)
+wilcox_test <- wilcox.test(correct ~ condition, data = Friendly, exact = FALSE)
+
+pander(wilcox_test)
+```
+After doing a Wilcoxon test, we got a p-value of 0.378 which is still higher than our significance level of 0.05.
+
+### Conclusions and Interpretations
+Because our our p-value is greater than our alpha, we fail to reject the null and conclude that there is insufficient evidence to conclude that there is difference between the Meshed and Before methods.
+
+The results of this study provide valuable insights into the relationship between learning methods and memory retention. While both the Meshed and Before approaches have their merits, the analysis did not indicate a significant difference in memory recall performance between the two methods. This suggests that other factors, such as individual learning styles and cognitive load, may play a more substantial role in retention.
+
+These findings highlight the importance of tailoring educational strategies to fit diverse learner needs rather than relying on a one-size-fits-all approach. Further research could explore how these approaches interact with different subject matters, age groups, and cognitive abilities to refine best practices for memory-based learning.
 
 

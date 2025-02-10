@@ -196,10 +196,15 @@ boxplot(length~sex, data=KidsFeet)
 ::: {.cell}
 
 ```{.r .cell-code}
-KidsFeet %>% 
+summary <- KidsFeet %>% 
   group_by(sex) %>% 
-  summarise(min = min(length), Q1=quantile(length, 0.25), median=median(length), Q3=quantile(length, 0.75),
+  summarise(min = min(length), 
+            Q1=quantile(length, 0.25), 
+            median=median(length), 
+            Q3=quantile(length, 0.75),
             max=max(length))
+
+summary
 ```
 
 ::: {.cell-output-display}
@@ -218,7 +223,9 @@ KidsFeet %>%
 ::: {.cell}
 
 ```{.r .cell-code}
-favstats(length~sex, data=KidsFeet)
+summary <- favstats(length~sex, data=KidsFeet)
+
+summary
 ```
 
 ::: {.cell-output-display}
@@ -563,6 +570,10 @@ cor(KidsFeet$length, KidsFeet$width)
 
 
 :::
+
+```{.r .cell-code}
+# The function cor(KidsFeet$length, KidsFeet$width) in R calculates the Pearson correlation coefficient between the length and width columns of the KidsFeet dataset, measuring the strength and direction of their linear relationship. A result close to 1 indicates a strong positive correlation (as foot length increases, width also increases), while a result near -1 suggests a strong negative correlation (as length increases, width decreases). A value around 0 implies no significant linear relationship between the two variables.
+```
 :::
 
 ::: {.cell}
@@ -1612,3 +1623,23 @@ pander(favstats(length~sex, data=KidsFeet))
 
 :::
 :::
+
+::: {.cell}
+
+```{.r .cell-code}
+# How to write Ho and Ha
+```
+:::
+
+
+
+$$
+H_0: \mu = 10 \\
+$$
+
+$$
+H_a: \mu \neq 10
+$$
+
+
+
