@@ -1,0 +1,94 @@
+---
+title: "Confidence Intervals"
+author: "Your Name"
+date: "`r Sys.Date()`"
+format: html
+---
+
+# Confidence Intervals
+
+A confidence interval is a range of plausible values for a parameter, and it is a commonly used interval estimator. The general form of a confidence interval is a point estimate plus or minus a margin of error. The margin of error is an estimate of the variability of responses.
+
+## Interpreting a Confidence Interval
+
+- A 95% confidence interval means that you are 95% confident that the true mean lies within the lower and upper bounds of the confidence interval.
+- If the process of creating confidence intervals was repeated many times, 95% of the resulting confidence intervals would contain the true mean.
+- A confidence interval does not imply anything about whether or not one specific confidence interval contains the true mean.
+- It is not correct to say that there is a 95% probability or chance that the true mean is within the interval, because the probability of the true mean being within a specific confidence interval is either 1 or 0.
+- When interpreting a confidence interval, you should use the word "confident" rather than "probability" or "chance".
+
+## Factors that Affect the Width of a Confidence Interval
+
+- **Sample size (n):** As the sample size increases, the width of the confidence interval decreases, resulting in a narrower interval.
+- **Confidence level:** As the confidence level increases, the width of the confidence interval increases. For example, a 99% confidence interval will be wider than a 90% confidence interval.
+- **Margin of error:** The margin of error is directly impacted by the level of confidence (and its corresponding \( z^* \) or \( t^* \) value) and the sample size.
+- A smaller margin of error gives greater insight about the true value of the parameter being estimated.
+
+## Confidence Intervals for Different Parameters
+
+- **One mean (sigma known):** A confidence interval for a single mean with a known standard deviation \( \sigma \) is calculated as:
+  
+  $$
+  \bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}
+  $$
+  
+  where \( \bar{x} \) is the sample mean, \( z^* \) is the critical value for the given confidence level, and \( n \) is the sample size.
+
+- **One mean (sigma unknown):** A confidence interval for a single mean with an unknown standard deviation \( \sigma \) is calculated using a t-distribution:
+  
+  $$
+  \bar{x} \pm t^* \frac{s}{\sqrt{n}}
+  $$
+  
+  where \( t^* \) is the t-score corresponding to the confidence level and \( s \) is the sample standard deviation.
+
+- **Mean of differences (two dependent samples):** A confidence interval for the true mean of the differences for paired data is calculated as:
+  
+  $$
+  \bar{d} \pm t^* \frac{s_d}{\sqrt{n}}
+  $$
+  
+  where \( \bar{d} \) is the mean of the differences, and \( s_d \) is the standard deviation of the differences.
+
+- **Difference of means (two independent samples):** A confidence interval for the difference of two means with independent samples provides a range of plausible values for the unknown parameter \( \mu_1 - \mu_2 \). If zero is within the confidence interval, then it is plausible that \( \mu_1 = \mu_2 \) and there is no significant difference between the means.
+
+- **One proportion:** A confidence interval for one proportion is calculated as:
+  
+  $$
+  \widehat{p} \pm z^* \sqrt{\frac{\widehat{p} (1-\widehat{p})}{n}}
+  $$
+  
+  where \( \widehat{p} \) is the sample proportion, \( z^* \) is the critical value, and \( n \) is the sample size.
+
+- **Difference of two proportions:** The confidence interval for the difference of two proportions is computed using:
+  
+  $$
+  \left( ( \hat{p}_1 -\hat{p}_2 ) - z^* \sqrt{ \frac{\hat{p}_1 (1 - \hat{p}_1)}{n_1} + \frac{\hat{p}_2 (1 - \hat{p}_2)}{n_2} }, ( \hat{p}_1 -\hat{p}_2 ) + z^* \sqrt{ \frac{\hat{p}_1 (1 - \hat{p}_1)}{n_1} + \frac{\hat{p}_2 (1 - \hat{p}_2)}{n_2} } \right)
+  $$
+  
+  where \( \hat{p}_1 \) and \( \hat{p}_2 \) are the sample proportions for group 1 and group 2, respectively.
+
+- **Slope of a regression line:** A confidence interval for the slope of a regression line can be calculated using software.
+
+## Requirements for a Valid Confidence Interval
+
+- The sample should be representative of the population.
+- The sampling distribution of the sample mean must be approximately normal. This is satisfied if the raw data are normally distributed or if the sample size is large.
+- For a confidence interval of one proportion, the requirements are:
+  
+  $$
+  n \widehat{p} \geq 10 \quad \text{and} \quad n(1-\widehat{p}) \geq 10
+  $$
+  
+- For a confidence interval of two proportions, the requirements are:
+  
+  $$
+  n_1 \cdot \hat{p}_1 \geq 10, \quad n_2 \cdot \hat{p}_2 \geq 10
+  $$
+  
+  $$
+  n_1 \cdot (1-\hat{p}_1) \geq 10, \quad n_2 \cdot (1-\hat{p}_2) \geq 10
+  $$
+
+Confidence intervals are not calculated when working with contingency tables.
+
