@@ -6,10 +6,13 @@ execute:
   warning: false
 format:
   html:
+    theme: cerulean
     code-fold: false
     code-line-numbers: true
-editor_options: 
-  chunk_output_type: console
+    code-tools: true
+editor:
+  render-on-save: true
+  chunk-output-type: console
 ---
 
 
@@ -527,6 +530,10 @@ $G
 
 
 :::
+
+```{.r .cell-code}
+# NOTE: tapply() is a function used to apply a function to subsets of a vector, grouped by factors. It is particularly useful for summarizing data by categories
+```
 :::
 
 ::: {.cell}
@@ -572,7 +579,13 @@ cor(KidsFeet$length, KidsFeet$width)
 :::
 
 ```{.r .cell-code}
-# The function cor(KidsFeet$length, KidsFeet$width) in R calculates the Pearson correlation coefficient between the length and width columns of the KidsFeet dataset, measuring the strength and direction of their linear relationship. A result close to 1 indicates a strong positive correlation (as foot length increases, width also increases), while a result near -1 suggests a strong negative correlation (as length increases, width decreases). A value around 0 implies no significant linear relationship between the two variables.
+# The function cor(KidsFeet$length, KidsFeet$width) in R calculates the Pearson correlation 
+# coefficient between the length and width columns of the KidsFeet dataset, measuring the 
+# strength and direction of their linear relationship. A result close to 1 indicates a 
+# strong positive correlation (as foot length increases, width also increases), while a 
+# result near -1 suggests a strong negative correlation (as length increases, width 
+# decreases). A value around 0 implies no significant linear relationship between the two 
+# variables.
 ```
 :::
 
