@@ -495,15 +495,17 @@ library(pander)
 
 ```{.r .cell-code}
 # One Quantitative Response Variable Y - length
-summary(KidsFeet$length)
+summary(KidsFeet$length) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  21.60   24.00   24.50   24.72   25.60   27.50 
-```
+--------------------------------------------------
+ Min.   1st Qu.   Median   Mean    3rd Qu.   Max. 
+------ --------- -------- ------- --------- ------
+ 21.6     24       24.5    24.72    25.6     27.5 
+--------------------------------------------------
 
 
 :::
@@ -513,20 +515,32 @@ summary(KidsFeet$length)
 
 ```{.r .cell-code}
 # Quantitative Y | Categorical X (2 Groups) - length by sex
-tapply(KidsFeet$length, KidsFeet$sex, summary)
+tapply(KidsFeet$length, KidsFeet$sex, summary) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
-$B
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  22.90   24.35   24.95   25.11   25.80   27.50 
 
-$G
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  21.60   23.65   24.20   24.32   25.10   26.70 
-```
+  * **B**:
+
+    --------------------------------------------------
+     Min.   1st Qu.   Median   Mean    3rd Qu.   Max.
+    ------ --------- -------- ------- --------- ------
+     22.9    24.35    24.95    25.11    25.8     27.5
+    --------------------------------------------------
+
+  * **G**:
+
+    --------------------------------------------------
+     Min.   1st Qu.   Median   Mean    3rd Qu.   Max.
+    ------ --------- -------- ------- --------- ------
+     21.6    23.65     24.2    24.32    25.1     26.7
+    --------------------------------------------------
+
+
+<!-- end of list -->
+
 
 
 :::
@@ -547,16 +561,21 @@ $G
 
 ```{.r .cell-code}
 # Quantitative Y | Multiple Categorical X - length by sex and biggerfoot
-tapply(KidsFeet$length, list(KidsFeet$sex, KidsFeet$biggerfoot), summary)
+tapply(KidsFeet$length, list(KidsFeet$sex, KidsFeet$biggerfoot), summary) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
-  L                R               
-B summaryDefault,6 summaryDefault,6
-G summaryDefault,6 summaryDefault,6
-```
+------------------------------------------------------------------------
+ &nbsp;                 L                               R               
+-------- ------------------------------- -------------------------------
+ **B**    24.20000, 24.60000, 25.20000,   22.9, 23.9, 24.5, 24.7, 25.5, 
+          25.43636, 26.10000, 27.10000                27.5              
+
+ **G**    22.90000, 24.10000, 24.50000,      21.600, 23.325, 23.850,    
+          24.77273, 26.00000, 26.70000       23.700, 24.175, 25.500     
+------------------------------------------------------------------------
 
 
 :::
@@ -566,16 +585,12 @@ G summaryDefault,6 summaryDefault,6
 
 ```{.r .cell-code}
 # Quantitative Y | Quantitative X - length and width
-cor(KidsFeet$length, KidsFeet$width)
+cor(KidsFeet$length, KidsFeet$width) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
-
-```
-[1] 0.6410961
-```
-
-
+::: {.cell-output-display}
+_0.6411_
 :::
 
 ```{.r .cell-code}
@@ -593,49 +608,62 @@ cor(KidsFeet$length, KidsFeet$width)
 
 ```{.r .cell-code}
 # Quantitative Y | Multiple X  - length and width and sex
-lm(length ~ width + sex, data = KidsFeet)
+lm(length ~ width + sex, data = KidsFeet) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
+---------------------------------------------------------------
+     &nbsp;        Estimate   Std. Error   t value   Pr(>|t|)  
+----------------- ---------- ------------ --------- -----------
+ **(Intercept)**    10.36       3.323       3.118    0.003575  
 
-Call:
-lm(formula = length ~ width + sex, data = KidsFeet)
+    **width**       1.604       0.3607      4.447    8.015e-05 
 
-Coefficients:
-(Intercept)        width         sexG  
-    10.3609       1.6044      -0.1329  
-```
+    **sexG**       -0.1329      0.363      -0.3661    0.7164   
+---------------------------------------------------------------
+
+Table: Fitting linear model: length ~ width + sex
 
 
 :::
+
+```{.r .cell-code}
+# NOTE: lm() is a function used for linear regression modeling. It is short for 
+# "linear model" and helps you fit a linear relationship between a dependent 
+# variable and one or more independent variables.
+```
 :::
 
 ::: {.cell}
 
 ```{.r .cell-code}
 # Binomial Y | Quantitative X - sex and length - opposite x and y 
-glm(sex ~ length, data = KidsFeet, family = binomial)
+glm(sex ~ length, data = KidsFeet, family = binomial) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
+--------------------------------------------------------------
+     &nbsp;        Estimate   Std. Error   z value   Pr(>|z|) 
+----------------- ---------- ------------ --------- ----------
+ **(Intercept)**    12.49       6.966       1.792    0.07306  
 
-Call:  glm(formula = sex ~ length, family = binomial, data = KidsFeet)
+   **length**      -0.5074      0.2818     -1.801    0.07174  
+--------------------------------------------------------------
 
-Coefficients:
-(Intercept)       length  
-    12.4860      -0.5074  
-
-Degrees of Freedom: 38 Total (i.e. Null);  37 Residual
-Null Deviance:	    54.04 
-Residual Deviance: 50.34 	AIC: 54.34
-```
+Table: Fitting generalized (binomial/logit) linear model: sex ~ length
 
 
 :::
+
+```{.r .cell-code}
+# NOTE: The glm() function in R is used for Generalized Linear Models (GLMs), 
+# which extend linear regression (lm()) to support non-normal response 
+# distributions (e.g., binary, count data).
+```
 :::
 
 ::: {.cell}
@@ -649,17 +677,19 @@ Residual Deviance: 50.34 	AIC: 54.34
 
 ```{.r .cell-code}
 # Categorical Y | Categorical X - biggerfoot and domhand
-table(KidsFeet$biggerfoot, KidsFeet$domhand)
+table(KidsFeet$biggerfoot, KidsFeet$domhand) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
-   
-     L  R
-  L  2 20
-  R  6 11
-```
+-----------------
+ &nbsp;   L   R  
+-------- --- ----
+ **L**    2   20 
+
+ **R**    6   11 
+-----------------
 
 
 :::
@@ -677,18 +707,20 @@ table(KidsFeet$biggerfoot, KidsFeet$domhand)
 # group_by() - categorical
 KidsFeet %>% 
   group_by(sex) %>% 
-  summarise(mean_length = mean(length))
+  summarise(mean_length = mean(length))  %>%
+    pander()
 ```
 
 ::: {.cell-output-display}
 
-`````{=html}
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["sex"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean_length"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"B","2":"25.10500"},{"1":"G","2":"24.32105"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-`````
+-------------------
+ sex   mean_length 
+----- -------------
+  B       25.11    
+
+  G       24.32    
+-------------------
+
 
 :::
 :::
@@ -769,16 +801,17 @@ barplot(table(KidsFeet$sex), main="Barplot of Gender Count", col=c("blue","pink"
 
 ```{.r .cell-code}
 # How many boys and how many girls are in the KidsFeet dataset?
-table(KidsFeet$sex)
+table(KidsFeet$sex)  %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
-
- B  G 
-20 19 
-```
+---------
+ B    G  
+---- ----
+ 20   19 
+---------
 
 
 :::
@@ -829,7 +862,8 @@ boxplot(KidsFeet$length, main="Length of Kids Feet")
 
 ```{.r .cell-code}
 # Do boys or girls have longer feet, on average?
-favstats(length~sex, data=KidsFeet) %>% pander()
+favstats(length~sex, data=KidsFeet) %>% 
+  pander()
 ```
 
 ::: {.cell-output-display}
@@ -862,7 +896,8 @@ boxplot(length~sex, data=KidsFeet, main="Comparing Length of Feet Across Gender"
 
 ```{.r .cell-code}
 # Are there certain months of the year associated with longer feet?
-favstats(length~birthmonth, data=KidsFeet) %>% pander()
+favstats(length~birthmonth, data=KidsFeet) %>% 
+  pander()
 ```
 
 ::: {.cell-output-display}
@@ -915,16 +950,12 @@ boxplot(length~birthmonth, data=KidsFeet, col="navy",
 
 ```{.r .cell-code}
 # Is there a relationship between foot length and width?
-cor(KidsFeet$length, KidsFeet$width)
+cor(KidsFeet$length, KidsFeet$width)  %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
-
-```
-[1] 0.6410961
-```
-
-
+::: {.cell-output-display}
+_0.6411_
 :::
 :::
 
@@ -1021,80 +1052,111 @@ barplot(table(Kids3$sex, Kids3$season), beside = TRUE,
 
 ### Hypothesis Testing
 
+### Type I vs. Type II Errors – Example: Flip Flops vs. Medicine
+
+#### Type I Error (FALSE POSITIVE)
+- Rejecting a true null hypothesis.
+- It is the probability of rejecting the null hypothesis when you **should have accepted it**.
+- **Example:** A medical test incorrectly detects a disease in a healthy person.
+
+#### Type II Error (FALSE NEGATIVE)
+- Failing to reject a false null hypothesis.
+- It is the probability of accepting the null hypothesis when you **should have rejected it**.
+- **Example:** A medical test fails to detect a disease in a sick person.
+
+**In decision-making,**  
+- **Type I errors lead to UNNECESSARY ACTIONS.**  
+- **Type II errors result in MISSED DETECTIONS.**  
+
+---
+
+### Remembering Type I and II Errors:
+
+#### Hypothesis Definitions:
+- **Null Hypothesis (H₀):** There is no fire.
+- **Alternative Hypothesis (H₁):** There is a fire.
+
+#### Type I Error (FALSE POSITIVE) – "False Alarm"
+- You **reject** the null hypothesis when you **should have accepted it**.
+- **Example:** The fire alarm goes off, but there’s **no actual fire**.
+- **Think:** Overreaction—detecting something that isn’t actually there.
+
+#### Type II Error (FALSE NEGATIVE) – "Missed Detection"
+- You **accept** the null hypothesis when you **should have rejected it**.
+- **Example:** You **miss** detecting a real fire because the alarm **didn’t go off**.
+- **Think:** Underreaction—failing to detect something that actually exists.
 
 
-::: {.cell}
-
-```{.r .cell-code}
-# a. Type I error vs Type II error – Give an example (Flip flops vs medicine)
-# Type I error: False positive (rejecting a true null hypothesis)
-# Type II error: False negative (failing to reject a false null hypothesis)
-```
-:::
-
-::: {.cell}
-
-```{.r .cell-code}
-# b. Type I error = Level of significance = 1 – level of confidence
-# Example: If confidence level is 95%, significance level is 0.05
-```
-:::
-
-::: {.cell}
-
-```{.r .cell-code}
-# c. Type II errors and Power
-# Power = 1 - Type II error rate
-```
-:::
-
-::: {.cell}
-
-```{.r .cell-code}
-# d. Sufficient evidence – not proof
-# Hypothesis testing does not prove anything; it only provides sufficient evidence to support/reject a hypothesis.
-```
-:::
-
-::: {.cell}
-
-```{.r .cell-code}
-# e. P-value needs two things: a test statistic and a sampling distribution of test statistic
-```
-:::
+| **Decision**         | **Accept H₀ (No Fire)** | **Reject H₀ (Fire Alarm Goes Off)** |
+|----------------------|------------------------|-------------------------------------|
+| **H₀ is True (No Fire)**  | ✅ Correct Decision  | ❌ Type I Error (False Alarm)       |
+| **H₀ is False (There is a Fire)** | ❌ Type II Error (Missed Detection) | ✅ Correct Decision |
 
 
+### Type I Error and Significance Level
+
+- **Type I Error = Significance Level (α) = 1 – Confidence Level**
+- The significance level (α) is the probability of making a Type I error.
+- A **lower α** reduces the chance of rejecting a true null hypothesis.
+
+#### Example:
+- A **95% confidence level** means a **0.05 significance level (α = 0.05)**.
+- This means there is a **5% chance of incorrectly rejecting a true null hypothesis**.
+
+---
+
+### Type II Errors and Power
+
+- **Type II error:** Probability of accepting the null hypothesis when you **should have rejected it**.
+- **Power of a test:** Probability of correctly rejecting a false null hypothesis.
+- **Power = 1 - Probability of a Type II error**.
+- A **higher power** means a **lower** chance of making a Type II error.
+- **Increasing sample size, effect size, or significance level** can improve power.
+
+#### Example:
+- Suppose a new drug is being tested for effectiveness against a disease.
+  - **H₀:** The drug has no effect.
+  - **H₁:** The drug is effective.
+- A **Type II error** occurs if we conclude the drug is ineffective (**accept H₀**)  
+  when it actually works (**H₁ is true**).
+- The **power** of the test is the probability of correctly detecting the drug's effectiveness.
+- If power is **80%**, it means there’s a **20% chance** of failing to detect a real effect (**Type II error**).
+
+---
+
+### Sufficient Evidence ≠ Proof
+
+- Hypothesis testing does **not** **prove** anything.
+- It only provides **sufficient evidence** to support or reject a hypothesis.
+
+---
+
+### P-Value Requires Two Components:
+
+1. **A test statistic**
+2. **The sampling distribution of the test statistic**
 
 ### Parametric Distributions
 
+The four main **parametric distributions** used in statistical tests:
 
+1. **Normal distribution**
+2. **t-distribution**
+3. **Chi-square distribution**
+4. **F-distribution**
 
-::: {.cell}
+These distributions are used in hypothesis testing and confidence interval estimation in **STAT 221**.
 
-```{.r .cell-code}
-# Find the four parametric distributions (types of tests that are run in 221)
-# 1. Normal distribution
-# 2. t-distribution
-# 3. Chi-square distribution
-# 4. F-distribution
-```
-:::
+---
 
+### Parametric vs. Non-Parametric Methods
 
-
-### Parametric vs Non-Parametric Methods
-
-
-
-::: {.cell}
-
-```{.r .cell-code}
-# Parametric methods compared to non-parametric methods
-# Non-parametric tests are still powerful and are likely more powerful than parametric tests 
-# if the requirements for a parametric test are not met.
-```
-:::
-
+- **Parametric methods** assume that data follows a specific distribution (e.g., normal distribution).
+- **Non-parametric methods** do not require a specific distribution, making them more flexible.
+- **When to use non-parametric tests:**  
+  - When the assumptions for parametric tests (e.g., normality) **are not met**.  
+  - When working with **small sample sizes** or **ordinal data**.  
+- **Non-parametric tests** can sometimes be **more powerful** than parametric tests when assumptions are violated.
 
 
 ### Example of a t-Test
@@ -1105,24 +1167,19 @@ barplot(table(Kids3$sex, Kids3$season), beside = TRUE,
 
 ```{.r .cell-code}
 # Conducting a one-sample t-test
-t.test(KidsFeet$length, mu=25.1, alternative="two.sided", conf.level=0.95)
+t.test(KidsFeet$length, mu=25.1, alternative="two.sided", conf.level=0.95) %>%
+  pander()
 ```
 
-::: {.cell-output .cell-output-stdout}
+::: {.cell-output-display}
 
-```
+--------------------------------------------------------------------
+ Test statistic   df   P value   Alternative hypothesis   mean of x 
+---------------- ---- --------- ------------------------ -----------
+     -1.787       38    0.082          two.sided            24.72   
+--------------------------------------------------------------------
 
-	One Sample t-test
-
-data:  KidsFeet$length
-t = -1.7865, df = 38, p-value = 0.082
-alternative hypothesis: true mean is not equal to 25.1
-95 percent confidence interval:
- 24.29597 25.15019
-sample estimates:
-mean of x 
- 24.72308 
-```
+Table: One Sample t-test: `KidsFeet$length`
 
 
 :::
@@ -1460,7 +1517,7 @@ qqPlot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-85-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-78-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1481,7 +1538,7 @@ qqPlot(KidsFeet3$length - KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-86-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-79-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1502,7 +1559,7 @@ qqPlot(length~sex, data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-87-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-80-1.png){width=672}
 :::
 :::
 
@@ -1520,7 +1577,7 @@ boxplot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-88-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-81-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1528,7 +1585,7 @@ ggplot(data=KidsFeet, aes(x=length)) + geom_boxplot(fill="blue")
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-88-2.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-81-2.png){width=672}
 :::
 :::
 
@@ -1540,7 +1597,7 @@ boxplot(KidsFeet3$length - KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-89-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-82-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1548,7 +1605,7 @@ ggplot(data=KidsFeet3, aes(x=difference)) + geom_boxplot(fill="blue")
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-89-2.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-82-2.png){width=672}
 :::
 :::
 
@@ -1560,7 +1617,7 @@ boxplot(length~sex, data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-90-1.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-83-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1568,7 +1625,7 @@ ggplot(data=KidsFeet, aes(y=length, x=sex)) + geom_boxplot(fill=c("blue","pink")
 ```
 
 ::: {.cell-output-display}
-![](AllClassCodes_files/figure-html/unnamed-chunk-90-2.png){width=672}
+![](AllClassCodes_files/figure-html/unnamed-chunk-83-2.png){width=672}
 :::
 :::
 

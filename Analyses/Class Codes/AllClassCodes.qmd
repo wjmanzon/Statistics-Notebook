@@ -255,12 +255,14 @@ library(pander)
 
 ```{r}
 # One Quantitative Response Variable Y - length
-summary(KidsFeet$length)
+summary(KidsFeet$length) %>%
+  pander()
 ```
 
 ```{r}
 # Quantitative Y | Categorical X (2 Groups) - length by sex
-tapply(KidsFeet$length, KidsFeet$sex, summary)
+tapply(KidsFeet$length, KidsFeet$sex, summary) %>%
+  pander()
 # NOTE: tapply() is a function used to apply a function to subsets of a vector, grouped by factors. It is particularly useful for summarizing data by categories
 ```
 
@@ -270,12 +272,14 @@ tapply(KidsFeet$length, KidsFeet$sex, summary)
 
 ```{r}
 # Quantitative Y | Multiple Categorical X - length by sex and biggerfoot
-tapply(KidsFeet$length, list(KidsFeet$sex, KidsFeet$biggerfoot), summary)
+tapply(KidsFeet$length, list(KidsFeet$sex, KidsFeet$biggerfoot), summary) %>%
+  pander()
 ```
 
 ```{r}
 # Quantitative Y | Quantitative X - length and width
-cor(KidsFeet$length, KidsFeet$width)
+cor(KidsFeet$length, KidsFeet$width) %>%
+  pander()
 
 # The function cor(KidsFeet$length, KidsFeet$width) in R calculates the Pearson correlation 
 # coefficient between the length and width columns of the KidsFeet dataset, measuring the 
@@ -288,12 +292,22 @@ cor(KidsFeet$length, KidsFeet$width)
 
 ```{r}
 # Quantitative Y | Multiple X  - length and width and sex
-lm(length ~ width + sex, data = KidsFeet)
+lm(length ~ width + sex, data = KidsFeet) %>%
+  pander()
+
+# NOTE: lm() is a function used for linear regression modeling. It is short for 
+# "linear model" and helps you fit a linear relationship between a dependent 
+# variable and one or more independent variables.
 ```
 
 ```{r}
 # Binomial Y | Quantitative X - sex and length - opposite x and y 
-glm(sex ~ length, data = KidsFeet, family = binomial)
+glm(sex ~ length, data = KidsFeet, family = binomial) %>%
+  pander()
+
+# NOTE: The glm() function in R is used for Generalized Linear Models (GLMs), 
+# which extend linear regression (lm()) to support non-normal response 
+# distributions (e.g., binary, count data).
 ```
 
 ```{r}
@@ -302,7 +316,8 @@ glm(sex ~ length, data = KidsFeet, family = binomial)
 
 ```{r}
 # Categorical Y | Categorical X - biggerfoot and domhand
-table(KidsFeet$biggerfoot, KidsFeet$domhand)
+table(KidsFeet$biggerfoot, KidsFeet$domhand) %>%
+  pander()
 ```
 
 ### B - Summary Statistics
@@ -311,7 +326,8 @@ table(KidsFeet$biggerfoot, KidsFeet$domhand)
 # group_by() - categorical
 KidsFeet %>% 
   group_by(sex) %>% 
-  summarise(mean_length = mean(length))
+  summarise(mean_length = mean(length))  %>%
+    pander()
 ```
 
 ### C - Visualization
@@ -345,7 +361,8 @@ barplot(table(KidsFeet$sex), main="Barplot of Gender Count", col=c("blue","pink"
 
 ```{r}
 # How many boys and how many girls are in the KidsFeet dataset?
-table(KidsFeet$sex)
+table(KidsFeet$sex)  %>%
+  pander()
 ```
 
 ```{r}
@@ -363,7 +380,8 @@ boxplot(KidsFeet$length, main="Length of Kids Feet")
 
 ```{r}
 # Do boys or girls have longer feet, on average?
-favstats(length~sex, data=KidsFeet) %>% pander()
+favstats(length~sex, data=KidsFeet) %>% 
+  pander()
 ```
 
 ```{r}
@@ -373,7 +391,8 @@ boxplot(length~sex, data=KidsFeet, main="Comparing Length of Feet Across Gender"
 
 ```{r}
 # Are there certain months of the year associated with longer feet?
-favstats(length~birthmonth, data=KidsFeet) %>% pander()
+favstats(length~birthmonth, data=KidsFeet) %>% 
+  pander()
 ```
 
 ```{r}
@@ -383,7 +402,8 @@ boxplot(length~birthmonth, data=KidsFeet, col="navy",
 
 ```{r}
 # Is there a relationship between foot length and width?
-cor(KidsFeet$length, KidsFeet$width)
+cor(KidsFeet$length, KidsFeet$width)  %>%
+  pander()
 ```
 
 ```{r}
@@ -432,54 +452,119 @@ library(pander)
 
 ### Hypothesis Testing
 
-```{r}
-# a. Type I error vs Type II error – Give an example (Flip flops vs medicine)
-# Type I error: False positive (rejecting a true null hypothesis)
-# Type II error: False negative (failing to reject a false null hypothesis)
-```
+### Type I vs. Type II Errors – Example: Flip Flops vs. Medicine
 
-```{r}
-# b. Type I error = Level of significance = 1 – level of confidence
-# Example: If confidence level is 95%, significance level is 0.05
-```
+#### Type I Error (FALSE POSITIVE)
+- Rejecting a true null hypothesis.
+- It is the probability of rejecting the null hypothesis when you **should have accepted it**.
+- **Example:** A medical test incorrectly detects a disease in a healthy person.
 
-```{r}
-# c. Type II errors and Power
-# Power = 1 - Type II error rate
-```
+#### Type II Error (FALSE NEGATIVE)
+- Failing to reject a false null hypothesis.
+- It is the probability of accepting the null hypothesis when you **should have rejected it**.
+- **Example:** A medical test fails to detect a disease in a sick person.
 
-```{r}
-# d. Sufficient evidence – not proof
-# Hypothesis testing does not prove anything; it only provides sufficient evidence to support/reject a hypothesis.
-```
+**In decision-making,**  
+- **Type I errors lead to UNNECESSARY ACTIONS.**  
+- **Type II errors result in MISSED DETECTIONS.**  
 
-```{r}
-# e. P-value needs two things: a test statistic and a sampling distribution of test statistic
-```
+---
+
+### Remembering Type I and II Errors:
+
+#### Hypothesis Definitions:
+- **Null Hypothesis (H₀):** There is no fire.
+- **Alternative Hypothesis (H₁):** There is a fire.
+
+#### Type I Error (FALSE POSITIVE) – "False Alarm"
+- You **reject** the null hypothesis when you **should have accepted it**.
+- **Example:** The fire alarm goes off, but there’s **no actual fire**.
+- **Think:** Overreaction—detecting something that isn’t actually there.
+
+#### Type II Error (FALSE NEGATIVE) – "Missed Detection"
+- You **accept** the null hypothesis when you **should have rejected it**.
+- **Example:** You **miss** detecting a real fire because the alarm **didn’t go off**.
+- **Think:** Underreaction—failing to detect something that actually exists.
+
+
+| **Decision**         | **Accept H₀ (No Fire)** | **Reject H₀ (Fire Alarm Goes Off)** |
+|----------------------|------------------------|-------------------------------------|
+| **H₀ is True (No Fire)**  | ✅ Correct Decision  | ❌ Type I Error (False Alarm)       |
+| **H₀ is False (There is a Fire)** | ❌ Type II Error (Missed Detection) | ✅ Correct Decision |
+
+
+### Type I Error and Significance Level
+
+- **Type I Error = Significance Level (α) = 1 – Confidence Level**
+- The significance level (α) is the probability of making a Type I error.
+- A **lower α** reduces the chance of rejecting a true null hypothesis.
+
+#### Example:
+- A **95% confidence level** means a **0.05 significance level (α = 0.05)**.
+- This means there is a **5% chance of incorrectly rejecting a true null hypothesis**.
+
+---
+
+### Type II Errors and Power
+
+- **Type II error:** Probability of accepting the null hypothesis when you **should have rejected it**.
+- **Power of a test:** Probability of correctly rejecting a false null hypothesis.
+- **Power = 1 - Probability of a Type II error**.
+- A **higher power** means a **lower** chance of making a Type II error.
+- **Increasing sample size, effect size, or significance level** can improve power.
+
+#### Example:
+- Suppose a new drug is being tested for effectiveness against a disease.
+  - **H₀:** The drug has no effect.
+  - **H₁:** The drug is effective.
+- A **Type II error** occurs if we conclude the drug is ineffective (**accept H₀**)  
+  when it actually works (**H₁ is true**).
+- The **power** of the test is the probability of correctly detecting the drug's effectiveness.
+- If power is **80%**, it means there’s a **20% chance** of failing to detect a real effect (**Type II error**).
+
+---
+
+### Sufficient Evidence ≠ Proof
+
+- Hypothesis testing does **not** **prove** anything.
+- It only provides **sufficient evidence** to support or reject a hypothesis.
+
+---
+
+### P-Value Requires Two Components:
+
+1. **A test statistic**
+2. **The sampling distribution of the test statistic**
 
 ### Parametric Distributions
 
-```{r}
-# Find the four parametric distributions (types of tests that are run in 221)
-# 1. Normal distribution
-# 2. t-distribution
-# 3. Chi-square distribution
-# 4. F-distribution
-```
+The four main **parametric distributions** used in statistical tests:
 
-### Parametric vs Non-Parametric Methods
+1. **Normal distribution**
+2. **t-distribution**
+3. **Chi-square distribution**
+4. **F-distribution**
 
-```{r}
-# Parametric methods compared to non-parametric methods
-# Non-parametric tests are still powerful and are likely more powerful than parametric tests 
-# if the requirements for a parametric test are not met.
-```
+These distributions are used in hypothesis testing and confidence interval estimation in **STAT 221**.
+
+---
+
+### Parametric vs. Non-Parametric Methods
+
+- **Parametric methods** assume that data follows a specific distribution (e.g., normal distribution).
+- **Non-parametric methods** do not require a specific distribution, making them more flexible.
+- **When to use non-parametric tests:**  
+  - When the assumptions for parametric tests (e.g., normality) **are not met**.  
+  - When working with **small sample sizes** or **ordinal data**.  
+- **Non-parametric tests** can sometimes be **more powerful** than parametric tests when assumptions are violated.
+
 
 ### Example of a t-Test
 
 ```{r}
 # Conducting a one-sample t-test
-t.test(KidsFeet$length, mu=25.1, alternative="two.sided", conf.level=0.95)
+t.test(KidsFeet$length, mu=25.1, alternative="two.sided", conf.level=0.95) %>%
+  pander()
 ```
 
 ```{r}
