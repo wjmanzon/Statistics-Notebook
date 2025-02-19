@@ -1,11 +1,25 @@
 ---
-title: "My Two-way ANOVA"
+title: "Analyzing Reaction Time: Does Gender or Handedness Matter?"
 output: 
   html_document:
     theme: cerulean
     code_folding: hide
+editor_options: 
+  chunk_output_type: console
 ---
 
+### Introduction
+Reaction time plays a critical role in daily activities such as sports, driving, and gaming. The ability to respond quickly to external stimuli can often be the difference between success and failure, or even safety and danger. This study explores whether gender and handedness influence reaction time and whether there is an interaction effect between the two. To do this, I used data from the Census at School survey—a project that collects real-world data from students to help them learn statistics.
+
+The statistical tool of choice is a **two-way ANOVA** (Analysis of Variance). This test helps determine if there are significant differences in reaction time based on gender, handedness, or the combination of both. Three hypotheses were tested:
+
+1. **Gender Effect:** Do males and females have different reaction times?
+2. **Handedness Effect:** Do left-handed and right-handed individuals have different reaction times?
+3. **Interaction Effect:** Does the combination of gender and handedness influence reaction time?
+
+---
+
+### Data Preparation
 ```{r, warning=FALSE, message=FALSE}
 library(mosaic)
 library(DT)
@@ -13,24 +27,182 @@ library(pander)
 library(car)
 library(tidyverse)
 
-# Record your data from your own mini experiment in Excel.
-# Save the data as a .csv file in the Data folder of the Statistics-Notebook.
+# Load the data
+HSS <- read_csv("~/Statistics Notebook Github/Data/HighSchoolSeniors.csv")
 
-# Read in the data
-someNameYouWant <- read_csv("../../Data/whatYouNamedYourDataGoesHere.csv") 
+# Clean the data
+HSS2 <- HSS %>%
+  filter(!is.na(Reaction_time), 
+         !is.na(Gender),
+         !is.na(Handed)) %>%
+  filter(Reaction_time < 1.0) %>%
+  select(Gender, Reaction_time, Handed)
+
+# Ensure Gender and Handed are factors
+HSS2 <- HSS2 %>%
+  mutate(Gender = as.factor(Gender),
+         Handed = as.factor(Handed))
+
+View(HSS2)
 ```
 
-<!-- Instructions:
+---
 
-Perform your own mini experiment using two factors that each have at least two levels. Analyze your data using a two-way ANOVA.
+### Hypothesis #1: Gender Effect
+#### Hypotheses
+$$
+H_0: \mu_{maleReactionTime} = \mu_{femaleReactionTime}
+$$
+$$
+H_a: \mu_{maleReactionTime} \neq \mu_{femaleReactionTime}
+$$
 
-Studying reaction time is recommended because the data is quickly collected.
+#### Summary Statistics
+```{r}
+gender_summary <- HSS2 %>%
+  group_by(Gender) %>%
+  summarise(
+    Min = min(Reaction_time, na.rm = TRUE),
+    Q1 = quantile(Reaction_time, 0.25, na.rm = TRUE),
+    Median = median(Reaction_time, na.rm = TRUE),
+    Q3 = quantile(Reaction_time, 0.75, na.rm = TRUE),
+    Max = max(Reaction_time, na.rm = TRUE)
+  )
+pander(gender_summary)
+```
 
-While you should use the warpbreaks example analyses as your guide on how to properly complete this analysis, you should also be creative in your final delivery of this analysis. If you copy the format and approach of the example analyses, be sure to give credit in your document to these example analyses. You could write something like, "This work is modeled after the [warpbreaks](https://byuistats.github.io/Statistics-Notebook/Analyses/ANOVA/Examples/warpbreaksTwoWayANOVA.html) analysis." Whatever you do, DO NOT use any of the written statements from the example analyses in your analysis unless you quote them directly and give credit. Using someone else's writing as your own without giving credit to the original author is plagiarism and is an Honor Code Violation. So do your own work. Plus, the more you try to write things in your own words, the more you will learn. Also, note that there aren't really any "rules" about exactly how your document should be organized. So be creative and organize your file in a way that makes sense to you, but still has all important elements.
+#### Visualization
+```{r}
+ggplot(HSS2, aes(x = Gender, y = Reaction_time, fill = Gender)) +
+  geom_boxplot() +
+  labs(title = "Reaction Time by Gender", x = "Gender", y = "Reaction Time (seconds)") +
+  theme_minimal()
+```
 
--->
+### Hypothesis #1: Gender Effect
+
+The first hypothesis aimed to determine whether there is a significant difference in reaction time between males and females. The summary statistics indicate that females have a slightly higher median reaction time of **0.427 seconds** compared to **0.355 seconds** for males. The interquartile range (IQR), representing the middle 50% of the data, is also slightly higher for females (0.3615 to 0.4925 seconds) than for males (0.31 to 0.418 seconds). The minimum reaction time recorded was **0.168 seconds** for females and notably faster at **0.01 seconds** for males, while the maximum reaction times were **0.995 seconds** and **0.89 seconds**, respectively.
+
+This difference in both central tendency and range suggests that males tend to have faster reaction times overall. However, the overlapping interquartile ranges indicate that many individuals from both groups have similar reaction times.
+
+
+---
+
+### Hypothesis #2: Handedness Effect
+#### Hypotheses
+$$ 
+H_0: \mu_{leftHandedReactionTime} = \mu_{rightHandedReactionTime}
+$$
+$$ 
+H_a: \mu_{leftHandedReactionTime} \neq \mu_{rightHandedReactionTime} 
+$$
+
+#### Summary Statistics
+```{r}
+handedness_summary <- HSS2 %>%
+  group_by(Handed) %>%
+  summarise(
+    Min = min(Reaction_time, na.rm = TRUE),
+    Q1 = quantile(Reaction_time, 0.25, na.rm = TRUE),
+    Median = median(Reaction_time, na.rm = TRUE),
+    Q3 = quantile(Reaction_time, 0.75, na.rm = TRUE),
+    Max = max(Reaction_time, na.rm = TRUE)
+  )
+pander(handedness_summary)
+```
+
+#### Visualization
+```{r}
+ggplot(HSS2, aes(x = Handed, y = Reaction_time, fill = Handed)) +
+  geom_boxplot() +
+  labs(title = "Reaction Time by Handedness", x = "Handedness", y = "Reaction Time (seconds)") +
+  theme_minimal()
+```
+
+The second hypothesis investigated whether reaction time differs based on handedness. The summary statistics show that ambidextrous individuals have the lowest median reaction time at **0.339 seconds**, followed by right-handed individuals at **0.382 seconds** and left-handed individuals at **0.389 seconds**. The interquartile ranges (IQRs) are as follows: ambidextrous (0.279 to 0.44 seconds), right-handed (0.33 to 0.454 seconds), and left-handed (0.335 to 0.5172 seconds). The minimum reaction times were **0.01 seconds** for ambidextrous individuals, **0.067 seconds** for right-handed individuals, and **0.274 seconds** for left-handed individuals, while the maximum reaction times were **0.867 seconds**, **0.995 seconds**, and **0.895 seconds**, respectively.
+
+These results suggest that ambidextrous individuals tend to have faster reaction times overall, while left-handed individuals exhibit slightly slower reaction times compared to right-handed individuals. However, the overlapping IQRs indicate that many individuals within each group have similar reaction times.
+
+---
+
+### Hypothesis #3: Interaction Effect
+#### Hypotheses
+$$ 
+H_0: \text{There is no interaction between Gender and Handedness on Reaction Time} 
+$$
+$$ 
+H_a: \text{There is an interaction between Gender and Handedness on Reaction Time} 
+$$
+
+#### Summary Statistics
+```{r}
+interaction_summary <- HSS2 %>%
+  group_by(Gender, Handed) %>%
+  summarise(
+    Min = min(Reaction_time, na.rm = TRUE),
+    Q1 = quantile(Reaction_time, 0.25, na.rm = TRUE),
+    Median = median(Reaction_time, na.rm = TRUE),
+    Q3 = quantile(Reaction_time, 0.75, na.rm = TRUE),
+    Max = max(Reaction_time, na.rm = TRUE)
+  )
+pander(interaction_summary)
+```
+
+#### Visualization
+```{r}
+interaction_summary <- HSS2 %>%
+  group_by(Gender, Handed) %>%
+  summarise(Mean_Reaction_time = mean(Reaction_time, na.rm = TRUE), .groups = "drop")
+
+ggplot(interaction_summary, aes(x = Handed, y = Mean_Reaction_time, group = Gender, color = Gender)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  labs(title = "Interaction Effect: Reaction Time by Gender and Handedness",
+       x = "Handedness",
+       y = "Mean Reaction Time (seconds)") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"))
+```
+
+The third hypothesis aimed to determine whether the combination of gender and handedness affects reaction time. The summary statistics reveal that male ambidextrous individuals have the lowest median reaction time at **0.3055 seconds**, followed by male right-handed individuals at **0.356 seconds** and male left-handed individuals at **0.375 seconds**. Among females, ambidextrous individuals have the lowest median reaction time at **0.366 seconds**, followed by right-handed individuals at **0.427 seconds** and left-handed individuals at **0.442 seconds**. The interquartile ranges (IQRs) vary slightly between groups, with male ambidextrous individuals showing the narrowest range (0.2685 to 0.332 seconds), indicating more consistent reaction times. In contrast, female left-handed individuals have the widest range (0.348 to 0.542 seconds), suggesting greater variability.
+
+It looks like males exhibit faster reaction times than females across all handedness categories. Additionally, ambidextrous individuals tend to have the fastest reaction times regardless of gender.
+
+The interaction effect is further illustrated in the graph above. The chart shows the mean reaction time for each combination of gender and handedness. The slopes of the lines indicate how reaction time changes with handedness within each gender. Notably, the lines are not parallel, suggesting a potential interaction effect. For males, reaction time increases from ambidextrous to left-handed and then decreases for right-handed individuals. In contrast, females show a different trend, with reaction time peaking for left-handed individuals and remaining relatively higher compared to males. This visual representation reinforces the possibility of an interaction effect between gender and handedness, which will be confirmed through the two-way ANOVA results.
 
 
 
+---
 
+### Two-Way ANOVA Test
+```{r}
+anova_result <- aov(Reaction_time ~ Gender * Handed, data = HSS2)
+pander(summary(anova_result))
+```
+
+The results of the two-way ANOVA test are summarized in the table below:
+
+- **Gender:** The effect of gender on reaction time is statistically significant (F = 27.57, p < 0.001), indicating that males and females have significantly different reaction times.
+- **Handedness:** The effect of handedness is not statistically significant (F = 2.069, p = 0.1275), suggesting that being ambidextrous, left-handed, or right-handed does not lead to significantly different reaction times.
+- **Interaction (Gender × Handedness):** The interaction between gender and handedness is not statistically significant (F = 0.1362, p = 0.8727), indicating that the effect of gender on reaction time does not depend on handedness.
+
+These results confirm that gender is the primary factor influencing reaction time, with males exhibiting faster reaction times than females. However, neither handedness nor the interaction between gender and handedness has a significant impact on reaction time.
+
+---
+
+### Assumptions
+Before interpreting the results, it's essential to check whether the assumptions of ANOVA were met.
+
+- **Normality of Residuals:** Verified using a Q-Q plot.
+- **Homogeneity of Variances:** Checked using a residuals plot.
+
+```{r}
+par(mfrow = c(1, 2))
+plot(anova_result, which = 1:2)
+```
+
+---
+
+### Conclusion
+This study explored the effects of gender and handedness on reaction time using a two-way ANOVA. The analysis revealed that gender significantly influences reaction time, with males exhibiting faster reaction times than females. Handedness, however, did not show a statistically significant effect, indicating that being ambidextrous, left-handed, or right-handed does not substantially impact reaction speed. Additionally, no significant interaction effect was found between gender and handedness, suggesting that the difference in reaction time between males and females is consistent regardless of handedness. Overall, the study highlights gender as a key factor affecting reaction time, while handedness plays a minimal role.
 

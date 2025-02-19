@@ -31,8 +31,19 @@ Late <- pivot_longer(late, #Start with wide data set late
                names_transform = list(Week= ~as.numeric(.x)), #Make Week a numeric column of data
                values_to = "NumberofLateChildren") #Name of data column in long data
 
+View(Late)
 ```
 
+```{r}
+Late2 <- Late %>%
+  mutate(Period = case_when(
+    Week >= 1 & Week <= 4 ~ 'No Fine',
+    Week >= 5 & Week <= 16 ~ 'Fine Applied',
+    Week <= 17 ~ 'Fine Removed'
+  ))
+
+View(Late2)
+```
 
 
 <!--If you want to give your critiquers some ideas about what you have questions on and would like help with, place those details here.-->
