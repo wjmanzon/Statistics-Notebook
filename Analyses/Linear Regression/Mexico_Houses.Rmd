@@ -1,0 +1,144 @@
+---
+title: "Predicting House Prices in Mexico"
+output: 
+  html_document:
+    theme: cerulean
+    code_folding: hide
+    toc: true
+    toc_float: true
+format:
+  html:
+    code-fold: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+# Load necessary packages using pacman
+pacman::p_load(tidyverse, readxl, rio, ggrepel, viridis, ggtext, scales, Lahman, nycflights13, priceR, lubridate, riem, pander)
+```
+
+## 1. Introduction and Context
+
+In this analysis, we explore data from the Mexico real estate market to determine if property area (in square meters) can predict housing prices (in USD). The dataset contains information about various properties across different states in Mexico, including both houses and apartments.
+
+```{r}
+# Load the data
+df <- read.csv("mexico-real-estate-clean.csv")
+
+# Basic summary of the data
+pander(summary(df[, c("area_m2", "price_usd")]))
+
+# Count of property types
+pander(table(df$property_type))
+```
+
+The dataset includes `r nrow(df)` properties with information about their type, location (state), area in square meters, and price in USD. The properties range from `r min(df$area_m2)` to `r max(df$area_m2)` square meters, with prices ranging from $`r format(min(df$price_usd), big.mark=",")` to $`r format(max(df$price_usd), big.mark=",")`.
+
+## 2. Linear Regression Hypotheses
+
+For our linear regression analysis, we establish the following hypotheses:
+
+- **Null Hypothesis (H₀)**: There is no linear relationship between property area and price (slope = 0).
+- **Alternative Hypothesis (Hₐ)**: There is a significant linear relationship between property area and price (slope ≠ 0).
+
+## 3. Correlation and Scatterplot
+
+First, let\'s examine the correlation between property area and price:
+
+```{r}
+# Calculate correlation
+cor_val <- cor(df$area_m2, df$price_usd)
+cat("Correlation between area_m2 and price_usd:", round(cor_val, 4))
+```
+
+Now, let\'s visualize this relationship with a scatterplot:
+
+```{r}
+# Create scatterplot with regression line
+plot(df$area_m2, df$price_usd, 
+     main = "Scatterplot: Price vs. Area", 
+     xlab = "Area (m²)", 
+     ylab = "Price (USD)", 
+     pch = 19, 
+     col = adjustcolor("blue", alpha.f = 0.5))
+abline(lm(price_usd ~ area_m2, data = df), col = "red", lwd = 2)
+```
+
+The scatterplot shows a positive relationship between property area and price, with a correlation coefficient of `r round(cor_val, 4)`. This indicates a moderate positive correlation between these variables.
+
+## 4. Linear Regression Model
+
+Now, let\'s fit a linear regression model to quantify this relationship:
+
+```{r}
+# Fit linear regression model
+model <- lm(price_usd ~ area_m2, data = df)
+pander(summary(model))
+```
+
+## 5. Interpretation and Prediction
+
+The regression equation is:
+
+$$\	ext{Price (USD)} = `r round(coef(model)[1], 2)` + `r round(coef(model)[2], 2)` \	imes \	ext{Area (m²)}$$
+
+### Interpretation of Coefficients:
+
+- **Y-intercept (`r round(coef(model)[1], 2)`)**: This represents the estimated price when the area is 0 m², which may not have practical meaning in this context.
+- **Slope (`r round(coef(model)[2], 2)`)**: For every additional square meter of property area, the price is expected to increase by approximately $`r round(coef(model)[2], 2)`.
+
+### Making a Prediction:
+
+Let\'s predict the price for a property with 200 square meters:
+
+```{r}
+# Predict price for a 200 m² property
+new_data <- data.frame(area_m2 = 200)
+predicted_price <- predict(model, newdata = new_data)
+cat("Predicted price for a 200 m² property: $", format(round(predicted_price, 2), big.mark=","))
+```
+
+## 6. Checking Model Requirements
+
+To ensure the validity of our linear regression model, we need to check several assumptions:
+
+```{r}
+# Diagnostic plots
+par(mfrow=c(1,1))
+plot(model, which=1:2)
+```
+
+### Interpretation of Diagnostic Plots:
+
+1. **Residuals vs Fitted**: This plot helps assess the linearity assumption. Ideally, we want to see a random scatter of points around the horizontal line at y=0. The Residuals vs Fitted plot indicates potential issues with the linear regression model predicting price (USD) from area (m²). The residuals show heteroskedasticity, as their spread increases with fitted values, violating the assumption of constant variance. The slight curvature in the red smoothed trend line suggests a non-linear relationship, meaning a simple linear model may not be the best fit.
+
+2. **Normal Q-Q**: This plot checks if residuals follow a normal distribution. Points should follow the diagonal line closely. This Q-Q plot (Quantile-Quantile plot) assesses whether the residuals from the linear regression model (predicting price (USD) from area (m²)) follow a normal distribution. Ideally, if residuals are normally distributed, the points should lie along the dashed diagonal line. However, the plot shows deviations at both tails: residuals in the upper tail (right side) and lower tail (left side) deviate significantly from the line, indicating non-normality and confirming the Residuals vs Fitted conclusion.
+
+
+## 7. Conclusions and Future Studies
+
+Based on our analysis:
+
+- There is a statistically significant relationship between property area and price (p-value < 2e-16).
+- The model suggests that each additional square meter adds approximately $`r round(coef(model)[2], 2)` to the property price.
+- The R-squared value of `r round(summary(model)$r.squared, 4)` indicates that our model explains about `r round(summary(model)$r.squared * 100, 2)`% of the variability in housing prices.
+
+### Limitations and Future Studies:
+
+While our model provides valuable insights, it has limitations:
+
+1. The relatively low R-squared value suggests that other factors beyond property area influence housing prices.
+
+2. Future studies could incorporate additional predictors such as:
+   - Property type (house vs. apartment)
+   - Location (state, city, neighborhood)
+   - Number of bedrooms and bathrooms
+   - Property age and condition
+   - Proximity to amenities
+
+3. More complex models (multiple regression, non-linear models) might better capture the relationship between property characteristics and prices.
+
+This analysis provides a foundation for understanding the Mexican real estate market, but further research with more comprehensive data would yield more robust insights for potential buyers, sellers, and investors.
+
