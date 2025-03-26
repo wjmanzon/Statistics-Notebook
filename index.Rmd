@@ -21,9 +21,39 @@ This page, and all pages of this notebook, are meant to be customized to become 
 
 [Mean, median, five-number summary, standard deviation](NumericalSummaries.html)
 
+[Making Inference](MakingInference.html)
+
 [One Sample t Test](tTests.html)
 
-[Signed-Rank Wilcoxon Test](WilcoxonTests.html)
+[Paired Sample t Test](tTests.html)
+
+[Independent Sample t Test](tTests.html)
+
+[Wilcoxon Signed-Rank Test](WilcoxonTests.html)
+
+[Wilcoxon Rank Sum (Mann-Whitney) Test](WilcoxonTests.html)
+
+[Kruskal-Wallis Rank Sum Test](Kruskal.html)
+
+[One-way Anova](ANOVA.html)
+
+[Two-way Anova](ANOVA.html)
+
+[Block Design - Anova](ANOVA.html)
+
+[Simple Linear Regression](LinearRegression.html)
+
+[Multiple Linear Regression](LinearRegression.html)
+
+[Simple Logistic Regression](LogisticRegression.html)
+
+[Multiple Logistic Regression](LogisticRegression.html)
+
+[Permutation Test](PermutationTests.html)
+
+[R Cheatsheets and Notes](RCheatSheetsAndNotes.html)
+
+[R Markdown Hints](RMarkdownHints.html)
 
 ## {.tabset .tabset-fade}
 

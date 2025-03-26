@@ -14,6 +14,13 @@ Delete these words and write your own background here motivating why you are stu
 library(GSODR) #run: install.packages("GSODR") 
 # to get the GSODR package. You'll need this package to pull in your weather data.
 load(system.file("extdata", "isd_history.rda", package = "GSODR"))
+library(dplyr)
+library(pander)
+library(tidyverse)
+library(car)
+library(tidyr)
+library(mosaic)
+library(DT)
 ```
 
 ```{r, eval=FALSE}
@@ -27,22 +34,35 @@ View(isd_history)
 ```
 
 ```{r}
-rexburg <- get_GSOD(years = 2023, station = "726818-94194")
-#Run: View(rexburg)
 #To see what columns mean, go here: https://cran.r-project.org/web/packages/GSODR/vignettes/GSODR.html#appendices
 
-#Then run a similar code to get your station information for your weather stations.
-#(If you want to use rexburg, then just use one of the following codes)
-#cityName1 <- get_GSOD(years = 2023, station = "yourchoice1")
-#cityName2 <- get_GSOD(years = 2023, station = "yourchoice2")
+Rexburg <- get_GSOD(years = 2021, station = "726818-94194")
+Salt_Lake <- get_GSOD(years = 2021, station = "725720-24127")
+
+View(Rexburg)
+View(Salt_Lake)
 
 #Finally, join your two datasets together into one dataset:
-weather <- rbind(cityName1, cityName2)
+weather <- rbind(Rexburg, Salt_Lake)
+
+View(weather)
 ```
 
 <!-- Now write up an analysis that studies something like how well the MIN temperature predicts the MAX temperature of the day in the two cities you selected. Of course, you are welcome to do any multiple regression you want with the data, but the recommendation would be to just run a "two-lines" model with the x=MIN, y=MAX, and color of the dots the NAME column. -->
 
 ## Analysis
 
-Delete these words and put in your multiple regression analysis here.
+```{r}
+# PART C) Choosing Variables
+weather2 <- weather %>%
+  select(c(NAME, MAX, MIN))
+```
+
+```{r}
+weather3 <- weather2 %>%
+  select(c(NAME, MAX, MIN))
+
+datatable(weather3, options(list=c(3,10,30)))
+```
+
 
