@@ -1,0 +1,1177 @@
+---
+title: "All Class Activities"
+format: html
+editor: visual
+---
+
+
+
+## Week 2 Day 1
+### Graphical Summaries
+
+
+```{r}
+library(mosaic)
+library(pander)
+library(tidyverse)
+# View(KidsFeet)
+
+# Group 1
+boxplot(length~sex,data=KidsFeet)
+
+KidsFeet %>% 
+  group_by(sex) %>% 
+  summarise(min = min(length), Q1=quantile(length,0.25), median=median(length),Q3=quantile(length,0.75),
+            max=max(length))
+
+favstats(length~sex,data=KidsFeet)
+
+#Group 2
+barplot(table(KidsFeet$sex))
+
+table(KidsFeet$sex)
+
+#Group 3
+plot(length~width, data=KidsFeet)
+       
+KidsFeet %>% 
+  summarise(Correlation=cor(width,length))
+
+
+#Add any notes to your Index file in the Statistics Notebook
+```
+
+
+
+## Week 2 Day 2
+### Graphical Summaries
+
+
+```{r}
+#Day 1
+# A) Take a few moments to knit your index.rmd file
+# B) Do the Good Graphics question in the quiz
+library(mosaic)
+library(tidyverse)
+
+View(airquality)
+# ?airquality
+
+#Histograms (length)
+hist(airquality$Wind,main="La Guardia Airport from May to September, 1973", 
+     xlab="Daily Average Wind Speeds (mph)",ylab="Frequency",col="steelblue",breaks = 22)
+
+ggplot(airquality,aes(x=Wind))+
+  geom_histogram(fill="steelblue")+
+  labs(title="La Guardia Airport from May to September, 1973",
+       x="Daily Average Wind Speeds (mph)",
+       y="Frequency")
+
+## go through the four questions below for QUestion 3
+
+##25
+
+#boxplots
+boxplot(Wind~Month,main="Wind by Month", xlab="Month",
+     ylab="Wind",col=c("steelblue1", "steelblue2", "steelblue3","steelblue3",
+                       "steelblue2"),data=airquality)
+
+ggplot(data=airquality,aes(y=Wind,x=Month,group=Month))+
+  geom_boxplot(fill=c("steelblue1", "steelblue2", "steelblue3","steelblue3",
+                      "steelblue2"))+
+  labs(title = "Wind by Month",
+       y="Wind",
+       x="Month")
+
+
+#scatterplots 
+plot(Ozone~Temp,data=airquality,main="Relationship Between Ozone and Temperature",
+     xlab="Temp", ylab="Ozone",pch = 19, col="blue")
+
+ggplot(airquality,aes(x=Temp,y=Ozone))+
+  geom_point(color="blue")+
+  labs(title="Relationship Between Ozone and Temperature", 
+       x="Temp", 
+       y="Ozone")
+
+
+## Go over the Stephanie analysis
+```
+
+
+
+## Week 3 Day 1
+### Graphical and Numerical Summaries
+
+
+```{r}
+#Day 1
+# A) Quantitative vs Categorical Data - KidsFeet
+# B) Statistics-Notebook page - Identify columns where a dataset would match
+#"data logos"
+# One Quantitative Response Variable Y - length
+# Quantitative Y | Categorical X (2 Groups) - length by sex
+# Quantitative Y | Categorical X (3+ Groups) - Nothing in the data with 3+ groups
+# Quantitative Y | Multiple Categorical X length by sex and biggerfoot
+# Quantitative Y | Quantitative X - length and width
+# Quantitative Y | Multiple X  - length and width and sex
+# Binomial Y | Quantitative X - sex and length - opposite x and y 
+# Binomial Y | Multiple X - Don't worry about it
+# Categorical Y | Categorical X - biggerfoot and domhand
+
+#C - table - categorical
+table(KidsFeet$biggerfoot, KidsFeet$domhand)
+# group_by() - categorical
+#summarise() - quantiative
+KidsFeet %>% 
+  group_by(sex) %>% 
+  summarise(mean_length = mean(length))
+#D
+# Histogram - quantitative
+# Boxplot - quantitative
+# Dot plot - quantitative
+# Scatterplot - quantitative
+# Bar plot - categorical
+
+#E - If there is time, try some of the plots in R
+library(mosaic)
+library(tidyverse)
+library(pander)
+View(KidsFeet)
+## Identify the (1) type of data, (2) R Commands, and (3) Graphic that
+## could be used to answer each of the following questions.
+
+## How many boys (B) and how many girls (G) are in the KidsFeet dataset?
+#(1) type of data - sex (categorical)
+#(2 & 3) table and barplot
+table(KidsFeet$sex)
+
+barplot(table(KidsFeet$sex))
+
+## What is the average length of feet in the KidsFeet dataset?
+#(1) type of data - length (quantitative)
+#(2 & 3) favstats and boxplots
+favstats(KidsFeet$length) %>% pander()
+
+boxplot(KidsFeet$length, main="Length of Kids Feet")
+
+ggplot(data=KidsFeet, aes(x=length)) +
+  geom_boxplot(fill="navy")+
+  labs(
+    x="Length of Kids Feet"
+  )
+
+## Do boys (B) or girls (G) have longer feet, on average, in the KidsFeet
+##dataset?
+#(1) type of data - length (quantitative) and sex (categorical)
+#(2 & 3) favstats and boxplots
+favstats(length~sex,data=KidsFeet) %>% pander()
+
+boxplot(length~sex,data=KidsFeet, main="Comparing Length of Feet Across Gender", 
+        xlab="Gender",ylab="Length of Foot",col=c("blue","pink"))
+
+ggplot(KidsFeet, aes(x=sex, y=length,fill=sex)) +
+  geom_boxplot()+
+  labs(title = "Comparing Length of Feet Across Gender",
+       x="Gender",
+       y="Length of Foot")+
+  scale_fill_manual(values=c("blue","pink"))
+
+## Are there certain months of the year that are associated with children
+## having longer feet, on average, than others?
+#(1) type of data - length (quantitative) and month (categorical)
+#(2 & 3) favstats and boxplots
+favstats(length~birthmonth,data=KidsFeet) %>% pander()
+
+boxplot(length~birthmonth,data=KidsFeet, col="navy",
+xlab = "Numerical Birth Month", ylab="Feet Length")
+
+ggplot(data=KidsFeet, aes(x=as.factor(birthmonth), y=length)) +
+  geom_boxplot(fill="navy")+
+  labs(
+    x="Numerical Birth Month",
+    y="Foot Length"
+  )
+
+## Is there a relationship between the length of children's feet and the
+## width of their foot?
+#(1) type of data - length and width (quantitative)
+#(2 & 3) correlation and plot
+
+cor(KidsFeet$length,KidsFeet$width)
+
+plot(length~width, data=KidsFeet, main = "Relationship Between Length and 
+     Width of Kids Feet", xlab="Width of Foot", ylab = "Length of Foot")
+
+ggplot(KidsFeet,aes(x=width,y=length))+
+  geom_point(color="navy")+
+  labs(
+    title="Relationship Between Length and Width of Kids Feet",
+    x="Width of Foot",
+    y="Length of Foot")
+
+ggplot(KidsFeet,aes(x=width,y=length,color=sex))+
+  geom_point()+
+  labs(title="Relationship Between Length and Width of Kids Feet", 
+       x="Width of Foot", 
+       y="Length of Foot")+
+  scale_color_manual(values=c("blue","pink"))
+
+## Does the width of a child's foot predict whether or not they are
+## right-handed?
+## Logistic Regression - Will Cover later
+
+## Is one gender more likely to be born in certain seasons of the year?
+#(1) type of data - season and sex (categorical)
+#(2 & 3) table and bar plot
+
+Kids3 <- KidsFeet %>% 
+  mutate(
+    season = case_when(
+      birthmonth %in% c(12,1,2) ~ "Winter",
+      birthmonth %in% c(3,4,5) ~ "Spring",
+      birthmonth %in% c(6,7,8) ~ "Summer",
+      birthmonth %in% c(9,10,11) ~ "Fall"
+    )
+  )  
+
+pander(table(Kids3$season,KidsFeet$sex))
+
+barplot(table(Kids3$sex, Kids3$season),beside = TRUE,
+        col = c("blue","pink"),legend.text=TRUE, 
+        xlab="Handedness", ylab="Frequency", main="Count of Gender by Season")
+
+ggplot(Kids3,aes(x=season,fill=sex))+
+  geom_bar(position="dodge")+
+  scale_fill_manual(values=c("blue","pink"))
+
+
+#Make some notes in your index file and knit.
+```
+
+
+
+## Week 4 Day 1
+### T-Test
+
+
+```{r}
+#Go to the Making inference page - this first section is referring to book
+#Define inference first in class and then with the group.
+#Do not use the textbook when going over this.  Use the Script below as your guide
+
+#Hypothesis Testing
+#a.	Type I error vs Type II error – Give an example (Flip flops vs medicine)
+#b.	Type I error = Level of significance = 1 – level of confidence
+#c.	Type II errors  and Power
+#d.	Sufficient evidence – not proof
+#e.	P-value need two things: a test statistic and a sampling dist of test stat
+
+#Find the four parametric distributions
+#(types of tests that are run on each test from 221)
+
+#Parametric methods compared to non-parametric methods
+#non parametric test are still powerful and are likely more powerful 
+#than parametric tests if the requirements for a parametric test are not met. 
+library(mosaic)
+#An example of doing a t.test
+t.test(KidsFeet$length, mu=25.1, alternative="two.sided",conf.level=0.95)
+#Ho: mu=25.1 Ha:mu ne 25.1
+#level of signficance = 0.05
+#Test Statistic t=-1.7865 df=38 p=value = 0.082
+#p-value > alpha, therefore we fail to reject the Ho
+#We have insufficient evidence to say that the mean is different than 25.1.
+
+pander(t.test(KidsFeet$length, mu=25.1, alternative="less",conf.level=0.95))
+#Ho: mu=25.1 Ha:mu < 25.1
+#level of signficance = 0.05
+#Test Statistic t=-1.7865 df=38 p=value = 0.041
+#p-value < alpha, therefore we reject the Ho
+#We have sufficient evidence to say that the mean is less than 25.1.
+
+#Note: Because of the Central Limit Theorem, we can assume the distribution
+#of sample means is normal because we have a large sample size (n>=30).
+
+library(mosaic)
+t.test(length~sex,data=KidsFeet, mu=0, alternative = "greater",conf.level=0.95)
+
+```
+
+
+
+## Week 4 Day 2
+### T-Test
+
+
+```{r}
+#Use library function for mosaic and pander and then view functions on KidsFeet
+#before getting started
+library(tidyverse)
+library(mosaic)
+library(pander)
+
+
+#2)	Have students go through an explanation of what they see in Overview, 
+#R instructions, and Explanations.
+
+#One sample t test
+pander(t.test(KidsFeet$length, mu=28, alternative="two.sided",conf.level=0.95))
+#Ho: mu = 28 Ha: mu ne 28
+# $$ H_o: \mu=28 H_a:\mu \neq 28 $$
+#level of signficance = 0.05 ($$ \alpha $$)
+#Test Statistic t=-15.532 df=38 p=value < 2.2e-16
+#p-value < alpha, therefore we reject the Ho
+#We have sufficient evidence to say that the mean is different than 28.
+
+#Note: Because of the Central Limit Theorem, we can assume the distribution
+#of sample means is normal because we have a large sample size (n>30).
+
+#Paired t test
+library(tidyverse)
+KidsFeet3 <- KidsFeet %>% 
+  mutate(width3 = 3*width,difference = length -width3) 
+
+t.test(KidsFeet3$length, KidsFeet3$width3, mu=0, paired=TRUE,
+       alternative="two.sided",conf.level=0.95)
+
+t.test(KidsFeet3$difference, mu=0, 
+       alternative="two.sided",conf.level=0.95)
+
+#Ho: mu_d = 0 Ha: mu_d ne 0
+# $$ H_o: \mu_d = 0 H_a:\mu_d \neq 0 $$
+#level of signficance = 0.05 ($$ \alpha $$)
+#t = -11.529, df = 38, p-value = 5.668e-14
+#p-value < alpha, therefore we reject the Ho
+#We have sufficient evidence to say that there is a difference between
+#width*3 and length.
+  
+#Note: Because of the Central Limit Theorem, we can assume the distribution
+#of sample means is normal because we have a large sample size (n>30).
+  
+#Indepdendent Samples t test
+t.test(length~sex, mu=0, data=KidsFeet, alternative="two.sided",
+       conf.level=0.95)
+#Ho: mu_boy = mu_girl Ha: mu_boy = mu_girl
+# $$ H_o: \mu_boy = \mu_girl H_a:\mu_boy \neq \mu_girl $$
+#level of signficance = 0.05 ($$ \alpha $$)
+#t = 1.9174, df = 36.275, p-value = 0.06308
+#p-value > alpha, therefore we fail to reject the Ho
+#We have *insufficient evidence to say that the length is different
+#between boys and girls.
+  
+#Note: Because of the Central Limit Theorem, we can assume the distribution
+#of sample means is normal because we have a large sample size (n>30).
+
+#Checking requirements
+library(car)
+#One Sample t test
+qqPlot(KidsFeet$length)
+#Paired t test
+qqPlot(KidsFeet3$length-KidsFeet3$width3)
+#Independent Samples t test
+qqPlot(length~sex,data=KidsFeet)
+
+#Graphics
+#One Sample t test
+boxplot(KidsFeet$length)
+ggplot(data=KidsFeet, aes(x=length))+
+  geom_boxplot(fill="blue")
+# Paired t test
+boxplot(KidsFeet3$length-KidsFeet3$width3)
+ggplot(data=KidsFeet3, aes(x=difference))+
+  geom_boxplot(fill="blue")
+#Independent Samples t test
+boxplot(length~sex,data=KidsFeet)
+ggplot(data=KidsFeet, aes(y=length, x=sex))+
+  geom_boxplot(fill=c("blue","pink"))
+
+#Numerical Summaries
+#One Sample t test
+pander(favstats(KidsFeet$length))
+# Paired t test
+pander(favstats(KidsFeet3$length-KidsFeet3$width3))
+#Independent Samples t test
+pander(favstats(length~sex,data=KidsFeet))
+
+#Put some notes within the the index rmd file
+```
+
+
+
+## Week 5 Day 1
+### Wilcoxon Test
+
+
+
+```{r}
+#Any questions about the assignment last week
+#Remind students of peer feedback by Tuesday night
+#Go through the explanation of the five steps of doing the Wilcoxon signed-rank
+#test in the textbook
+
+#Example
+library(mosaic)
+library(car)
+t.test(KidsFeet$length, mu=25)
+qqPlot(KidsFeet$length)
+wilcox.test(KidsFeet$length, mu=25)
+
+#Ho: median = 25
+#Ha: median ne 25
+#What does the alternative hypothesis means?
+#alternative hypothesis: true location shift is not equal to 0
+
+#Go through the explanation of the five steps of doing the Wilcoxon ranked-sum
+#test (Mann-Whitney) in the textbook
+t.test(length ~ sex, data=KidsFeet)
+wilcox.test(length ~ sex, data=KidsFeet)
+
+#The test is negatively affected when there are ties (repeated values) present
+#in the data, but the results are still useful if there are relatively few ties.
+```
+
+
+
+## Week 5 Day 2
+### Wilcoxon Test
+
+
+
+```{r}
+##Question 1
+# 1) Function to to use to add a new column - Mutate
+# 2) Plots to look at two or more groups - boxplots and dotplots
+# 3) p-value <- test statistic and probability distribution
+# 4) Independent Samples t vs Wilcoxon - Parametric requirements not met for
+#    Wilcoxon
+# 5) Hypothesis
+#    Ho: mu1 = mu2  Ha: mu1 ne mu2 - indepdendent samples
+#    Ho: difference in medians = 0 Ha:difference in medians ne 0
+
+##Question 2
+# 1) Wilcoxon Applet and follow instructions in quiz
+# 2) Go through the four questions
+
+##Question 3
+# 1) Prepping for next week's assignment
+#   https://www.brainhq.com/brain-connection/word-list-recall/
+```
+
+
+
+## Week 6 Day 1
+### One Way ANOVA
+
+
+
+```{r}
+#Find the ANOVA using Statistics Notebook
+#Compare the difference between t-test, ANOVA using
+#the index.html file
+#Go through the Overview, Explanation, and Instructions in the Textbook
+# View(airquality)
+#Using the Airquality data - Define Factor and Level of a Factor
+#State briefly that we will cover two-way ANOVA next week
+library(pander)
+library(mosaic)
+library(tidyverse)
+
+#Use the Airquality Example
+#Numerical and Graphical Summary
+
+boxplot(Wind~Month,data=airquality)
+ggplot(data=airquality, aes(x=as.factor(Month), y=Wind))+
+  geom_boxplot(fill=c("blue","red","yellow","green","purple"))
+pander(favstats(Wind~Month,data=airquality))
+#Analysis - One Way ANOVA
+airq.aov <- aov(Wind~as.factor(Month),data=airquality)
+pander(summary(airq.aov))
+#Checking Requirements
+par(mfrow=c(1,2))
+plot(airq.aov,which=1:2)
+
+par(mfrow=c(1,1))
+1#Use the Chickwt Example
+#Null and alternative hypotheses
+#$$ H_0:\mu_1 = \mu_2 = \mu_3 = \mu_4 = \mu_5 = \mu_6 $$
+#$$ H_a: \text{at least one } \mu \text{ is different} $$
+  
+#Numerical and Graphical Summary
+boxplot(weight~feed,data=chickwts)
+ggplot(data=chickwts, aes(y=weight, x=feed))+
+  geom_boxplot(fill = c("blue","white","green","yellow","orange","brown"))
+
+xyplot(weight ~ feed, data=chickwts,
+main="Experiment on how Feed Type impacts Chicken Growth",
+ylab="Adult Weight of Chickens (in grams)",
+xlab="Type of Feed Chickens were Fed \n 
+(Blue line shows average weights per feed type.)", type=c("p","a"))
+
+pander(favstats(weight~feed,data=chickwts)[,c("feed","mean","sd","n")])
+#Analysis - One Way ANOVA
+chickwt.aov <- aov(weight~feed,data=chickwts)
+pander(summary(chickwt.aov))
+#Checking Requirements
+par(mfrow=c(1,2))
+plot(chickwt.aov,which=1:2)
+
+#warpbreaks dataset. 
+
+#Question - Are each of the two factors signficant and do they interaction
+#with each other
+#Null and alternative hypotheses
+#The First set of null and alternative hypotheses are listed for each factor
+# $$ H_0:\mu_1 = \mu_2 = \mu_3 =\mu \text{for tension}$$
+# $$ H_a: \text{at least one } \mu \text{ is different for tension} $$
+# $$ H_0:\mu_1 = \mu_2 = \mu \text{for wool}$$
+# $$ H_a: \text{at least one } \mu \text{ is different for wool} $$
+# $$ H_0:\text{ The effect of tension is the same for all types of wool} $$
+# $$ H_a:\text{ The effect of tension is not the same for all types of wool}$$
+
+# install.packages("lattice")
+library(lattice)
+library(tidyverse)
+library(mosaic)
+library(pander)
+
+#Numerical Summaries
+warpbreaks %>% 
+  group_by(tension) %>% 
+  summarise(ave=mean(breaks),sd=sd(breaks),SampleSize=n()) %>% pander()
+
+warpbreaks %>% 
+  group_by(wool) %>% 
+  summarise(ave=mean(breaks),sd=sd(breaks),SampleSize=n()) %>% pander()
+
+warpbreaks %>% 
+  group_by(wool, tension) %>% 
+  summarise(ave=mean(breaks),sd=sd(breaks),SampleSize=n()) %>% pander()
+
+library(mosaic)
+library(pander)
+favstats(breaks~wool+tension,data=warpbreaks)
+#Graphical Summaries xyplots 3 plots
+xyplot(breaks ~ wool, data=warpbreaks, type=c("p","a"),
+       main="Type of Wool", col='blue', 
+       xlab="Type of Wool", ylab="Number of Warps that Broke")
+xyplot(breaks ~ tension, data=warpbreaks, type=c("p","a"),
+       main="Type of Tension", col='blue', 
+       xlab="Type of Tension", ylab="Number of Warps that Broke")
+xyplot(breaks ~ tension, data=warpbreaks, groups=wool, type=c("p","a"), 
+       main="Significance of the Interaction",
+       auto.key=list(corner=c(1,1)))
+
+## Inferential Statistics
+warp.aov <- aov(breaks ~ wool + tension + wool:tension, data=warpbreaks)
+summary(warp.aov) %>% pander()
+par(mfrow=c(1,2))
+plot(warp.aov, which=1:2, pch=16)
+
+```
+
+
+
+## Week 7 Day 2
+### Kruskall Wallis
+
+
+```{r}
+
+#Open your Statistics Notebook with Kruskal Wallis Page
+#Start with Overview - Similarities and Differennces Between Kruskal-Wallis and Wilcoxon Rank Sum Test
+#Hypotheses for Kruskal-Wallis
+#Go through explanation of Calculating of Test Statistic - Briefly show the six steps – in the explanation
+#Go through one of the examples
+
+#What can you conclude with a p-value from a Kruskal Wallis
+#Kruskal-Wallis Test and Wilcoxon Rank Sum test – Multiple samples and not just two – plus it is the non-parametric version of ANOVA
+#Hypotheses
+
+#Kruskal Wallis – go through a few examples below and in the end explain what three codes they need for Kruskal Wallis
+
+library(mosaic)
+library(pander)
+library(car)
+library(tidyverse)
+
+par(mfrow=c(1,1))
+boxplot(correct ~ condition, data=Friendly, col='grey', ylab="# of Correct Answers", main="# of Correct Answers by Method", xlab="Method")
+ggplot(data=Friendly, aes(x=condition, y=correct))+
+  geom_boxplot(fill=c("red","white","blue"))
+
+favstats(correct ~ condition, data=Friendly)[,-10] %>%pander(caption="# of Correct Answers by Method")
+sharky.aov <- aov(correct ~ condition,data=Friendly)
+summary(sharky.aov)
+#Checking Requirements
+par(mfrow=c(1,2))
+plot(sharky.aov,which=1)
+qqPlot(sharky.aov$residuals)
+kruskal.test(correct ~ condition, data=Friendly)
+
+#Use the Chickwt Example
+#Numerical and Graphical Summary
+par(mfrow=c(1,1))
+boxplot(weight~feed,data=chickwts)
+ggplot(data=chickwts, aes(x=feed, y=weight))+
+  geom_boxplot(fill=c("red","white","blue","red","white","blue"))
+pander(favstats(weight~feed,data=chickwts))
+#Analysis - One Way ANOVA
+chickwt.aov <- aov(weight~feed,data=chickwts)
+summary(chickwt.aov)
+#Checking Requirements
+par(mfrow=c(1,2))
+plot(chickwt.aov,which=1)
+qqPlot(sharky.aov$residuals)
+#Analysis - Kruskal Wallis
+kruskal.test(weight~feed,data=chickwts)
+
+```
+
+
+
+## Week 8 Day 1
+### Simple Linear?
+
+
+
+```{r}
+# 1) Students are to find some data to do a simple linear regression for Friday
+#Need to find two quantitative variables to determine a linear relationship
+# 2) Predicted final exam score
+
+#3) Regression Applet
+#a) Move the sliders on the right - What does "a" represent and what does "b" represent
+#a.	Height to Shoe Size
+#b.	Move sliders and a and b to try and fit the data.
+#c.	Best fit and compare to your line
+#d.	Residuals – squared residuals
+
+#4)	Discuss with neighbor and then with group
+#a.	Changing a? – Explaining the slope
+
+#Talk from Elder Gilbert
+# a) What does least squares regression line mean?
+
+# Open your Statistics-Notebook to the Linear Regression page.
+#Overview of Simple Linear Regression
+#R instructions for Simple Linear Regression and finding the y-intercept and slope
+#First one section of Explanation tab
+# c. Residual and Errors
+
+
+#Sample Code for Simple Linear Regression
+
+#Get a Data Set
+#Assumptions
+#Review some of the explanations
+library(car)
+library(DT)
+library(tidyverse)
+library(pander)
+library(mosaic)
+rm("Davis")
+## $$ Y_i = \beta_0 +  \beta_1x_i + \epsilon $$
+## $$ H_0: \beta_1 = 0 $$
+## $$ H_a: \beta_1 \neq 0 $$
+
+##Data Set 1
+
+
+Davis2 <- Davis %>%
+  filter(height>140)
+
+# Now create the model
+davis.lm <- lm(height ~ repht, data = Davis2)
+
+predict(davis.lm, newdata = data.frame(repht = 160), type = "response")
+
+summary(davis.lm)
+
+
+plot(height ~ repht, data = Davis2)
+abline(davis.lm,lty=1,lwd=1)
+library(tidyverse)
+ggplot(Davis2, aes(x = repht, y = height))+
+  geom_point()+
+  geom_smooth(method = "lm", formula = y~x, se = FALSE)
+
+DavisNA <- Davis2 %>%
+  filter(!is.na(repht),!is.na(height))
+cor(DavisNA$height,DavisNA$repht)
+
+par(mfrow=c(1,3))
+plot(davis.lm,which=1)
+library(car)
+qqPlot(davis.lm$residuals)
+plot(davis.lm$residuals)
+
+##Data Set 2
+kidsfeet.lm <- lm(length ~ width, data = KidsFeet)
+summary(kidsfeet.lm)
+
+plot(length ~ width, data = KidsFeet)
+abline(kidsfeet.lm,lty=1,lwd=1)
+ggplot(KidsFeet, aes(x = width, y = length))+
+  geom_point()+
+  geom_smooth(method = "lm", formula = y~x, se = FALSE)
+
+cor(KidsFeet$length,KidsFeet$width)
+
+par(mfrow=c(1,3))
+plot(kidsfeet.lm,which=1:2)
+plot(kidsfeet.lm$residuals)
+
+#You should leave class having been introduced to the following.
+#Have students talk with at least one other person.
+
+#The Mathematical Model of Regression (including the equation of the best-fit line).
+#How to interpret the slope and intercept in a Simple Linear Regression.
+#What a residual is in a regression.
+#How to measure the correlation of a regression.
+#How to diagnose the appropriateness of a regression for a given data set.
+#How to perform a regression in RStudio and locate the slope and intercept from the output summary.
+
+```
+
+
+
+## Week 8 Day 2
+### Simple Linear?
+
+
+```{r}
+#Go through the four questions in the class quiz with at least one other
+#person and use the simple linear regression section within the textbook
+#You can use the code below to practice items with a simple linear regression.
+
+#KidsFeet Data Analysis
+library(car)
+library(DT)
+library(tidyverse)
+library(pander)
+library(mosaic)
+# $$ Y_i = \beta_0 +  \beta_1x_i + \epsilon $$
+# $$ H_0: \beta_1 = 0 $$
+# $$ H_a: \beta_1 \neq 0 $$
+kidsfeet.lm <- lm(length ~ width, data = KidsFeet)
+summary(kidsfeet.lm)
+
+plot(length ~ width, data = KidsFeet)
+abline(kidsfeet.lm,lty=1,lwd=1)
+ggplot(KidsFeet, aes(x = width, y = length))+
+  geom_point()+
+  geom_smooth(method = "lm", formula = y~x, se = FALSE)
+
+par(mfrow=c(1,3))
+plot(kidsfeet.lm,which=1:2)
+plot(kidsfeet.lm$residuals)
+```
+
+
+
+## Week 9 Day 1
+### Multiple Linear?
+
+
+```{r}
+#Go through the example using the two line model.- see the teaching notes and Elder Gilbert's talk
+#1)	State the mathematical equation of two-line model
+#2) lm.2lines <-lm(mpg ~ qsec + am + qsec:am, data=mtcars) -  
+#   Use the example in the textbook to go through what the estimates mean:
+#3)	Interpret the intercept and slope of each of the two lines (the answer is below)
+#4)	Create a scatterplot using the code below
+
+#Full Model
+lm.2lines <-lm(mpg ~ qsec + am + qsec:am, data=mtcars)
+summary(lm.2lines)
+
+lm.2lines <-lm(mpg ~ qsec*am, data=mtcars)
+summary(lm.2lines)
+
+#Equal Slopes Model
+eqslopes <-lm(mpg ~ qsec + am, data=mtcars)
+summary(eqslopes)
+
+#Equal Intercepts Model
+eqint <-lm(mpg ~ qsec + qsec:am, data=mtcars)
+summary(eqint)
+
+lm.line <-lm(mpg ~ qsec, data=mtcars)
+summary(lm.line)
+
+#Create graph using the following code:
+par(mfrow=c(1,1))
+plot(mpg ~ qsec, data=mtcars, col=c("yellow","red")[as.factor(am)], pch=16, 
+bg="gray83", main="Two-lines Model using mtcars data set", cex.main=1)
+legend("topleft", legend=c("Baseline (am==0)", "Changed-line (am==1)"), 
+bty="n", lty=1, col=c("yellow","red"), cex=0.8)
+
+#get the "Estimates" automatically:
+# Then b will have 4 estimates:
+# b[1] is the estimate of beta_0: -9.0099
+# b[2] is the estimate of beta_1:  1.4385
+# b[3] is the estimate of beta_2: -14.5107
+# b[4] is the estimate of beta_3: 1.3214
+
+#Full Model  - redo graph first
+b <- coef(lm.2lines)
+curve(b[1] + b[2]*x, col="yellow", lwd=2, add=TRUE)  #baseline (in blue)
+curve((b[1] + b[3]) + (b[2] + b[4])*x, col="red", lwd=2, add=TRUE) #changed line (in orange)
+b
+#Equal Slopes Model - redo graph first
+b <- coef(eqslopes)
+curve(b[1] + b[2]*x, col="yellow", lwd=2, add=TRUE)  #baseline (in blue)
+curve((b[1] + b[3]) + (b[2])*x, col="red", lwd=2, add=TRUE) #changed line (in orange)
+#Equal Intercepts Model  - redo graph first
+b <- coef(eqint)
+curve(b[1] + b[2]*x, col="yellow", lwd=2, add=TRUE)  #baseline (in blue)
+curve((b[1]) + (b[2] + b[3])*x, col="red", lwd=2, add=TRUE) #changed line (in orange)
+# Then b will have 4 estimates:
+# b[1] is the estimate of beta_0: -9.0099
+# b[2] is the estimate of beta_1:  1.4385
+# b[3] is the estimate of beta_2: -14.5107
+# b[4] is the estimate of beta_3: 1.3214
+library(tidyverse)
+
+#Full Model Graph
+b <- coef(lm.2lines)
+ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
+  geom_point(pch=16) +
+  #geom_smooth(method="lm", se=F) + #easy way, but only draws the full interaction model. The manual way using stat_function (see below) is more involved, but more dynamic.
+  stat_function(fun = function(x) b[1] + b[2]*x, color="red") + #am==0 line
+  stat_function(fun = function(x) (b[1]+b[3]) + (b[2]+b[4])*x,color="yellow") + #am==1 line 
+  scale_color_manual(name="Transmission (am)", values=c("red","yellow")) +
+  labs(title="Two-lines Model using mtcars data set")
+
+#Equal Slopes Graph
+b <- coef(eqslopes)
+ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
+  geom_point(pch=16) +
+  #geom_smooth(method="lm", se=F) + #easy way, but only draws the full interaction model. The manual way using stat_function (see below) is more involved, but more dynamic.
+  stat_function(fun = function(x) b[1] + b[2]*x, color="red") + #am==0 line
+  stat_function(fun = function(x) (b[1]+b[3]) + (b[2])*x,color="yellow") + #am==1 line 
+  scale_color_manual(name="Transmission (am)", values=c("red","yellow")) +
+  labs(title="Two-lines Model using mtcars data set")
+
+#Equal Intercepts Graph
+b <- coef(eqint)
+ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
+  geom_point(pch=16) +
+  #geom_smooth(method="lm", se=F) + #easy way, but only draws the full interaction model. The manual way using stat_function (see below) is more involved, but more dynamic.
+  stat_function(fun = function(x) b[1] + b[2]*x, color="red") + #am==0 line
+  stat_function(fun = function(x) (b[1]) + (b[2]+b[3])*x,color="yellow") + #am==1 line 
+  scale_color_manual(name="Transmission (am)", values=c("red","yellow")) +
+  labs(title="Two-lines Model using mtcars data set")
+
+library(tidyverse)
+ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
+  geom_point(pch=16, bg="gray83") +
+  geom_smooth(method="lm", se=F) + #easy way, but only draws the full interaction model. The manual way using stat_function (see below) is more involved, but more dynamic.
+  scale_color_manual(name="Transmission (am)", values=c("red","yellow")) +
+  labs(title="Two-lines Model using mtcars data set")
+
+
+#Check the requirements to see if the model is good
+par(mfrow=c(1,3))
+plot(lm.2lines,which=1)
+library(car)
+qqPlot(lm.2lines$residuals)
+plot(lm.2lines$residuals)
+
+#Check for significance
+#qsec is significant  and the change of slope is significant
+
+```
+
+
+
+## Week 9 Day 2
+### Multiple Linear?
+
+
+```{r}
+#1)	Each student draw a sketch of the two-line model and explain to one other person
+#2) LaTex code for the model and null and alternative hypotheses
+# $$   Y_i = \beta_0 + \beta_1{X_{i1}} + \beta_2{X_{i2}} + \beta_3{x_{i1}}{x_{i2}} + \epsilon_i $$
+# $$ H_0: \beta_1 = 0 $$
+# $$ H_a: \beta_1 \neq 0 $$
+# $$ H_0: \beta_2 = 0 $$
+# $$ H_a: \beta_2 \neq 0 $$
+# $$ H_0: \beta_3 = 0 $$
+# $$ H_a: \beta_3 \neq 0 $$
+#2) Go through one example of the three and then have them try the other two:
+
+#Equal slopes
+
+par(mfrow=c(1,1))
+palette(c("skyblue","firebrick"))
+plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), main="1974 Motor Trend Cars", pch=16)
+equalslopes.lm <- lm(mpg~qsec + as.factor(am), data=mtcars)
+summary(equalslopes.lm)
+b <- coef(equalslopes.lm)
+b
+abline( b[1], b[2], col=palette()[1])
+abline( b[1]+b[3],b[2], col=palette()[2])
+legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="Transmission (am)", bty="n")
+#Note:  You may need to increase the graph window so the legend is in the right place.
+
+#Equal intercepts
+
+palette(c("skyblue","firebrick"))
+plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), main="1974 Motor Trend Cars", pch=16)
+equalint.lm <- lm(mpg~qsec + qsec:as.factor(am), data=mtcars)
+summary(equalint.lm)
+b <- coef(equalint.lm)
+abline( b[1], b[2], col=palette()[1])
+abline( b[1],b[2]+b[3], col=palette()[2])
+legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="Transmission (am)", bty="n")
+
+#Full Model
+
+palette(c("skyblue","firebrick"))
+plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), main="1974 Motor Trend Cars", pch=16)
+fullmodel.lm <- lm(mpg~qsec + as.factor(am) + as.factor(am):qsec, data=mtcars)
+summary(fullmodel.lm)
+b <- coef(fullmodel.lm)
+abline( b[1], b[2], col=palette()[1])
+abline( b[1]+b[3],b[2]+b[4], col=palette()[2])
+legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="Transmission (am)", bty="n")
+
+#Summarize your Findings
+#What have you learned? Discuss the following with your peers as you complete this activity.
+
+#Are all p-values significant in your lm(...) for the full model?
+  
+#How about for the equal intercepts model?
+  
+#How about for the equal slopes model?
+```
+
+
+
+## Week 10 Day 1
+### Logistic Regression?
+
+
+```{r}
+#Open Challenger example and see if you can watch a few minutes from the video
+#Look at the second paragraph on how the data was collected
+#Then go to the explanation of the logistic model and explain
+#a.	The model
+#b.	The log of the odds
+# install.packages("alr4")
+library(alr4)
+library(mosaic)
+library(DT)
+library(tidyverse)
+library(pander)
+
+
+chall.glm <- glm(fail>0 ~ temp, data=Challeng, family=binomial)
+summary(chall.glm) %>% pander()
+
+#Plotting the model
+plot( fail>0 ~ temp, data=Challeng, 
+      xlab="Outside Temperature at Time of Launch (Fahrenheit)",
+      col = c("green","red")[as.factor(fail>0)],
+      ylab='Probability of At least One O-ring Failing', pch=16, 
+      main="NASA Shuttle Launch Data from 1981 to 1985", xlim=c(30,85))
+
+#Getting the coeffiencts
+b <- coef(chall.glm)
+b
+curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
+#Testing the fit of the model
+library(ResourceSelection)
+library(tidyverse)
+library(pander)
+hoslem.test(chall.glm$y, chall.glm$fitted, g=6) %>% pander()
+#If multiple repeated x values then use the following:
+pchisq(20.32, 21, lower.tail=FALSE)
+
+#Prediciting a failure based on a temperature: 
+predict(chall.glm, newdata = data.frame(temp = 64.75), type = "response")
+#0.9996088
+
+#Interpreting exp(b1) shows that the odds of the o-rings failing for a given
+#launch decreases by a factor of 0.79 for every 1° F increase in temperature.
+#Said differently, the odds of an o-ring failure during launch decrease by 21% (1-0.79)
+#for every 1° F increase in temperature. (Also, from the reverse perspective,
+#every 1° F decrease in temperature increases the odds of a failed o-ring by a factor of
+exp(-0.2322)
+exp(b[2])
+#0.79
+
+#Add some notes to your Table of Contents about logistic regression.
+
+#Things to do Further:
+# 1) Probability on y-axis
+# 2) Binomial is using logit equation
+# 3) Checking requirements
+# 4) Explain of each of the items in the equation mean
+
+# crime.lm <- lm(crimerate ~ exams, data=andrew)
+# summary(crime.lm)
+# crime.glm <- glm((crimerate > 210.5)~exames, data=andrew, family=binomial)
+# summary(crime.glm)
+
+```
+
+
+
+## Week 10 Day 2
+### Logistic Regression?
+
+
+```{r}
+#WAIT TO ADD THIS WITHIN THE COURSE
+#Work on the KidsFeet Data
+#Do the model: 
+kidsfeet.glm <- glm(sex=="B" ~ length, data=KidsFeet, family=binomial)
+summary(kidsfeet.glm)
+#Plotting the model
+plot( sex=="B" ~ length, data=KidsFeet, xlab="Length",
+      col = c("red","lightblue")[as.factor(sex=="B")],
+      ylab="Probability of of a Child being a Boy", pch=16, 
+      main="KidsFeet Logistic Regression")
+b <- coef(kidsfeet.glm)
+b
+library(ResourceSelection)
+library(tidyverse)
+library(pander)
+curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
+hoslem.test(kidsfeet.glm$y, kidsfeet.glm$fitted, g=6) %>% pander()
+#Predict 
+predict(kidsfeet.glm, newdata = data.frame(length = 25), type = "response")
+#Calculating odds
+exp(b[2])
+#1.660921
+#Interpreting
+#If beta1 is significant then the explanatory variable does well in predicting 
+#the odds of a “success”.  But interpreting e(b1) is more important.  
+#As the length of a foot in cm goes up by one, the odds of the child being a boy
+#increases by a factor of 0.66 or 66%. 
+
+```
+
+
+
+## Week 12 Day 1
+### Chi-squared Test
+
+
+```{r}
+#1)	Open statistics notebook
+#2)	Go through the combine function in the textbook
+Fruitrow <- rbind( Apples = c(Good = 80, Bruised = 20, Rotten = 15), 
+                   Oranges = c(Good = 75, Bruised = 25, Rotten = 10) )
+Fruitrow
+#          Good Bruised Rotten
+#Apples    80      20     15
+#Oranges   75      25     10
+Fruitcolumn <- cbind( Apples = c(Good = 80, Bruised = 20, Rotten = 15), Oranges = c(Good = 75, Bruised = 25, Rotten = 10) )
+Fruitcolumn
+#         Apples Oranges
+#Good        80      75
+#Bruised     20      25
+#Rotten      15      10
+#5)	Go through an example of a barplot
+#6)	Note: Rows are legends, and columns are columns or bars
+barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
+barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
+# 9) Using data
+table(mtcars$am, mtcars$cyl)
+library(tidyverse)
+ggplot(data=mtcars,aes(x=as.factor(cyl),fill=as.factor(am)))+
+  geom_bar(stat = "count",position = position_dodge())+
+  scale_fill_manual(values = c("red","green"))+
+  labs(
+    x="cylinder",
+    fill="Transmission",
+    y="Number of Cars"
+  )
+#10) Using data
+barplot(table(mtcars$am, mtcars$cyl), beside=TRUE, 
+        col=c("red","green"), legend.text=TRUE, xlab="Cylinders")
+#Doing chisq analysis – chisq.test(x) using both data
+Fruitchi <- chisq.test(Fruitcolumn)
+Fruitchi
+mtchi <- chisq.test(table(mtcars$am, mtcars$cyl))
+mtchi
+#12)	Check the requirements using mychisq$expected and mean(mychisq$expected) for both data
+Fruitchi$expected
+#             Good Bruised   Rotten
+#Apples  79.22222      23 12.77778
+#Oranges 75.77778      22 12.22222 
+mtchi$expected
+#       4       6      8
+#0 6.53125 4.15625 8.3125
+#1 4.46875 2.84375 5.6875
+mean(mtchi$expected)
+#[1] 5.333333
+#13)	Do Pearsons residuals on both data – mychisq$residuals
+Fruitchi$residuals
+mtchi$residuals
+
+```
+
+
+
+## Week 12 Day 2
+### Chi-squared Test
+
+
+```{r}
+#1)	Open statistics notebook
+#2)	Go through the combine function in the textbook
+Fruitrow <- rbind( Apples = c(Good = 80, Bruised = 20, Rotten = 15), 
+                   Oranges = c(Good = 75, Bruised = 25, Rotten = 10) )
+Fruitrow
+#          Good Bruised Rotten
+#Apples    80      20     15
+#Oranges   75      25     10
+Fruitcolumn <- cbind( Apples = c(Good = 80, Bruised = 20, Rotten = 15), Oranges = c(Good = 75, Bruised = 25, Rotten = 10) )
+Fruitcolumn
+#         Apples Oranges
+#Good        80      75
+#Bruised     20      25
+#Rotten      15      10
+#5)	Go through an example of a barplot
+#6)	Note: Rows are legends, and columns are columns or bars
+barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
+barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
+# 9) Using data
+table(mtcars$am, mtcars$cyl)
+library(tidyverse)
+ggplot(data=mtcars,aes(x=as.factor(cyl),fill=as.factor(am)))+
+  geom_bar(stat = "count",position = position_dodge())+
+  scale_fill_manual(values = c("red","green"))+
+  labs(
+    x="cylinder",
+    fill="Transmission",
+    y="Number of Cars"
+  )
+#10) Using data
+barplot(table(mtcars$am, mtcars$cyl), beside=TRUE, 
+        col=c("red","green"), legend.text=TRUE, xlab="Cylinders")
+#Doing chisq analysis – chisq.test(x) using both data
+Fruitchi <- chisq.test(Fruitcolumn)
+Fruitchi
+mtchi <- chisq.test(table(mtcars$am, mtcars$cyl))
+mtchi
+#12)	Check the requirements using mychisq$expected and mean(mychisq$expected) for both data
+Fruitchi$expected
+#             Good Bruised   Rotten
+#Apples  79.22222      23 12.77778
+#Oranges 75.77778      22 12.22222 
+mtchi$expected
+#       4       6      8
+#0 6.53125 4.15625 8.3125
+#1 4.46875 2.84375 5.6875
+mean(mtchi$expected)
+#[1] 5.333333
+#13)	Do Pearsons residuals on both data – mychisq$residuals
+Fruitchi$residuals
+mtchi$residuals
+```
+
