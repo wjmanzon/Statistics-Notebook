@@ -590,7 +590,8 @@ xyplot(breaks ~ tension, data=warpbreaks, groups=wool, type=c("p","a"),
 # Inferential Statistics
 warp.aov <- aov(breaks ~ wool + tension + wool:tension, data=warpbreaks)
 
-summary(warp.aov) %>% pander()
+summary(warp.aov) %>% 
+  pander()
 
 par(mfrow=c(1,2))
 
@@ -629,7 +630,8 @@ favstats(correct ~ condition, data=Friendly)[,-10] %>%pander(caption="# of Corre
 sharky.aov <- aov(correct ~ condition,
                   data=Friendly)
 
-summary(sharky.aov)
+summary(sharky.aov) %>%
+  pander()
 
 # Checking Requirements
 par(mfrow=c(1,2))
@@ -657,7 +659,8 @@ pander(favstats(weight~feed,data=chickwts))
 chickwt.aov <- aov(weight~feed,
                    data=chickwts)
 
-summary(chickwt.aov)
+summary(chickwt.aov) %>%
+  pander()
 
 # Checking Requirements
 par(mfrow=c(1,2))
@@ -725,7 +728,8 @@ predict(davis.lm,
         newdata = data.frame(repht = 160), 
         type = "response")
 
-summary(davis.lm)
+summary(davis.lm) %>%
+  pander()
 
 plot(height ~ repht, 
      data = Davis2)
@@ -758,7 +762,8 @@ plot(davis.lm$residuals)
 kidsfeet.lm <- lm(length ~ width, 
                   data = KidsFeet)
 
-summary(kidsfeet.lm)
+summary(kidsfeet.lm) %>%
+  pander()
 
 plot(length ~ width, 
      data = KidsFeet)
@@ -811,7 +816,8 @@ plot(kidsfeet.lm$residuals)
 kidsfeet.lm <- lm(length ~ width, 
                   data = KidsFeet)
 
-summary(kidsfeet.lm)
+summary(kidsfeet.lm) %>%
+  pander()
 
 plot(length ~ width, 
      data = KidsFeet)
@@ -839,7 +845,7 @@ plot(kidsfeet.lm$residuals)
 ### Multiple Linear?
 
 ```{r}
-# Libraries used: TIDYVERSE, CAR
+# Libraries used: TIDYVERSE, CAR, PANDER
 # Dataset:        MTCARS
 
 # Go through the example using the TWO LINE MODEL.
@@ -853,28 +859,34 @@ plot(kidsfeet.lm$residuals)
 lm.2lines <-lm(mpg ~ qsec + am + qsec:am, 
                data=mtcars)
 
-summary(lm.2lines)
+summary(lm.2lines) %>%
+  pander()
 
 lm.2lines <-lm(mpg ~ qsec*am, 
                data=mtcars)
 
-summary(lm.2lines)
+summary(lm.2lines) %>%
+  pander()
 
 #Equal Slopes Model
 eqslopes <-lm(mpg ~ qsec + am, 
               data=mtcars)
 
-summary(eqslopes)
+summary(eqslopes) %>%
+  pander()
 
 #Equal Intercepts Model
 eqint <-lm(mpg ~ qsec + qsec:am, 
            data=mtcars)
 
-summary(eqint)
+summary(eqint) %>%
+  pander()
 
 lm.line <-lm(mpg ~ qsec, 
              data=mtcars)
-summary(lm.line)
+
+summary(lm.line) %>%
+  pander()
 
 #Create graph using the following code:
 par(mfrow=c(1,1))
@@ -906,7 +918,9 @@ curve((b[1] + b[3]) + (b[2] + b[4]) * x,
       col="red", 
       lwd=2, 
       add=TRUE) #changed line (in orange)
-b
+
+b %>%
+  pander()
 
 # Equal Slopes Model - redo graph first
 b <- coef(eqslopes)
@@ -1012,11 +1026,13 @@ plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), m
 
 equalslopes.lm <- lm(mpg~qsec + as.factor(am), data=mtcars)
 
-summary(equalslopes.lm)
+summary(equalslopes.lm) %>%
+  pander()
 
 b <- coef(equalslopes.lm)
 
-b
+b %>%
+  pander()
 
 abline( b[1], b[2], col=palette()[1])
 abline( b[1]+b[3],b[2], col=palette()[2])
@@ -1032,9 +1048,13 @@ plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), m
 
 equalint.lm <- lm(mpg~qsec + qsec:as.factor(am), data=mtcars)
 
-summary(equalint.lm)
+summary(equalint.lm) %>%
+  pander()
 
 b <- coef(equalint.lm)
+
+b  %>%
+  pander()
 
 abline( b[1], b[2], col=palette()[1])
 abline( b[1],b[2]+b[3], col=palette()[2])
@@ -1045,7 +1065,8 @@ palette(c("skyblue","firebrick"))
 plot(mpg ~ qsec, data=mtcars, col=as.factor(am), xlim=c(0,30), ylim=c(-30,40), main="1974 Motor Trend Cars", pch=16)
 
 fullmodel.lm <- lm(mpg~qsec + as.factor(am) + as.factor(am):qsec, data=mtcars)
-summary(fullmodel.lm)
+summary(fullmodel.lm) %>%
+  pander()
 
 b <- coef(fullmodel.lm)
 
@@ -1090,7 +1111,8 @@ plot( fail>0 ~ temp, data=Challeng,
 
 # Getting the coeffiencts
 b <- coef(chall.glm)
-b
+b %>%
+  pander()
 
 curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 
@@ -1099,10 +1121,12 @@ hoslem.test(chall.glm$y, chall.glm$fitted, g=6) %>%
   pander()
 
 # If multiple repeated x values then use the following:
-pchisq(20.32, 21, lower.tail=FALSE)
+pchisq(20.32, 21, lower.tail=FALSE)  %>%
+  pander()
 
 # Prediciting a failure based on a temperature: 
-predict(chall.glm, newdata = data.frame(temp = 64.75), type = "response")
+predict(chall.glm, newdata = data.frame(temp = 64.75), type = "response") %>%
+  pander()
 #0.9996088
 
 # Interpreting exp(b1) shows that the odds of the o-rings failing for a given launch decreases by a factor of 0.79 for every 1° F increase in temperature. Said differently, the odds of an o-ring failure during launch decrease by 21% (1-0.79) for every 1° F increase in temperature. (Also, from the reverse perspective, every 1° F decrease in temperature increases the odds of a failed o-ring by a factor of exp(-0.2322) exp(b[2])
@@ -1137,7 +1161,8 @@ kidsfeet.glm <- glm(sex=="B" ~ length,
                     data=KidsFeet, 
                     family=binomial)
 
-summary(kidsfeet.glm)
+summary(kidsfeet.glm) %>%
+  pander()
 
 #Plotting the model
 plot( sex=="B" ~ length, 
@@ -1149,7 +1174,8 @@ plot( sex=="B" ~ length,
       main="KidsFeet Logistic Regression")
 
 b <- coef(kidsfeet.glm)
-b
+b %>%
+  pander()
 
 curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 
@@ -1159,10 +1185,12 @@ hoslem.test(kidsfeet.glm$y, kidsfeet.glm$fitted, g=6) %>%
 # Predict 
 predict(kidsfeet.glm, 
         newdata = data.frame(length = 25), 
-        type = "response")
+        type = "response") %>%
+  pander()
 
 # Calculating odds
-exp(b[2])
+exp(b[2]) %>%
+  pander()
 #1.660921
 
 # Interpreting
@@ -1187,7 +1215,8 @@ Fruitrow <- rbind(
                                Bruised = 25, 
                                Rotten = 10)
                   )
-Fruitrow
+Fruitrow %>%
+  pander()
 #          Good Bruised Rotten
 # Apples    80      20     15
 # Oranges   75      25     10
@@ -1200,7 +1229,8 @@ Fruitcolumn <- cbind(
                                 Bruised = 25, 
                                 Rotten = 10) )
 
-Fruitcolumn
+Fruitcolumn %>%
+  pander()
 
 #         Apples Oranges
 #Good        80      75
@@ -1214,7 +1244,8 @@ barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
 barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
 
 # 9) Using data
-table(mtcars$am, mtcars$cyl)
+table(mtcars$am, mtcars$cyl) %>%
+  pander()
 
 ggplot(data=mtcars,aes(x=as.factor(cyl),
                        fill=as.factor(am)))+
@@ -1235,28 +1266,34 @@ barplot(table(mtcars$am, mtcars$cyl),
 
 # Doing chisq analysis – chisq.test(x) using both data
 Fruitchi <- chisq.test(Fruitcolumn)
-Fruitchi
+Fruitchi %>%
+  pander()
 
 mtchi <- chisq.test(table(mtcars$am, mtcars$cyl))
-mtchi
+mtchi %>%
+  pander()
 
 # 12)	Check the requirements using mychisq$expected and mean(mychisq$expected) for both data
-Fruitchi$expected
+Fruitchi$expected %>%
+  pander()
 #             Good Bruised   Rotten
 #Apples  79.22222      23 12.77778
 #Oranges 75.77778      22 12.22222 
 
-mtchi$expected
+mtchi$expected %>%
+  pander()
 #       4       6      8
 #0 6.53125 4.15625 8.3125
 #1 4.46875 2.84375 5.6875
 
-mean(mtchi$expected)
+mean(mtchi$expected) %>%
+  pander()
 #[1] 5.333333
 
 # 13)	Do Pearsons residuals on both data – mychisq$residuals
 Fruitchi$residuals
-mtchi$residuals
+mtchi$residuals %>%
+  pander()
 
 ```
 
@@ -1275,7 +1312,8 @@ Fruitrow <- rbind( Apples = c(Good = 80,
                    Oranges = c(Good = 75, 
                                Bruised = 25, 
                                Rotten = 10) )
-Fruitrow
+Fruitrow %>%
+  pander()
 
 #          Good Bruised Rotten
 #Apples    80      20     15
@@ -1287,7 +1325,8 @@ Fruitcolumn <- cbind( Apples = c(Good = 80,
                       Oranges = c(Good = 75, 
                                   Bruised = 25, 
                                   Rotten = 10) )
-Fruitcolumn
+Fruitcolumn %>%
+  pander()
 
 #         Apples Oranges
 # Good        80      75
@@ -1317,26 +1356,32 @@ barplot(table(mtcars$am, mtcars$cyl), beside=TRUE,
 
 # Doing chisq analysis – chisq.test(x) using both data
 Fruitchi <- chisq.test(Fruitcolumn)
-Fruitchi
+Fruitchi %>%
+  pander()
 mtchi <- chisq.test(table(mtcars$am, mtcars$cyl))
-mtchi
+mtchi %>%
+  pander()
 
 # 12)	Check the requirements using mychisq$expected and mean(mychisq$expected) for both data
-Fruitchi$expected
+Fruitchi$expected %>%
+  pander()
 
 #             Good Bruised   Rotten
 #Apples  79.22222      23 12.77778
 #Oranges 75.77778      22 12.22222 
 
-mtchi$expected
+mtchi$expected %>%
+  pander()
 #       4       6      8
 #0 6.53125 4.15625 8.3125
 #1 4.46875 2.84375 5.6875
 
-mean(mtchi$expected)
+mean(mtchi$expected) %>%
+  pander()
 #[1] 5.333333
   
 #13)	Do Pearsons residuals on both data – mychisq$residuals
 Fruitchi$residuals
-mtchi$residuals
+mtchi$residuals %>%
+  pander()
 ```
