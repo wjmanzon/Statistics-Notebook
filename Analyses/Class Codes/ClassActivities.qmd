@@ -1,7 +1,17 @@
 ---
-title: "All Class Activities"
-format: html
-editor: visual
+title: "Class Activities"
+author: "Wilson Jr Manzon"
+execute:
+  keep-md: true
+  df-print: paged
+  warning: false
+format:
+  html:
+    theme: cerulean
+    toc: true
+    toc-search: true
+    code-fold: false
+    code-line-numbers: true
 ---
 
 ```{r}
