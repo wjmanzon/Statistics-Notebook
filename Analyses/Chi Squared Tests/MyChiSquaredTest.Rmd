@@ -1,31 +1,142 @@
 ---
-title: "Chi Squared Test"
+title: "Chi Squared Test: Is Eye Color Independent of Hair Color?"
 output: 
   html_document:
     theme: cerulean
     code_folding: hide
 ---
 
-
-<!-- Directions
-
-Come up with a chi squared test analysis of your own creation. 
-
-* Write the Background and clearly state your question. Then collect data and perform the chi-squared test analysis in order to answer your question. Use the proper order of first, ask the question, then second, figure out the answer.
-
-* You can use data from 
-    - An R data set
-    - the internet (like weather data, Facebook data, or sports data) 
-    - your own experiment 
-    - your own observational study
-* However,     
-    - Do not violate the "Human Subjects Rules" of the university: http://www.byui.edu/executive-strategy-and-planning/institutional-research/research-and-assessments/research-and-surveys
-
-* You need a sample size large enough to meet the requirements of the chi squared test. Unfortunately, the sample size is completely dependent on the situation you select. A good rule of thumb is 10 observations per "combination-group" in your data.
-
--->
+```{r}
+pacman::p_load(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection)
+```
 
 
-## Background
+## 1. Context
+We're analyzing the HairEyeColor dataset in R to determine if there's a relationship between hair color and eye color. The dataset contains counts of individuals with different combinations of hair color (Black, Brown, Red, Blond) and eye color (Brown, Blue, Hazel, Green).
+
+```{r}
+# Load the HairEyeColor dataset  
+data(HairEyeColor)  
+  
+# Collapse across Sex dimension to get a 2-way table of Hair vs Eye color  
+hair_eye_table <- apply(HairEyeColor, c(1,2), sum)  
+print(hair_eye_table)  
+```
+
+The aggregated table shows the distribution of individuals across different hair and eye color combinations. For example, there are 68 individuals with black hair and brown eyes, while only 7 individuals have blond hair and brown eyes. This initial examination suggests potential patterns in the distribution that warrant further investigation.
+
+## 2. Hypothesis
+```{r}
+# Define our hypotheses  
+cat("Null Hypothesis (H0): Hair color and eye color are independent.\n")  
+cat("Alternative Hypothesis (Ha): Hair color and eye color are not independent.\n")  
+```
+
+Our null hypothesis posits that there is no association between hair color and eye color, meaning that knowing an individual's hair color provides no information about their likely eye color. The alternative hypothesis suggests that these traits are related, potentially due to genetic linkages or other biological factors.
+
+## 3. Graph
+
+```{r}
+# Convert the table to a data frame for ggplot  
+hair_eye_df <- as.data.frame.table(hair_eye_table)  
+names(hair_eye_df) <- c("Hair", "Eye", "Frequency")  
+  
+# Create a grouped bar chart  
+ggplot(hair_eye_df, aes(x = Hair, y = Frequency, fill = Eye)) +  
+  geom_bar(stat = "identity", position = "dodge") +  
+  labs(title = "Distribution of Hair and Eye Color",  
+       x = "Hair Color",   
+       y = "Frequency",  
+       fill = "Eye Color") +  
+  theme_minimal() +  
+  scale_fill_manual(values = c("Brown" = "brown", "Blue" = "blue",   
+                              "Hazel" = "darkgoldenrod3", "Green" = "green4"))  
+  
+# Create a proportional stacked bar chart to better show distributions  
+ggplot(hair_eye_df, aes(x = Hair, y = Frequency, fill = Eye)) +  
+  geom_bar(stat = "identity", position = "fill") +  
+  labs(title = "Proportional Distribution of Eye Color by Hair Color",  
+       x = "Hair Color",   
+       y = "Proportion",  
+       fill = "Eye Color") +  
+  theme_minimal() +  
+  scale_fill_manual(values = c("Brown" = "brown", "Blue" = "blue",   
+                              "Hazel" = "darkgoldenrod3", "Green" = "green4")) +  
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),  
+        axis.title = element_text(face = "bold"),  
+        legend.title = element_text(face = "bold"))  
+```
+
+The grouped bar chart shows the raw counts. I looks like brown hair is the most common overall, but the proportional stacked bar chart reveals that blond-haired individuals have a remarkably high proportion of blue eyes. 
+
+## 4. Chi-square Analysis
+
+```{r}
+# Perform Chi-square test  
+chi_test <- chisq.test(hair_eye_table)  
+
+chi_test %>%
+  pander()
+```
+
+The chi-square test yields a test statistic of 138.29 with 9 degrees of freedom and a __p-value less than 2.2e-16 (effectively zero).__ __This extremely small p-value provides overwhelming evidence against the null hypothesis of independence.__ The magnitude of the chi-square statistic indicates substantial deviations from the expected frequencies that would occur if hair and eye color were independent.
+
+## 5. Checking Requirements
+
+```{r}
+# Check if expected frequencies are at least 5  
+expected <- chi_test$expected  
+
+expected %>%
+  pander()
+```
+
+For a chi-square test to be valid, the expected frequencies in each cell should generally be at least 5. Our analysis confirms that all cells meet this requirement, with the smallest expected frequency being approximately 7.68 (for red hair and green eyes). This validates our use of the chi-square test for this dataset and strengthens the reliability of our conclusions.
+
+## 6. Chi-Square Residuals
+
+```{r}
+# Calculate standardized residuals  
+residuals <- chi_test$residuals  
+
+residuals %>% 
+  pander()
+
+  
+# Create a heatmap of the residuals  
+residuals_df <- as.data.frame.table(residuals)  
+names(residuals_df) <- c("Hair", "Eye", "Residual")  
+  
+ggplot(residuals_df, aes(x = Eye, y = Hair, fill = Residual)) +  
+  geom_tile() +  
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +  
+  labs(title = "Standardized Residuals from Chi-Square Test",  
+       x = "Eye Color",   
+       y = "Hair Color") +  
+  theme_minimal() +  
+  geom_text(aes(label = round(Residual, 1)), color = "black", size = 3)  
+```
+
+The standardized residuals provide a detailed picture of which specific hair-eye combinations contribute most to the overall chi-square statistic. Positive residuals indicate combinations that occur more frequently than expected under independence, while negative residuals indicate combinations that occur less frequently than expected.
+
+The heatmap visualization of these residuals reveals several notable patterns:
+
+- Black hair with brown eyes shows a strong positive association (residual = 4.4)
+- Blond hair with blue eyes shows an extremely strong positive association (residual = 7.0)
+- Blond hair with brown eyes shows a strong negative association (residual = -5.9)
+- Black hair with blue eyes shows a moderate negative association (residual = -3.1)
+- Red hair with green eyes shows a positive association (residual = 2.3)
+
+These patterns suggest specific genetic linkages between certain hair and eye color combinations.
+
+## 7. Conclusion
+__Based on our comprehensive analysis, we can confidently reject the null hypothesis of independence between hair color and eye color.__ The chi-square test yielded a p-value effectively equal to zero, indicating that the observed patterns in the data are extremely unlikely to have occurred by chance if hair and eye color were truly independent traits.
+
+The residual analysis provides deeper insights into the nature of these associations. __The strong positive association between blond hair and blue eyes, as well as between black hair and brown eyes, suggests genetic linkages between these traits.__ Conversely, the negative associations between blond hair and brown eyes, and between black hair and blue eyes, further support the conclusion that these traits are not randomly distributed in the population.
+
+These findings align with our understanding of human genetics, where certain combinations of physical traits tend to co-occur due to shared genetic factors. For instance, the genes that influence melanin production affect both hair and eye color, which explains some of the observed associations.
+
+__In summary, our analysis provides strong statistical evidence that hair color and eye color are not independent traits but are instead associated in patterns that reflect underlying genetic mechanisms.__ This conclusion is supported by multiple lines of evidence: the significant chi-square test, the clear patterns in the visualizations, and the specific associations highlighted by the residual analysis.
+
 
 
