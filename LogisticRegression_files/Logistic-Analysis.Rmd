@@ -1,0 +1,97 @@
+---
+title: "Logistic-Analysis"
+output: html_document
+---
+
+```{r}
+pacman::p_load(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection)
+```
+1) Background/Context
+In this analysis, we investigate how the property area (in m²) predicts whether a property is expensive (price above the median). The dataset comprises various features like property type, state, area, and price in USD.
+
+```{r}
+# Load the dataset  
+real_estate <- read.csv('mexico-real-estate-clean.csv', stringsAsFactors = TRUE)  
+  
+# Display the first few rows of the dataset  
+print(head(real_estate))  
+  
+# Create a binary outcome: 'expensive' is 1 if price is above the median, else 0  
+median_price <- median(real_estate$price_usd, na.rm = TRUE)  
+real_estate$expensive <- ifelse(real_estate$price_usd > median_price, 1, 0)  
+real_estate$expensive <- as.factor(real_estate$expensive)  
+```
+
+2) Hypothesis Testing with Model
+Null Hypothesis (H₀): The coefficient for area_m2 equals 0 (i.e., no effect on the probability of being expensive).
+Alternative Hypothesis (H₁): The coefficient for area_m2 is nonzero (i.e., area influences the probability).
+
+```{r}
+# Fit logistic regression model using area_m2 as the predictor  
+model <- glm(expensive ~ area_m2, data = real_estate, family = binomial)  
+summary_model <- summary(model)  
+```
+
+3) Graph
+The following plot shows the observed data and the fitted logistic regression curve.
+
+```{r}
+# Create a sequence for area_m2 and predict probabilities  
+area_seq <- seq(min(real_estate$area_m2, na.rm = TRUE), max(real_estate$area_m2, na.rm = TRUE), length.out = 100)  
+pred_frame <- data.frame(area_m2 = area_seq)  
+pred_frame$pred_prob <- predict(model, newdata = pred_frame, type = 'response')  
+  
+# Plot using ggplot2  
+plot_lr <- ggplot(real_estate, aes(x = area_m2, y = as.numeric(as.character(expensive)))) +   
+  geom_jitter(height = 0.05, alpha = 0.5) +   
+  geom_line(data = pred_frame, aes(x = area_m2, y = pred_prob), color = 'blue', size = 1) +   
+  labs(title = 'Logistic Regression: Probability of Expensive Property vs Area (m²)',  
+       x = 'Area (m²)',  
+       y = 'Probability of Being Expensive')  
+print(plot_lr)  
+```
+
+4) Analysis
+The following output displays the logistic regression model summary, including the estimated coefficients, standard errors, and p-values.
+```{r}
+# Display model summary using pander for formatting  
+pander(summary_model)  
+```
+5) Prediction
+We now predict the probability of a property with an area of 150 m² being expensive.
+```{r}
+# Predict probability for a new property with area of 150 m²  
+new_property <- data.frame(area_m2 = 150)  
+predicted_prob <- predict(model, newdata = new_property, type = 'response')  
+cat('Predicted probability for a property with 150 m² is:', predicted_prob, '\n')  
+```
+6) Explanation of exp
+In logistic regression, exp(b1) represents the odds ratio for a one-unit increase in the predictor variable. Here, it indicates the multiplicative change in the odds of a property being expensive when the property area increases by 1 m².
+```{r}
+cat("exp(b1), the odds ratio for area_m2, indicates the multiplicative change in the odds of a property being expensive for each additional m².\n")
+```
+7) Goodness of Fit Test
+We perform the Hosmer-Lemeshow goodness of fit test using the ResourceSelection package.
+
+```{r}
+hoslem_result <- hoslem.test(as.numeric(as.character(real_estate$expensive)), fitted(model), g = 10)  
+pander(hoslem_result)  
+```
+
+8) Conclusion/Future Studies
+The logistic regression analysis indicates that property area is a significant predictor of whether a property is expensive. Specifically, as the area increases, the probability of the property being expensive increases.
+
+Future studies could include:
+
+Additional predictors such as location, property type, and neighborhood characteristics.
+Investigation of interaction effects between predictors.
+Exploration of non-linear relationships.
+Analysis across different segments or regions.
+
+```{r}
+cat("Conclusion: The logistic regression model suggests that property area (m²) is a significant predictor of a property being expensive.\n")  
+cat("Future studies could incorporate additional predictors like location and property type to further improve model performance.\n")  
+```
+
+
+

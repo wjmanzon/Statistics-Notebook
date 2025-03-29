@@ -1,20 +1,161 @@
 ---
-title: "My Simple Logistic Regression"
+title: "Logistic Regression Analysis - Is Property Size a Good Predictor of Its Price?"
 output: 
   html_document:
     theme: cerulean
     code_folding: hide
+editor_options: 
+  chunk_output_type: console
 ---
 
-<!-- Find some data of interest to you that can be analyzed with a logistic regression. Complete your Logistic Regression Analysis using this file. 
-
-Hint, run the command 
-
-> data() 
-
-in your Console to see available datasets in R that you could use for this Analysis. You are also welcome to collect data yourself, or find other available datasets online for this Analysis. Just be careful to not use anyone else's "analysis" for this Analysis. Also, no conducting surveys unless you have IRB approval to do so. -->
-
-```{r, include=FALSE}
-library(mosaic)
-library(ResourceSelection) 
+```{r}
+pacman::p_load(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection)
 ```
+
+## 1) Background/Context
+The Mexican real estate market represents a diverse landscape of properties varying in size, location, and price. Understanding the factors that influence property prices is crucial for investors, developers, and policymakers. This analysis focuses specifically on how property area (measured in square meters) relates to property pricing. To facilitate this investigation, we've transformed the continuous price variable into a binary outcome: properties are classified as "expensive" if their price exceeds the median price in our dataset, and "not expensive" otherwise. This binary classification allows us to employ logistic regression to model the probability of a property being expensive based on its area.
+
+The dataset contains information on various properties across different Mexican states, including details such as property type, geographical coordinates, area, and price in USD. By examining the relationship between area and price classification, we aim to quantify how property size influences the likelihood of a property commanding a premium price in the Mexican market.
+
+```{r}
+# Load the dataset  
+real_estate <- read.csv('mexico-real-estate-clean.csv', stringsAsFactors = TRUE)  
+  
+# Display the first few rows of the dataset  
+head(real_estate) %>%
+  pander()
+  
+# Create a binary outcome: 'expensive' is 1 if price is above the median, else 0  
+median_price <- median(real_estate$price_usd, na.rm = TRUE)  
+real_estate$expensive <- ifelse(real_estate$price_usd > median_price, 1, 0)  
+real_estate$expensive <- as.factor(real_estate$expensive)  
+```
+
+## 2) Hypothesis Testing with Model
+In this analysis, we formulate the following hypotheses to test the relationship between property area and price classification:
+
+__Null Hypothesis (H₀):__ Property area has no effect on the probability of a property being classified as expensive. Mathematically, this means the coefficient for area_m2 in our logistic regression model equals zero.
+
+__Alternative Hypothesis (H₁):__ Property area influences the probability of a property being classified as expensive. In this case, the coefficient for area_m2 in our logistic regression model is non-zero.
+
+To test these hypotheses, we employ a logistic regression model with the binary outcome variable "expensive" as the dependent variable and property area (area_m2) as the independent variable. The logistic regression model is appropriate for this analysis because it models the probability of a binary outcome as a function of predictor variables.
+
+```{r}
+# Fit logistic regression model using area_m2 as the predictor  
+model <- glm(expensive ~ area_m2, data = real_estate, family = binomial)  
+summary_model <- summary(model)  
+```
+
+## 3) Graph
+The following visualization illustrates the relationship between property area and the probability of a property being classified as expensive:
+
+```{r warning = FALSE}
+# Create a sequence for area_m2 and predict probabilities  
+area_seq <- seq(min(real_estate$area_m2, na.rm = TRUE), max(real_estate$area_m2, na.rm = TRUE), length.out = 100)  
+pred_frame <- data.frame(area_m2 = area_seq)  
+pred_frame$pred_prob <- predict(model, newdata = pred_frame, type = 'response')  
+  
+# Plot using ggplot2  
+plot_lr <- ggplot(real_estate, aes(x = area_m2, y = as.numeric(as.character(expensive)))) +   
+  geom_jitter(height = 0.05, alpha = 0.5) +   
+  geom_line(data = pred_frame, aes(x = area_m2, y = pred_prob), color = 'blue', size = 1) +   
+  labs(title = 'Logistic Regression: Probability of Expensive Property vs Area (m²)',  
+       x = 'Area (m²)',  
+       y = 'Probability of Being Expensive')  
+print(plot_lr)  
+```
+
+The graph above presents a visual representation of our logistic regression model. The x-axis represents property area in square meters, while the y-axis shows the probability of a property being classified as expensive. Each point on the graph represents an individual property in our dataset, with points at y=1 representing expensive properties and points at y=0 representing non-expensive properties. The points have been jittered slightly on the y-axis to reduce overplotting and improve visibility.
+
+The blue curve represents the fitted logistic regression model, showing how the probability of a property being expensive increases with property area. The S-shaped curve is characteristic of logistic regression and indicates that the relationship between area and the probability of being expensive is not linear. For smaller properties, the probability increases slowly with increasing area. As property area reaches a middle range, the probability increases more rapidly, and then levels off again for very large properties. This suggests that while larger properties are generally more likely to be expensive, the effect of additional square meters diminishes for very large properties.
+
+The steepest part of the curve appears to be around 150-200 square meters, indicating that this is the range where property area has the strongest influence on price classification. Properties below approximately 100 square meters have a relatively low probability of being classified as expensive, while properties above 300 square meters have a high probability of being classified as expensive.
+
+## 4) Analysis
+The following output displays the detailed results of our logistic regression model:
+```{r}
+# Display model summary using pander for formatting  
+pander(summary_model)  
+```
+
+The logistic regression model results provide strong evidence of a significant relationship between property area and the probability of a property being classified as expensive. The coefficient for area_m2 is 0.01697, with a very small standard error of 0.0009097, resulting in a z-value of 18.65. The associated p-value is extremely small (1.214e-77), far below any conventional significance level. This provides overwhelming evidence to reject the null hypothesis that property area has no effect on the probability of a property being expensive.
+
+The intercept coefficient is -2.796, which represents the log odds of a property being expensive when the area is zero square meters. While a property with zero area is not practically meaningful, this intercept serves as the baseline for our model. The negative value indicates that very small properties have a low probability of being classified as expensive.
+
+The model's deviance statistics also support its effectiveness. The null deviance (2407 on 1735 degrees of freedom) represents how well the outcome variable is predicted by a model with only an intercept. The residual deviance (1886 on 1734 degrees of freedom) represents how well the outcome is predicted by our model including the area_m2 predictor. The substantial reduction in deviance (521 points) indicates that adding property area as a predictor significantly improves the model's fit compared to the intercept-only model.
+
+Overall, these results confirm that property area is a statistically significant predictor of whether a property is classified as expensive in the Mexican real estate market, with larger properties having higher probabilities of being expensive.
+
+## 5) Prediction
+To illustrate the practical application of our model, we predict the probability of a property with an area of 150 square meters being classified as expensive:
+
+```{r}
+# Predict probability for a new property with area of 150 m²  
+new_property <- data.frame(area_m2 = 150)  
+predicted_prob <- predict(model, newdata = new_property, type = 'response')  
+cat('Predicted probability for a property with 150 m² is:', predicted_prob, '\n')  
+```
+
+Our logistic regression model predicts that a property with an area of 150 square meters has approximately a 43.75% probability of being classified as expensive (i.e., having a price above the median price in our dataset). This prediction falls near the middle of the probability range, which aligns with our earlier observation that the 150-200 square meter range is where the steepest part of the logistic curve occurs.
+
+This prediction provides valuable insight for real estate stakeholders. For investors or developers considering properties around 150 square meters, this result suggests that such properties are nearly equally likely to fall into either the expensive or non-expensive category. Other factors beyond size, such as location, property condition, or amenities, may be particularly important in determining the final price point for properties in this size range. For properties significantly smaller than 150 square meters, the model would predict a lower probability of being expensive, while for properties significantly larger, the model would predict a higher probability.
+
+## 6) Explanation of exp
+
+
+```{r}
+cat("exp(b1), the odds ratio for area_m2, indicates the multiplicative change in the odds of a property being expensive for each additional m².\n")
+```
+
+In logistic regression, the coefficient b1 represents the change in log odds of the outcome for a one-unit increase in the predictor variable. The exponential of this coefficient, exp(b1), is the odds ratio, which is more intuitively interpretable.
+
+In our model, the coefficient for area_m2 is 0.01697, and therefore 
+exp(b1), is approximately 1.0171. This means that for each additional square meter of property area, the odds of a property being classified as expensive increase by about 1.71%. While this may seem like a small increase for a single square meter, the effect compounds for larger differences in property size. For example, a property that is 100 square meters larger than another would have odds of being expensive that are approximately 5.4 times higher (calculated as exp⁡(0.01697×100)≈5.4.
+
+This odds ratio provides a quantifiable measure of how property size influences price classification in the Mexican real estate market. It confirms that larger properties command significantly higher odds of being in the expensive category, which aligns with the general expectation that property size is a key determinant of price.
+
+## 7) Goodness of Fit Test
+To assess how well our logistic regression model fits the data, we perform the Hosmer-Lemeshow goodness of fit test:
+
+```{r}
+hoslem_result <- hoslem.test(as.numeric(as.character(real_estate$expensive)), fitted(model), g = 10)  
+pander(hoslem_result)  
+```
+
+The Hosmer-Lemeshow test is a statistical test for goodness of fit in logistic regression models. It works by grouping the data into deciles (10 groups) based on predicted probabilities, then comparing the observed and expected frequencies in each group using a chi-square test.
+
+In our analysis, the Hosmer-Lemeshow test yields a test statistic of 12.15 with 8 degrees of freedom and a p-value of 0.1444. Since this p-value is greater than the conventional significance level of 0.05, we fail to reject the null hypothesis that the model fits the data well. In other words, there is no significant evidence of a lack of fit in our model.
+
+This result suggests that our simple logistic regression model with property area as the sole predictor provides a reasonably good fit to the data. The observed frequencies of expensive properties in different area ranges are not significantly different from what our model predicts. This further validates our model and the relationship we've identified between property area and price classification.
+
+However, it's important to note that while the model fits the data adequately, the Hosmer-Lemeshow test does not indicate whether additional predictors might improve the model further. It only assesses the fit of the current model specification.
+
+## 8) Conclusion/Future Studies
+
+```{r}
+cat("Conclusion: The logistic regression model suggests that property area (m²) is a significant predictor of a property being expensive.\n")  
+cat("Future studies could incorporate additional predictors like location and property type to further improve model performance.\n")  
+```
+
+__Our logistic regression analysis provides compelling evidence that property area is a significant predictor of whether a property is classified as expensive in the Mexican real estate market.__ The model demonstrates that as property area increases, the probability of a property being expensive also increases, following a logistic curve. The relationship is statistically significant, with a p-value far below conventional significance levels, and the model passes the Hosmer-Lemeshow goodness of fit test.
+
+The McFadden's R-squared value of approximately 0.22 indicates that our model explains about 22% of the variation in the probability of a property being expensive. While this represents a substantial improvement over a model with no predictors, it also suggests that there are other factors beyond property area that influence property prices in the Mexican real estate market.
+
+This analysis has several practical implications. For buyers and investors, it quantifies how property size relates to price, which can inform investment decisions and budget planning. For developers, it provides insight into how much additional value might be associated with increasing property size. For policymakers, it offers a baseline understanding of one factor driving property values, which could inform housing policies and regulations.
+
+Despite these valuable insights, our analysis has limitations that future studies could address:
+
+- __Additional predictors:__ Future research could incorporate other property characteristics such as location (state, city, neighborhood), property type, number of bedrooms and bathrooms, age of the property, and proximity to amenities. These factors likely explain much of the remaining variation in property prices.
+
+- __Interaction effects:__ The relationship between property area and price might vary by location or property type. Future studies could explore interaction terms to capture these nuanced relationships.
+
+- __Non-linear relationships:__ While our logistic model captures some non-linearity in the relationship between area and the probability of being expensive, there might be more complex non-linear relationships that could be modeled using polynomial terms or splines.
+
+- __Market segmentation:__ The Mexican real estate market might be segmented, with different factors driving prices in different segments. Future analyses could stratify the data by property type, region, or price range to identify segment-specific patterns.
+
+- __Temporal dynamics:__ Real estate markets evolve over time. Longitudinal studies could track how the relationship between property area and price changes in response to economic conditions, policy changes, or other temporal factors.
+
+In conclusion, our analysis establishes property area as a significant predictor of property price classification in the Mexican real estate market, while also highlighting the need for more comprehensive models that incorporate additional factors. This study provides a foundation for future research that could further enhance our understanding of the complex dynamics of real estate valuation in Mexico.
+
+
+

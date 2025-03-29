@@ -30,9 +30,9 @@ KidsFeet %>%
 favstats(length~sex,data=KidsFeet)
 
 # Group 2
-barplot(table(KidsFeet$sex))
-
 table(KidsFeet$sex)
+
+barplot(table(KidsFeet$sex))
 
 # Group 3
 plot(length~width, data=KidsFeet)
