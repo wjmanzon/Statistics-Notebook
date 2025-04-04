@@ -1,5 +1,5 @@
 ---
-title: "Predicting House Prices in Mexico"
+title: "Linear Regression: Predicting House Prices in Mexico"
 output: 
   html_document:
     theme: cerulean
@@ -42,6 +42,8 @@ For our linear regression analysis, we establish the following hypotheses:
 
 - **Null Hypothesis (H₀)**: There is no linear relationship between property area and price (slope = 0).
 - **Alternative Hypothesis (Hₐ)**: There is a significant linear relationship between property area and price (slope ≠ 0).
+
+- **Level of Significance**: 0.05
 
 ## 3. Correlation and Scatterplot
 

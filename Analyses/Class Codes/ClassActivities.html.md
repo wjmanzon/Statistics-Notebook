@@ -3543,3 +3543,424 @@ mtchi$residuals %>%
 
 :::
 :::
+
+
+
+## Week 13 Day 1
+### Permutation Testing
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+# 1)	Go through the Lego Example in the textbook
+# 2)	The process of randomization testing involves three things:
+#  a.	Computing a test statistic of original data
+#  b.	Re-sample the data a bunch of times computing the test statistic each time. – This is how a distribution is created - 
+#   c.	Compute the p-value by determining the percentage of permuted test statistics that are extreme or more extreme than the observed test statistic
+# 3)	Note: a for loop allows for you to do a function or functions multiple times
+# 4)	Example
+
+# Step 1
+library(mosaic)
+
+myTest <- t.test(length~sex,data=KidsFeet, mu=0)
+myTest
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+
+	Welch Two Sample t-test
+
+data:  length by sex
+t = 1.9174, df = 36.275, p-value = 0.06308
+alternative hypothesis: true difference in means between group B and group G is not equal to 0
+95 percent confidence interval:
+ -0.04502067  1.61291541
+sample estimates:
+mean in group B mean in group G 
+       25.10500        24.32105 
+```
+
+
+:::
+
+```{.r .cell-code}
+observedTestStat <- myTest$statistic	
+observedTestStat
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+       t 
+1.917445 
+```
+
+
+:::
+
+```{.r .cell-code}
+# Step 2
+N <- 10000      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- t.test(sample(length) ~ sex, data = KidsFeet, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+hist(permutedTestStats, col="skyblue")
+abline(v=observedTestStat, col="red")
+```
+
+::: {.cell-output-display}
+![](ClassActivities_files/figure-html/unnamed-chunk-19-1.png){width=672}
+:::
+
+```{.r .cell-code}
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.031
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.969
+```
+
+
+:::
+
+```{.r .cell-code}
+2*sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.062
+```
+
+
+:::
+
+```{.r .cell-code}
+myTest <- t.test(extra ~ group, data = sleep, mu = 0)
+observedTestStat <- myTest$statistic
+observedTestStat
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        t 
+-1.860813 
+```
+
+
+:::
+
+```{.r .cell-code}
+N <- 2000
+permutedTestStats <- rep(NA, N)
+for (i in 1:N){
+  permutedTest <- t.test(sample(extra) ~ group, data = sleep, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+
+hist(permutedTestStats, col = "skyblue")
+abline(v = observedTestStat, col = "red", lwd = 3)
+```
+
+::: {.cell-output-display}
+![](ClassActivities_files/figure-html/unnamed-chunk-19-2.png){width=672}
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.9595
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.042
+```
+
+
+:::
+
+```{.r .cell-code}
+2*sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0.084
+```
+
+
+:::
+:::
+
+
+
+## Week 13 Day 2
+### Permutation Testing
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+# Go through three examples as part of the quiz
+# INDEPENDENT SAMPLES T TEST
+
+# Step 1
+library(mosaic)
+Mtcars2 <- filter(mtcars, cyl %in% c(4,8))
+myTest <- t.test(wt~cyl,data=Mtcars2, mu=0)
+observedTestStat <- myTest$statistic	
+observedTestStat
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+        t 
+-6.444974 
+```
+
+
+:::
+
+```{.r .cell-code}
+# Step 2
+N <- 2000      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- t.test(sample(wt) ~ cyl, data = Mtcars2, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+hist(permutedTestStats, col="skyblue",xlim = c(-7,4))
+abline(v=observedTestStat, col="red")
+```
+
+::: {.cell-output-display}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-1.png){width=672}
+:::
+
+```{.r .cell-code}
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 1
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+
+```{.r .cell-code}
+2*sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+
+```{.r .cell-code}
+# ANOVA
+# Step 1
+myTest <- aov(price~clarity,data=diamonds)
+observedTestStat <- summary(myTest)[[1]]$`F value`[1]
+observedTestStat
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 215.0193
+```
+
+
+:::
+
+```{.r .cell-code}
+# Step 2
+N <- 100      
+permutedTestStats <- rep(NA, N) 
+for (i in  1:N){
+  permutedTest <- aov(sample(price)~clarity,data=diamonds)
+  permutedTestStats[i] <- summary(permutedTest)[[1]]$`F value`[1]
+}
+hist(permutedTestStats)
+abline(v=observedTestStat)
+```
+
+::: {.cell-output-display}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-2.png){width=672}
+:::
+
+```{.r .cell-code}
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 1
+```
+
+
+:::
+
+```{.r .cell-code}
+2*sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+
+```{.r .cell-code}
+# LOGISTIC REGRESSION
+# Step 1
+myTest <- glm((sat>1000)~expend,data=SAT,family=binomial)
+observedTestStat <- summary(myTest)[[12]][2,3]
+observedTestStat
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] -2.499955
+```
+
+
+:::
+
+```{.r .cell-code}
+# Step 2
+N <- 100      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- glm((sample(sat))>1000~expend,data=SAT,family=binomial)
+  permutedTestStats[i] <- summary(permutedTest)[[12]][2,3]
+}
+hist(permutedTestStats)
+abline(v=observedTestStat, col="red")
+```
+
+::: {.cell-output-display}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-3.png){width=672}
+:::
+
+```{.r .cell-code}
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 1
+```
+
+
+:::
+
+```{.r .cell-code}
+sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+
+```{.r .cell-code}
+2*sum(permutedTestStats <= observedTestStat)/N
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 0
+```
+
+
+:::
+:::

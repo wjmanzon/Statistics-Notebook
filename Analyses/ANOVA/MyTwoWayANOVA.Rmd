@@ -28,7 +28,7 @@ library(car)
 library(tidyverse)
 
 # Load the data
-HSS <- read_csv("~/Statistics Notebook Github/Data/HighSchoolSeniors.csv")
+HSS <- read_csv("HighSchoolSeniors.csv")
 
 # Clean the data
 HSS2 <- HSS %>%
@@ -149,7 +149,7 @@ pander(interaction_summary)
 ```
 
 #### Visualization
-```{r}
+```{r warning = FALSE}
 interaction_summary <- HSS2 %>%
   group_by(Gender, Handed) %>%
   summarise(Mean_Reaction_time = mean(Reaction_time, na.rm = TRUE), .groups = "drop")
@@ -191,18 +191,33 @@ These results confirm that gender is the primary factor influencing reaction tim
 ---
 
 ### Assumptions
-Before interpreting the results, it's essential to check whether the assumptions of ANOVA were met.
+Before fully trusting the ANOVA results, we must verify two key assumptions:
 
-- **Normality of Residuals:** Verified using a Q-Q plot.
-- **Homogeneity of Variances:** Checked using a residuals plot.
+Normality of Residuals – checked with the Q-Q plot
+
+Homogeneity of Variances – checked with the residuals vs fitted plot
 
 ```{r}
 par(mfrow = c(1, 2))
 plot(anova_result, which = 1:2)
 ```
 
+__Linearity:__
+The Residuals vs Fitted plot shows a fairly horizontal red line (loess curve), but there are some noticeable patterns and clustering of residuals, suggesting a possible mild violation of linearity. The relationship between the predictors and the response may not be perfectly linear.
+
+__Homoscedasticity (Constant Variance):__
+The spread of residuals in the Residuals vs Fitted plot is not uniform. There appears to be some heteroscedasticity, as residuals vary in spread across different fitted values, especially with vertical clustering.
+
+__Normality of Residuals:__
+The Q-Q plot shows a significant deviation from the diagonal line in the upper tail (right side), indicating that the residuals are right-skewed and do not perfectly follow a normal distribution. This is especially concerning for inference-based procedures like confidence intervals or p-values.
+
 ---
 
 ### Conclusion
-This study explored the effects of gender and handedness on reaction time using a two-way ANOVA. The analysis revealed that gender significantly influences reaction time, with males exhibiting faster reaction times than females. Handedness, however, did not show a statistically significant effect, indicating that being ambidextrous, left-handed, or right-handed does not substantially impact reaction speed. Additionally, no significant interaction effect was found between gender and handedness, suggesting that the difference in reaction time between males and females is consistent regardless of handedness. Overall, the study highlights gender as a key factor affecting reaction time, while handedness plays a minimal role.
+
+This study investigated the effects of gender and handedness on reaction time using a two-way ANOVA. The results revealed that gender had a statistically significant effect on reaction time (F = 27.57, p < 0.001), with males exhibiting a lower median reaction time (0.355 seconds) compared to females (0.427 seconds). This suggests that males, on average, respond faster than females. In contrast, handedness did not show a statistically significant effect (F = 2.069, p = 0.1275). Although ambidextrous individuals recorded the lowest median reaction time (0.339 seconds), followed by right-handed (0.382 seconds) and left-handed individuals (0.389 seconds), these differences were not strong enough to be considered statistically meaningful. Additionally, the interaction between gender and handedness was not statistically significant (F = 0.1362, p = 0.8727), indicating that the influence of gender on reaction time does not vary by handedness.
+
+An evaluation of model assumptions supported the general validity of the ANOVA results. The Q-Q plot showed some deviation from normality, particularly in the upper tail, suggesting slight skewness in the residuals. The Residuals vs Fitted plot revealed non-constant variance, with some clustering and unequal spread of residuals. While these minor violations of normality and homoscedasticity could affect precision, ANOVA is relatively robust to such issues, especially with a sufficient sample size.
+
+In conclusion, the analysis provides strong evidence that gender influences reaction time, with males responding more quickly on average. However, handedness and the interaction between gender and handedness do not appear to significantly affect reaction time. Future studies may benefit from considering data transformations or alternative models to further validate these findings.
 

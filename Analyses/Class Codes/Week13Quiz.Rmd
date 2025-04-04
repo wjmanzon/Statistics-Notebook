@@ -1,0 +1,32 @@
+---
+title: "Week13Quiz"
+output: html_document
+---
+
+```{r}
+pacman::p_load(tidyverse, car, pander, mosaic)
+```
+
+
+```{r}
+#Step 1
+myTest <-  t.test(values ~ group, data = theData, mu = 0) 
+
+observedTestStat <- myTest$statistic
+
+#Step 2
+N <- 2000      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+   permutedTest <-   t.test(sample(values) ~ group, data = theData, mu = 0)
+
+   permutedTestStats[i]  <-  permutedTest$statistic 
+}
+hist(permutedTestStats)
+abline(v=observedTestStat)
+
+#Step 3
+sum(permutedTestStats >= observedTestStat)/N # positive
+sum(permutedTestStats <= observedTestStat)/N # newgative
+```
+

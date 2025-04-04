@@ -1395,3 +1395,133 @@ Fruitchi$residuals
 mtchi$residuals %>%
   pander()
 ```
+
+## Week 13 Day 1
+### Permutation Testing
+
+```{r}
+# 1)	Go through the Lego Example in the textbook
+# 2)	The process of randomization testing involves three things:
+#  a.	Computing a test statistic of original data
+#  b.	Re-sample the data a bunch of times computing the test statistic each time. – This is how a distribution is created - 
+#   c.	Compute the p-value by determining the percentage of permuted test statistics that are extreme or more extreme than the observed test statistic
+# 3)	Note: a for loop allows for you to do a function or functions multiple times
+# 4)	Example
+
+# Step 1
+library(mosaic)
+
+myTest <- t.test(length~sex,data=KidsFeet, mu=0)
+myTest
+observedTestStat <- myTest$statistic	
+observedTestStat
+
+# Step 2
+N <- 10000      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- t.test(sample(length) ~ sex, data = KidsFeet, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+hist(permutedTestStats, col="skyblue")
+abline(v=observedTestStat, col="red")
+
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+sum(permutedTestStats <= observedTestStat)/N
+2*sum(permutedTestStats >= observedTestStat)/N
+
+myTest <- t.test(extra ~ group, data = sleep, mu = 0)
+observedTestStat <- myTest$statistic
+observedTestStat
+
+N <- 2000
+permutedTestStats <- rep(NA, N)
+for (i in 1:N){
+  permutedTest <- t.test(sample(extra) ~ group, data = sleep, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+
+hist(permutedTestStats, col = "skyblue")
+abline(v = observedTestStat, col = "red", lwd = 3)
+
+sum(permutedTestStats >= observedTestStat)/N
+sum(permutedTestStats <= observedTestStat)/N
+2*sum(permutedTestStats <= observedTestStat)/N
+
+```
+
+## Week 13 Day 2
+### Permutation Testing
+
+```{r}
+# Go through three examples as part of the quiz
+# INDEPENDENT SAMPLES T TEST
+
+# Step 1
+library(mosaic)
+Mtcars2 <- filter(mtcars, cyl %in% c(4,8))
+myTest <- t.test(wt~cyl,data=Mtcars2, mu=0)
+observedTestStat <- myTest$statistic	
+observedTestStat
+
+# Step 2
+N <- 2000      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- t.test(sample(wt) ~ cyl, data = Mtcars2, mu = 0)
+  permutedTestStats[i] <- permutedTest$statistic
+}
+hist(permutedTestStats, col="skyblue",xlim = c(-7,4))
+abline(v=observedTestStat, col="red")
+
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+sum(permutedTestStats <= observedTestStat)/N
+2*sum(permutedTestStats <= observedTestStat)/N
+
+# ANOVA
+# Step 1
+myTest <- aov(price~clarity,data=diamonds)
+observedTestStat <- summary(myTest)[[1]]$`F value`[1]
+observedTestStat
+
+# Step 2
+N <- 100      
+permutedTestStats <- rep(NA, N) 
+for (i in  1:N){
+  permutedTest <- aov(sample(price)~clarity,data=diamonds)
+  permutedTestStats[i] <- summary(permutedTest)[[1]]$`F value`[1]
+}
+hist(permutedTestStats)
+abline(v=observedTestStat)
+
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+sum(permutedTestStats <= observedTestStat)/N
+2*sum(permutedTestStats >= observedTestStat)/N
+
+
+# LOGISTIC REGRESSION
+# Step 1
+myTest <- glm((sat>1000)~expend,data=SAT,family=binomial)
+observedTestStat <- summary(myTest)[[12]][2,3]
+observedTestStat
+
+# Step 2
+N <- 100      
+permutedTestStats <- rep(NA, N)
+for (i in  1:N){
+  permutedTest <- glm((sample(sat))>1000~expend,data=SAT,family=binomial)
+  permutedTestStats[i] <- summary(permutedTest)[[12]][2,3]
+}
+hist(permutedTestStats)
+abline(v=observedTestStat, col="red")
+
+# Step 3
+sum(permutedTestStats >= observedTestStat)/N
+sum(permutedTestStats <= observedTestStat)/N
+2*sum(permutedTestStats <= observedTestStat)/N
+
+```
+

@@ -86,11 +86,14 @@ datatable(Friendly, options=list(lengthMenu = c(3,10,30)))
 ## Analysis
 
 ### Introduction
-Understanding how information is best retained is a crucial area of research in cognitive psychology and education. Educators and researchers have long debated the effectiveness of different teaching methodologies in improving memory recall. This study examines two primary instructional approaches: the Meshed Approach, where new content is introduced while simultaneously reviewing previously learned material, and the Before Approach, where a thorough review of old material precedes the introduction of new content.
+Understanding how information is best retained is a major topic in psychology and education. This study compares two ways of reviewing and introducing new content to see which method helps people remember better. The two methods tested were the Meshed and Before approaches. We wanted to know: does one of these methods actually help students remember more?
 
-To evaluate the impact of these approaches on memory recall, participants were presented with a structured word recall task, where they were exposed to a series of words in a controlled environment. This experiment aimed to determine whether either approach offers a significant advantage in enhancing memory retention. The findings from this study have implications for optimizing learning strategies in academic and professional settings.
+To answer this question, we first used a Welch Two Sample t-test, which compares the means (averages) of two groups. The hypotheses were:
 
-### Hypotheses for the t test
+### Hypotheses 
+
+__Hypotheses for the t test__
+
 $$
   H_0: \mu_\text{meshed} = \mu_\text{before}
 $$
@@ -99,7 +102,24 @@ $$
   H_a: \mu_\text{meshed} \neq \mu_\text{before}
 $$
 
+Here, the null hypothesis (H0) says there's no difference in average recall scores between the two methods. The alternative hypothesis (Ha) says there is a difference. We used a significance level of \( \alpha = 0.05 \) for this test.
+
+Because the t-test assumes the data follows a normal distribution, we also used a Wilcoxon rank-sum test (also called the Mann-Whitney U test) to compare the medians instead of the means. This test doesn’t assume normality. The hypotheses for this test were:
+
+__Hypotheses for the Wilcoxon Test__
+
+$$
+  H_0: \text{difference in medians} = 0
+$$
+
+$$
+  H_a: \text{difference in medians} \neq 0
+$$
+We used the same significance level of \( \alpha = 0.05 \) for the Wilcoxon test.
+
 ### Graphical and Numerical Summaries
+
+We narrowed the dataset to include only the Before and Meshed groups. Then we examined the descriptive statistics.
 
 ```{r}
 Friendly <- Friendly %>%
@@ -113,6 +133,8 @@ Friendly <- Friendly %>%
 pander(favstats(correct~condition, data=Friendly))
 ```
 At a first glance, it looks like there is no difference in the two methods' means. Both of them have 36.6 mean.
+
+We also created a boxplot to visualize the distribution of scores.
 
 ```{r}
 # Independent Samples t-Test Graphic
@@ -132,7 +154,15 @@ statresult <- t.test(correct~condition, data=Friendly, mu=0, alternative="two.si
 
 pander(statresult)
 ```
-Oops... the p-value is 1, which is way higher than our significance level of 0.05, which indicates that their is no difference between the two.
+The Welch Two Sample t-test gave us:
+
+- Test statistic: 0
+
+- Degrees of freedom: 14.24
+
+- p-value: 1
+
+Since the p-value is much higher than our alpha level of 0.05, we fail to reject the null hypothesis. This means we have no reason to believe that the average recall is different between the two methods. Both groups had the exact same mean score of 36.6, so the t-test result makes sense.
 
 But wait, let's back up of a second here to make sure that doing a t-Test is appropriate for this analysis. To do that, let's take a look at the distribution of the data.
 
@@ -141,19 +171,7 @@ But wait, let's back up of a second here to make sure that doing a t-Test is app
 qqPlot(correct~condition, data=Friendly)
 ```
 
-It looks like some of our data points don't follow the blue line, which means the data is not normally distributed. In this case, let's do a Wilcoxon test for two independent samples, called Mann Whitney test.
-
-### Wilcoxon Test 
-
-__Hypotheses for the Wilcoxon__
-
-$$
-  H_0: \text{difference in medians} = 0
-$$
-
-$$
-  H_a: \text{difference in medians} \neq 0
-$$
+We used a QQ plot to check if the data followed a normal distribution. Some points did not follow the expected pattern, so the normality assumption may not hold. Because of this, we also ran a non-parametric test.
 
 
 __Wilcoxon Test__
@@ -163,13 +181,16 @@ wilcox_test <- wilcox.test(correct ~ condition, data = Friendly, exact = FALSE)
 
 pander(wilcox_test)
 ```
-After doing a Wilcoxon test, we got a p-value of 0.378 which is still higher than our significance level of 0.05.
+We ran the Wilcoxon test to compare the medians of the two groups. This test is better suited for data that might not be normally distributed.
+
+- p-value: 0.378
+
+Since this p-value is also higher than 0.05, we again fail to reject the null hypothesis. There's no strong evidence of a difference in medians between the two groups.
 
 ### Conclusions and Interpretations
-Because our our p-value is greater than our alpha, we fail to reject the null and conclude that there is insufficient evidence to conclude that there is difference between the Meshed and Before methods.
+Both the t-test and Wilcoxon test showed that there is no statistically significant difference between the Meshed and Before methods in terms of word recall. The t-test produced a p-value of 1, and the Wilcoxon test produced a p-value of 0.378. Both of these are greater than our significance level of 0.05, which means we do not have enough evidence to say one method is better than the other.
 
-The results of this study provide valuable insights into the relationship between learning methods and memory retention. While both the Meshed and Before approaches have their merits, the analysis did not indicate a significant difference in memory recall performance between the two methods. This suggests that other factors, such as individual learning styles and cognitive load, may play a more substantial role in retention.
+Whether you mix in old content while teaching new material or review everything first doesn’t seem to affect how much students remember—at least in this experiment. in terms of word recall. Whether you mix in old content while teaching new material or review everything first doesn’t seem to affect how much students remember—at least in this experiment.
 
-These findings highlight the importance of tailoring educational strategies to fit diverse learner needs rather than relying on a one-size-fits-all approach. Further research could explore how these approaches interact with different subject matters, age groups, and cognitive abilities to refine best practices for memory-based learning.
-
+This suggests that other factors—like a person’s learning style or how complex the material is—might matter more than the review method. Future studies could explore these factors to find more personalized learning strategies.
 
