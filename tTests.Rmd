@@ -16,7 +16,7 @@ library(car)
 
 ----
 
-Much of statistical inference concerns the location of the population mean $\mu$ for a given parametric distribution. Some of the most common approaches to making inference about $\mu$ utilize a test statistic that follows a t distribution.
+A lot of statistics is about figuring out where the average value (called $\mu$) of a whole group lies, based on a certain type of math model. One popular way to do this is by using a test number (called a test statistic) that follows something known as a t distribution.
 
 ----
 
@@ -28,7 +28,7 @@ Much of statistical inference concerns the location of the population mean $\mu$
 <a href="index.html#one-quantitative-response-variable-y"><img src="./Images/QuantY.png" width=35px;></a>
 </div>
 
-A one sample t test is used when there is a hypothesized value for the population mean $\mu$ of a single quantitative variable. 
+A one-sample t test is used when you have a guess (called a hypothesis) about the average value ($\mu$) of just one number-based variable.
 
 #### Overview 
 
@@ -43,13 +43,17 @@ The one sample t test can be used to answer questions like:
 
 **Requirements**
 
-This test is only appropriate when both of the following are satisfied.
+This test only works well if both of the following are true:
 
-(1) The sample is **representative** of the population. (Having a simple random sample is the best way to do this.)
+(1) The sample represents the whole group you're studying. The best way to make sure of this is to randomly choose people or things for the sample.
 
-(2) The sampling distribution of the sample mean $\bar{x}$ *can be assumed to be normal*. This is a safe assumption when either (a) the population data can be assumed to be normally distributed using a Q-Q Plot or (b) the size of the sample (n) that was taken from the population is large (at least n > 30, but "large" really depends on how badly the data is skewed).
+(2) The average of the sample, written as $\bar{x}$, can be assumed to follow a normal shape. This is usually okay if either:
 
-If the requirements listed above are satisfied, then the results of the test can be trusted to give meaningful inference about the population. If the requirements are not met, then that doesn't mean the results of the test are necessarily bad, but there is no guarantee that they are good.
+(a) The data from the whole group looks like a normal distribution when you check it using a Q-Q Plot, or
+
+(b) The sample size is pretty big (at least $n > 30$), though what counts as "big" depends on how uneven or skewed the data is.
+
+If these two things are true, then you can trust the test to give useful info about the whole group. If not, that doesn't automatically mean the test results are wrong—but you can’t be sure they’re right either.
 
 **Hypotheses** 
 
@@ -262,9 +266,9 @@ qqPlot(mtcars$mpg)
 
 <div style="padding-left:125px;">
 
-In many cases where it is of interest to test a claim about a single population mean $\mu$, the one sample t test is used. This is an appropriate decision whenever the sampling distribution of the sample mean can be assumed to be normal and the data represents a simple random sample from the population. 
+A one-sample t test is often used when you want to test a guess about the average ($\mu$) of a single group. It's the right choice when the average of the sample is expected to follow a normal shape, and the sample is a simple random pick from the whole group.
 
-In the figure below, the null hypothesis $H_0: \mu = \mu_0$ is represented by the normal distribution (gray) centered at $\mu_0$. Note that $\mu_0$ is just some specified number. This shows how the null hypothesis represents the assumption about the center of the distribution of the data. 
+In the picture below, the null hypothesis ($H_0: \mu = \mu_0$) is shown as a normal (bell-shaped) curve in gray, centered at $\mu_0$. Here, $\mu_0$ is just a number that we’re guessing might be the true average. This picture shows that the null hypothesis is basically saying, “we think the middle (average) of the data is at $\mu_0$.”
 
 ```{r, echo=FALSE}
 x <- seq(9,21, length.out=500)
@@ -286,19 +290,21 @@ x2 <- seq(14,22, length.out=100)
 lines(x2,dnorm(x2,sbar,sig), lty=2, col='skyblue')
 ```
 
-After a hypothesis (null) is established and an alternative hypothesis similarly declared, a simple random sample of data of size $n$ is obtained from the population of interest. In the plot above, this is depicted by the points (blue dots) which are centered around their sample mean $\bar{x}$.
+Once you’ve made a null hypothesis and also stated the alternative hypothesis, you take a simple random sample of size $n$ from the group you're studying. In the picture above, the blue dots show this sample, and they are centered around their average, written as $\bar{x}$.
 
-Above the points (blue dots) is shown a second normal distribution (blue dashed line) which represents the idea that the alternative hypothesis allows for a normal distribution which is potentially more consistent with the data than the one specified under the null hypothesis. 
+Above those dots is a second bell-shaped curve (the blue dashed line) that represents what the data might look like if the alternative hypothesis were true. It shows the idea that maybe this new curve fits the data better than the one we assumed with the null hypothesis.
 
-The role of the one sample t test is to measure the probability of a sample mean being as extreme or more extreme from the hypothesized value of $\mu_0$ than the one observed assuming the null hypothesis is true. This probability is of course the p-value of the test. This works because the sampling distribution of the sample mean has been assumed to be normal. In this case, the distribution of the test statistic t, 
+The job of the one-sample t test is to figure out how likely it is to get a sample average as far away from the guessed value ($\mu_0$) as the one we actually got—or even more extreme—if the null hypothesis is true. That likelihood is called the p-value.
+
+This all works because we’re assuming the average of the sample follows a normal distribution. That’s why the test uses something called the t distribution. In this case, the distribution of the test statistic t, 
 $$
   t = \frac{\bar{x}-\mu}{s/\sqrt{n}}
 $$  
-is known to follow a t distribution with $n-1$ degrees of freedom. (The mathematics that provide this result are phenominal! You can consult any advanced statistical textbook for the details.)
+is known to follow a t distribution with $n-1$ degrees of freedom. (The math behind this is amazing! You can check out an advanced stats textbook if you're curious about how it works.)
 
-The p-value of the one sample t test represents the probability that the test statistic $t$ is as extreme or more extreme than the one observed according to a t-distribution with $n-1$ degrees of freedom.
+The p-value in a one-sample t test is the chance of getting a t value as extreme—or more extreme—than the one from your sample, assuming it follows a t distribution with $n - 1$ degrees of freedom.
 
-If the probability (the p-value) is close enough to zero (smaller than $\alpha$) then it is determined that the most *plausible* hypothesis is the alternative hypothesis, and thus the null is "rejected" in favor of the alternative. 
+If this p-value is really small (smaller than a cutoff number called $\alpha$), then we say the alternative hypothesis seems more believable, and we reject the null hypothesis in its favor.
 
 </div>
 
@@ -316,7 +322,7 @@ If the probability (the p-value) is close enough to zero (smaller than $\alpha$)
 <a href="index.html#one-quantitative-response-variable-y"><img src="./Images/QuantY.png" width=35px;></a>
 </div>
 
-The paired samples t test is used when a value is hypothesized for the popluation mean of the differences, $\mu_d$, obtained from paired observations. 
+The paired samples t test is used when you have two related sets of data, and you’re testing a guess about the average difference between them, written as $\mu_d$.
 
 #### Overview
 
@@ -332,11 +338,16 @@ The Paired Samples t Test can be used to answer questions like:
 
 **Requirements**
 
-The test is only appropriate when both of the following are satisfied.
+This test only works well if both of the following are true:
 
-(1) The sample of differences is representative of the population differences.
+(1) The sample of differences (the differences between the paired values) should represent the whole population of differences.
 
-(2) The sampling distribution of the sample mean of the differences $\bar{d}$ ($\bar{x}$ of the differences) can be assumed to be normal. (This second requirement can be assumed to be satisfied when (a) the differences themselves can be assumed to be normal from a Q-Q Plot, or (b) when the sample size $n$ of the differences is large.)
+(2) The average of those differences, written as $\bar{d}$ (which is like $\bar{x}$ but for the differences), should be normally distributed.
+This is usually okay if:
+
+(a) A Q-Q Plot shows the differences look like a normal distribution, or
+
+(b) The number of differences ($n$) is large enough.
 
 
 **Hypotheses**
@@ -741,11 +752,14 @@ qqPlot(differences)
 
 <div style="padding-left:125px;">
 
-The paired samples t test considers the single mean of all the differences from the paired values. Thus, the paired samples t test essentially becomes a one sample t test on the differences between paired observations. Hence the requirement is that the sampling distribution of the sample mean of the differences, $\bar{d}$, can be assumed to be normally distributed. (It is also required that the obtained differences represent a simple random sample of the full population of possible differences.) 
+The paired samples t test looks at the average of all the differences between the paired values. So, it basically becomes a one-sample t test, but just on those differences.
+That’s why we still need to assume that the average of the differences, written as $\bar{d}$, follows a normal distribution.
+(Also, the differences should come from a simple random sample of all the possible differences.)
 
-The paired samples t test is similar to the independent samples t test scenario, except that there is extra information that allows values from one sample to be paired with a value from the other sample. This pairing of values allows for a more direct analysis of the change or difference individuals experience between the two samples. 
+This test is similar to the independent samples t test, but with a key difference: here, we have extra info that lets us pair each value in one group with a matching value in the other group.
+This pairing helps us clearly see the change or difference each individual went through between the two sets.
 
-The points in the plot below demonstrate how points are paired together, and the only thing of interest are the differences between the paired points.
+In the picture below, the dots show how values are matched up (paired), and what really matters are the differences between those pairs.
 
 ```{r, echo=FALSE}
 x <- seq(9,21, length.out=500)
@@ -791,7 +805,7 @@ for (i in 1:length(s1)){
 <a href="index.html#quantitative-y-categorical-x-2-groups"><img src="./Images/QuantYQualXg2.png" width=62px;></a>
 </div>
 
-The independent samples t test is used when a value is hypothesized for the difference between two (possibly) different population means, $\mu_1 - \mu_2$. 
+The independent samples t test is used when you want to test a guess about the difference between the averages of two different groups, written as $\mu_1 - \mu_2$.
 
 
 #### Overview 
@@ -808,11 +822,16 @@ The Independent Samples t Test can be used to answer questions like:
 
 **Requirements**
 
-The test is only appropriate when both of the following are satisfied.
+This test only works well if both of the following are true:
 
-(1) Both samples are **representative** of the population. (Simple random samples are the best way to do this.) 
+(1) Both samples should represent the whole population. The best way to make sure of this is to use simple random samples.
 
-(2) The sampling distribution of the difference of the sample means $(\bar{x}_1 - \bar{x}_2)$ *can be assumed to be normal*. (This is a safe assumption when the sample size of each group is $30$ or greater or when the population data from each group can be assumed to be normal with a Q-Q Plot.)
+(2) The difference between the sample averages, written as $(\bar{x}_1 - \bar{x}_2)$, should be normally distributed.
+This is usually safe to assume if:
+
+- Each group has at least 30 data points, or
+
+- The data from each group looks normal when checked with a Q-Q Plot.
 
 **Hypotheses**
 
@@ -1214,7 +1233,15 @@ qqPlot(KidsFeet$length[KidsFeet$sex=="G"])
 
 <div style="padding-left:125px;">
 
-The first figure below depicts the scenario where the difference in means of two separate normal distributions is non-zero. In other words, the two distributions have different means, $\mu_1$ and $\mu_2$, respectively. It is worth emphasizing that the values of $\mu_1$ and $\mu_2$ are unknown to the researcher. The only thing observed are two separate samples of data (blue dots) of sizes $n_1$ and $n_2$, respectively. For the scenario depicted, the null hypothesis that $H_0: \mu_1 - \mu_2 = 0$ (i.e., that $\mu_1=\mu_2$) is rejected in favor of the alternative that $H_a: \mu_1 - \mu_2 \neq 0$ based on the sample data observed. This dicision would be correct as the true difference in means, $\mu_1-\mu_2$ is non-zero in this case.
+The first picture below shows a case where the two normal curves (distributions) have different averages, called $\mu_1$ and $\mu_2$.
+That means the real difference between the two groups is not zero.
+
+It's important to know that we don’t actually know the exact values of $\mu_1$ and $\mu_2$. All we have are two separate samples of data (the blue dots) with sizes $n_1$ and $n_2$.
+
+In this example, the null hypothesis—$H_0: \mu_1 - \mu_2 = 0$ (which means we think both group averages are equal)—gets rejected.
+Instead, we go with the alternative hypothesis: $H_a: \mu_1 - \mu_2 \neq 0$, which says the averages are not equal.
+
+That’s the right choice in this case, because the true difference between the two group averages ($\mu_1 - \mu_2$) really isn’t zero.
 
 ```{r, echo=FALSE}
 x <- seq(9,21, length.out=500)
@@ -1246,7 +1273,11 @@ text(sbar1+.25, 0.04, expression(bar(x)[1]), col='skyblue3')
 text(sbar2+.25, 0.04, expression(bar(x)[2]), col='skyblue')
 ```
 
-When the null hypothesis is true, that $H_0: \mu_1 - \mu_2 = 0$, then it follows that the test statistic $t$ that is obtained by measuring the distance between the two sample means, $\bar{x}_1-\bar{x}_2$, and appropriately standardizing the result follows a $t$ distribution with degrees of freedom less than or equal to $n_1+n_2-2$. Thus, the $p$-value of the independent samples $t$ test is obtained by using this $t$ distribution to calculate the probability of a test statistic $t$ being as extreme or more extreme than the one observed assuming the null hypothesis is true. 
+When the null hypothesis is true, meaning $H_0: \mu_1 - \mu_2 = 0$ (the group averages are equal), then the test statistic $t$—which is found by comparing the two sample means ($\bar{x}_1 - \bar{x}_2$) and adjusting for sample size—follows a t distribution.
+
+The number of degrees of freedom is less than or equal to $n_1 + n_2 - 2$.
+
+The p-value in the independent samples t test comes from this t distribution. It tells us the chance of getting a test statistic as extreme—or even more extreme—than the one we got, assuming the null hypothesis is true. 
 $$
   t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2)}{\sqrt{s_1/n_1+s_2/n_2 }}
 $$

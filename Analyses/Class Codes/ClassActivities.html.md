@@ -608,6 +608,7 @@ ggplot(Kids3, aes(x=season,fill=sex))+
 ## Week 4 Day 1
 
 ### T-Test
+One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 
 
@@ -725,6 +726,7 @@ mean in group B mean in group G
 ## Week 4 Day 2
 
 ### T-Test
+One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 
 
@@ -765,7 +767,18 @@ Table: One Sample t-test: `KidsFeet$length`
 # We have sufficient evidence to say that the mean is different than 28.
 
 # Note: Because of the Central Limit Theorem, we can assume the distribution of sample means is normal because we have a large sample size (n>30).
+```
+:::
 
+
+
+Paired sample t test: This test is typically used when you have two related measurements on the same subject or matched subjects, and you want to compare the means of these two measurements.
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
 # PAIRED T-TEST
 KidsFeet3 <- KidsFeet %>% 
   mutate(width3 = 3*width,difference = length -width3) 
@@ -826,7 +839,18 @@ mean of x
 # We have sufficient evidence to say that there is a difference between (width*3) and length.
   
 # Note: Because of the Central Limit Theorem, we can assume the distribution of sample means is normal because we have a large sample size (n>30).
-  
+```
+:::
+
+
+
+Independent sample t test: The sources describe a situation where you have a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups ("A" and "B"). An independent samples t-test would be used to compare the means of the quantitative variable between these two independent groups.
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
 # INDEPENDENT SAMPLES T-TEST
 t.test(length~sex, 
        data=KidsFeet, 
@@ -870,7 +894,7 @@ qqPlot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -888,7 +912,7 @@ qqPlot(KidsFeet3$length-KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-2.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -906,7 +930,7 @@ qqPlot(length~sex,data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -916,7 +940,7 @@ boxplot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -925,7 +949,7 @@ ggplot(data=KidsFeet, aes(x=length))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -934,7 +958,7 @@ boxplot(KidsFeet3$length-KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -943,7 +967,7 @@ ggplot(data=KidsFeet3, aes(x=difference))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-7.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-7.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -952,7 +976,7 @@ boxplot(length~sex,data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-8.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-8.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -961,7 +985,7 @@ ggplot(data=KidsFeet, aes(y=length, x=sex))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-6-9.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-8-9.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1026,6 +1050,13 @@ pander(favstats(length~sex,data=KidsFeet))
 
 ### Wilcoxon Test
 
+Wilcoxon Signed Rank test for one sample: The sources do not specifically mention non-parametric alternatives like the Wilcoxon tests in the main descriptions of data scenarios. This test is a non-parametric alternative to the one-sample t-test, used when the data are not normally distributed.
+
+
+Wilcoxon Signed Rank test for paired: Similar to the paired sample t-test, the sources do not explicitly describe a paired data scenario in the context of non-parametric tests. This test is a non-parametric alternative to the paired t-test.
+
+
+
 
 
 ::: {.cell}
@@ -1064,7 +1095,7 @@ qqPlot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-7-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1101,7 +1132,19 @@ alternative hypothesis: true location is not equal to 25
 # Ha: median neq 25
 # What does the alternative hypothesis means?
 # Alternative hypothesis: true location shift is not equal to 0
+```
+:::
 
+
+
+
+Wilcoxon Rank sum test for independent: The sources describe a situation with a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups. The Wilcoxon Rank Sum test (also known as the Mann-Whitney U test) is a non-parametric alternative to the independent samples t-test used when the assumptions of the t-test are not met.
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
 # Five steps of doing the Wilcoxon RANKED-SUM test (Mann-Whitney)
 
 t.test(length ~ sex, 
@@ -1187,6 +1230,8 @@ alternative hypothesis: true location shift is not equal to 0
 
 ### One Way ANOVA
 
+One Way ANOVA: The sources describe a scenario with a single quantitative variable of interest (Y) and a categorical (qualitative) variable (X) with three or more groups. One-way ANOVA is used to compare the means of the quantitative variable across these multiple independent groups.
+
 
 
 ::: {.cell}
@@ -1208,7 +1253,7 @@ boxplot(Wind~Month,data=airquality)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1217,7 +1262,7 @@ ggplot(data=airquality, aes(x=as.factor(Month), y=Wind))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1273,7 +1318,7 @@ plot(airq.aov,which=1:2)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1289,7 +1334,7 @@ boxplot(weight~feed,data=chickwts)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1298,7 +1343,7 @@ ggplot(data=chickwts, aes(y=weight, x=feed))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1312,7 +1357,7 @@ xyplot(weight ~ feed,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1371,7 +1416,7 @@ plot(chickwt.aov,which=1:2)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-7.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-7.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1489,7 +1534,7 @@ xyplot(breaks ~ wool, data=warpbreaks, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-8.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-8.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1499,7 +1544,7 @@ xyplot(breaks ~ tension, data=warpbreaks, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-9.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-9.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1509,7 +1554,7 @@ xyplot(breaks ~ tension, data=warpbreaks, groups=wool, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-10.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-10.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1546,15 +1591,21 @@ plot(warp.aov, which=1:2, pch=16)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-11.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-12-11.png){width=672}
 :::
 :::
 
+
+
+Two Way ANOVA: The sources describe a situation with a single quantitative variable of interest (Y) and multiple categorical (qualitative) variables (X1, X2, etc.), each with at least two levels. Two-way ANOVA is used to examine the effects of two or more categorical independent variables on a single quantitative dependent variable, as well as their interactions. The example mentions "gender" (e.g., "boy" and "girl") and "Classrank" (e.g., "Freshman", "Sophomore", and "Junior") as potential categorical variables. The notebook has a section titled "My Two-way ANOVA", suggesting this topic is covered elsewhere within the full notebook.
+
+NEED EXAMPLE
 
 
 ## Week 7 Day 2
 
 ### Kruskal Wallis
+Kruskal Wallis Test: The sources do not specifically mention this test in the main descriptions of data scenarios. The Kruskal-Wallis test is a non-parametric alternative to one-way ANOVA, used when the assumptions of ANOVA are not met and you want to compare the medians of a quantitative variable across three or more independent groups.
 
 
 
@@ -1580,7 +1631,7 @@ boxplot(correct ~ condition, data=Friendly, col='grey', ylab="# of Correct Answe
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1589,7 +1640,7 @@ ggplot(data=Friendly, aes(x=condition, y=correct))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1647,7 +1698,7 @@ qqPlot(sharky.aov$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-3.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1687,7 +1738,7 @@ boxplot(weight~feed,data=chickwts)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1696,7 +1747,7 @@ ggplot(data=chickwts, aes(x=feed, y=weight))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1758,7 +1809,7 @@ qqPlot(sharky.aov$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-10-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-6.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1794,8 +1845,8 @@ Kruskal-Wallis chi-squared = 37.343, df = 5, p-value = 5.113e-07
 
 ## Week 8 Day 1
 
-### Simple Linear?
-
+### Simple Linear Regression
+Simple Linear Regression: The sources describe a scenario with a single quantitative variable of interest (Y) and another single quantitative variable of interest (X) used to explain Y. Simple linear regression is used to model the linear relationship between these two quantitative variables. The notebook has a section titled "My Simple Linear Regression", indicating further content on this topic.
 
 
 ::: {.cell}
@@ -1897,7 +1948,7 @@ abline(davis.lm,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-11-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1909,7 +1960,7 @@ ggplot(Davis2, aes(x = repht, y = height))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-11-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1952,7 +2003,7 @@ plot(davis.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-11-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2018,7 +2069,7 @@ par(mfrow=c(1,3))
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-11-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2028,7 +2079,7 @@ plot(kidsfeet.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-11-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2045,7 +2096,7 @@ plot(kidsfeet.lm$residuals)
 
 ## Week 8 Day 2
 
-### Simple Linear?
+### Simple Linear
 
 
 
@@ -2103,7 +2154,7 @@ abline(kidsfeet.lm,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2115,7 +2166,7 @@ ggplot(KidsFeet, aes(x = width, y = length))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2128,7 +2179,7 @@ plot(kidsfeet.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-3.png){width=672}
 :::
 :::
 
@@ -2136,7 +2187,8 @@ plot(kidsfeet.lm$residuals)
 
 ## Week 9 Day 1
 
-### Multiple Linear?
+### Multiple Linear
+Multiple Linear Regression: The sources describe a scenario with a single quantitative variable of interest (Y) and multiple x-variables (X1, X2, etc.), which can be quantitative or potentially categorical (though not explicitly stated here but common in regression) used to explain Y. Multiple linear regression extends simple linear regression to model the linear relationship between a quantitative dependent variable and two or more independent variables.
 
 
 
@@ -2389,7 +2441,7 @@ curve((b[1]) + (b[2] + b[3]) * x,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2411,7 +2463,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2428,7 +2480,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2444,7 +2496,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2456,7 +2508,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2482,7 +2534,7 @@ plot(lm.2lines$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2495,7 +2547,7 @@ plot(lm.2lines$residuals)
 
 ## Week 9 Day 2
 
-### Multiple Linear?
+### Multiple Linear
 
 
 
@@ -2576,7 +2628,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2643,7 +2695,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2692,7 +2744,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2708,7 +2760,8 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 
 ## Week 10 Day 1
 
-### Logistic Regression?
+### Logistic Regression
+Simple Logistic Regression: The sources describe a scenario where the response variable (Y) is a single categorical (qualitative) variable with two possible values (1 for success, 0 for failure) and the explanatory variable (X) is quantitative. Simple logistic regression is used to model the probability of a binary outcome (Y) based on a quantitative predictor (X). The notebook has a section titled "My Logistic Regression", suggesting more details are available.
 
 
 
@@ -2786,7 +2839,7 @@ curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-15-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-18-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2861,7 +2914,9 @@ predict(chall.glm, newdata = data.frame(temp = 64.75), type = "response") %>%
 
 ## Week 10 Day 2
 
-### Logistic Regression?
+### Logistic Regression
+
+Multiple Logistic Regression: The sources describe a scenario where the response variable (Y) is a single categorical (qualitative) variable with two possible values (1 for success, 0 for failure) and there are multiple explanatory variables (X1, X2, etc.), which can be quantitative or categorical. Multiple logistic regression extends simple logistic regression to model the probability of a binary outcome based on multiple predictor variables.
 
 
 
@@ -2936,7 +2991,7 @@ curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-19-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3006,6 +3061,8 @@ exp(b[2]) %>%
 ## Week 12 Day 1
 
 ### Chi-squared Test
+
+Chi Squared Test: The sources describe a scenario where both the response variable (Y) and the explanatory variable (X) are categorical (qualitative). Chi-squared tests are used to examine the association between two or more categorical variables. The notebook mentions "Chi Squared Tests" and "My Chi-sqaured Test", implying further discussion within the notebook.
 
 
 
@@ -3086,7 +3143,7 @@ barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3094,7 +3151,7 @@ barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3129,7 +3186,7 @@ ggplot(data=mtcars,aes(x=as.factor(cyl),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3142,7 +3199,7 @@ barplot(table(mtcars$am, mtcars$cyl),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3358,7 +3415,7 @@ barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-18-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3366,7 +3423,7 @@ barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-18-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3398,7 +3455,7 @@ ggplot(data=mtcars,aes(x=as.factor(cyl),fill=as.factor(am)))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-18-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3408,7 +3465,7 @@ barplot(table(mtcars$am, mtcars$cyl), beside=TRUE,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-18-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3549,6 +3606,8 @@ mtchi$residuals %>%
 ## Week 13 Day 1
 ### Permutation Testing
 
+Permutation Test: The sources mention "Randomization", which is a principle underlying permutation tests. Permutation tests are non-parametric tests that involve rearranging the observed data to assess the likelihood of obtaining the observed results under a null hypothesis. They can be applied to various scenarios.
+
 
 
 ::: {.cell}
@@ -3616,7 +3675,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-19-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3627,7 +3686,7 @@ sum(permutedTestStats >= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.031
+[1] 0.0348
 ```
 
 
@@ -3640,7 +3699,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.969
+[1] 0.9652
 ```
 
 
@@ -3653,7 +3712,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.062
+[1] 0.0696
 ```
 
 
@@ -3688,7 +3747,7 @@ abline(v = observedTestStat, col = "red", lwd = 3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-19-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3711,7 +3770,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.042
+[1] 0.041
 ```
 
 
@@ -3724,7 +3783,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.084
+[1] 0.082
 ```
 
 
@@ -3775,7 +3834,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-23-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3848,7 +3907,7 @@ abline(v=observedTestStat)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-23-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3921,7 +3980,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-23-3.png){width=672}
 :::
 
 ```{.r .cell-code}

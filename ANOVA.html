@@ -13,7 +13,7 @@
 
 <title>Analysis Of Variance (ANOVA)</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -131,11 +131,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -164,8 +168,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -173,16 +177,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -401,9 +398,10 @@ $(document).ready(function () {
  }
 </script>
 <hr />
-<p>An ANOVA is for testing the equality of several means simultaneously.
-A single <em>quantitative</em> response variable is required with one or
-more <em>qualitative</em> explanatory variables, i.e., factors.</p>
+<p>An ANOVA is used to test if several group averages (means) are equal
+all at once. You need one number-based (quantitative) outcome and one or
+more category-based (qualitative) explanatory variables, also called
+factors.</p>
 <div style="font-size:0.8em;">
 Note: A factor is defined as a qualitative variable containing at least
 two categories. The categories of the factor are referred to as the
@@ -416,9 +414,13 @@ class="section level3 tabset tabset-fade tabset-pills">
 <div style="float:left;width:125px;" align="center">
 <p><img src="Images/QuantYQualXg3plus.png" width=58px;></p>
 </div>
-<p>Each experimental unit is assigned to exactly one factor-level
-combination. Another way to say this is “one measurement per individual”
-(no repeated measures) and “equal numbers of individuals per group”.</p>
+<p>Each person or thing in the experiment is put into only one group
+based on the factor levels. Another way to say this is:</p>
+<ul>
+<li><p>There’s one measurement per individual (no repeated tests),
+and</p></li>
+<li><p>There are equal numbers of individuals in each group.</p></li>
+</ul>
 <div id="overview" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
@@ -573,20 +575,23 @@ class="math inline">\(\sigma\)</span>.</p>
 <p><img src="ANOVA_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <div id="hypotheses" class="section level6">
 <h6>Hypotheses</h6>
-<p>The aim of ANOVA is to determine which hypothesis is more plausible,
-that the means of the different distributions are all equal (the null),
-or that at least one group mean differs (the alternative).
-Mathematically, <span class="math display">\[
+<p>The goal of ANOVA is to figure out which idea makes more sense:</p>
+<p>The null hypothesis says that all the group means are equal.</p>
+<p>The alternative hypothesis says that at least one group mean is
+different.</p>
+<p>In math terms, it looks like this:</p>
+<p><span class="math display">\[
   H_0: \mu_1 = \mu_2 = \ldots = \mu_m = \mu
 \]</span> <span class="math display">\[
   H_a: \mu_i \neq \mu \quad \text{for at least one}\ i\in\{1,\ldots,m\}.
-\]</span> In other words, the goal is to determine if it is more
-plausible that each of the <span class="math inline">\(m\)</span>
-different samples (where each sample is of size <span
-class="math inline">\(n\)</span>) came from the same normal distribution
-(this is what the null hypothesis claims) or that at least one of the
-samples (and possibly several or all) come from different normal
-distributions (this is what the alternative hypothesis claims).</p>
+\]</span> In simple terms, the goal is to figure out which makes more
+sense:</p>
+<p>The null hypothesis says that all <span
+class="math inline">\(m\)</span> different samples (each with size <span
+class="math inline">\(n\)</span>) came from the same normal
+distribution.</p>
+<p>The alternative hypothesis says that at least one sample (maybe more)
+came from a different normal distribution.</p>
 </div>
 <div id="visualizing-the-hypotheses" class="section level6">
 <h6>Visualizing the Hypotheses</h6>
@@ -972,11 +977,11 @@ same. (This can be safely assumed to be satisfied when the
 similarly vertically spread out.)</p></li>
 </ol>
 <p><strong>Hypotheses</strong></p>
-<p>With a two-way ANOVA there are three sets of hypotheses. Writing out
-the hypotheses can be very involved depending on whether you use the
-official “effects model” notation (very mathematically correct) or a
-simplified “means model” notation (which isn’t very mathematically
-correct, but gets the idea across in an acceptable way).</p>
+<p>In a two-way ANOVA, there are three sets of hypotheses to test.
+Writing them out can get pretty complicated, especially if you use the
+official “effects model” notation (which is the most mathematically
+accurate). But you can also use a simpler “means model” version—it’s not
+as precise, but it gets the point across clearly enough.</p>
 <div class="tab">
 <p><button class="tablinks" onclick="openTab(event, 'meansModel')">Means
 Model</button>
@@ -1028,37 +1033,42 @@ for all levels of the second factor.}
 <p>A mathematically correct way to state the two-way ANOVA model is with
 the equation <span class="math display">\[
   Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk}
-\]</span> In this model, <span class="math inline">\(\mu\)</span> is the
-grand mean (which is the average Y-value ignoring all information
-contained in the factors); <span class="math inline">\(\alpha_i\)</span>
-is the first factor <span class="math inline">\(X1\)</span> with levels
-<span class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span> (though there could be more levels in
-<span class="math inline">\(X1\)</span> depending on your data); <span
-class="math inline">\(\beta_j\)</span> is the second factor with levels
-<span class="math inline">\(C\)</span>, <span
-class="math inline">\(D\)</span>, and <span
-class="math inline">\(E\)</span> (though there could be fewer or more
-levels to this factor depending on your data); <span
-class="math inline">\(\alpha\beta_{ij}\)</span> is the interaction of
-the two factors which has <span
-class="math inline">\(2\times3=6\)</span> (may differ for your data)
-levels; and <span class="math inline">\(\epsilon_{ijk} \sim
-N(0,\sigma^2)\)</span> is the normally distributed error term for each
-point <span class="math inline">\(k\)</span> found within level <span
-class="math inline">\(i\)</span> of <span
+\]</span> In this model:</p>
+<p><span class="math inline">\(\mu\)</span> is the grand mean, which is
+the overall average of the outcome (<span
+class="math inline">\(Y\)</span>), ignoring the effects of any groups or
+factors.</p>
+<p><span class="math inline">\(\alpha_i\)</span> represents the first
+factor (<span class="math inline">\(X1\)</span>), which could have
+levels like A and B (but your data might have more).</p>
+<p><span class="math inline">\(\beta_j\)</span> represents the second
+factor (<span class="math inline">\(X2\)</span>), which could have
+levels like C, D, and E (again, this can vary depending on your
+data).</p>
+<p><span class="math inline">\(\alpha\beta_{ij}\)</span> represents the
+interaction between the two factors—in this case, there are <span
+class="math inline">\(2 \times 3 = 6\)</span> interaction levels (though
+this number depends on how many levels your factors have).</p>
+<p><span class="math inline">\(\epsilon_{ijk} \sim
+N(0,\sigma^2)\)</span> is the random error for each observation, assumed
+to follow a normal distribution with mean 0 and variance <span
+class="math inline">\(\sigma^2\)</span>. Each error is tied to a
+specific level <span class="math inline">\(i\)</span> of <span
 class="math inline">\(X1\)</span> and level <span
 class="math inline">\(j\)</span> of <span
 class="math inline">\(X2\)</span>.</p>
-<p>This model allows us to more formally state the hypotheses as</p>
+<p>This setup helps us clearly write the hypotheses for a two-way
+ANOVA.</p>
 <ol style="list-style-type: decimal">
-<li><p>First factor <span class="math inline">\(X1\)</span> having say,
-levels <span class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>. <span class="math display">\[
+<li>First factor <span class="math inline">\(X1\)</span> (with levels
+like A and B):</li>
+</ol>
+<p><span class="math display">\[
   H_0: \alpha_A = \alpha_B = 0
 \]</span> <span class="math display">\[
   H_a: \alpha_i \neq 0 \ \text{for at least one}\ i\in\{1=A,2=B\}
-\]</span></p></li>
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Second factor <span class="math inline">\(X2\)</span> with say,
 levels <span class="math inline">\(C\)</span>, <span
 class="math inline">\(D\)</span>, and <span

@@ -13,7 +13,7 @@
 
 <title>t Tests</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -130,11 +130,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -163,8 +167,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -172,16 +176,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -375,11 +372,11 @@ $(document).ready(function () {
  }
 </script>
 <hr />
-<p>Much of statistical inference concerns the location of the population
-mean <span class="math inline">\(\mu\)</span> for a given parametric
-distribution. Some of the most common approaches to making inference
-about <span class="math inline">\(\mu\)</span> utilize a test statistic
-that follows a t distribution.</p>
+<p>A lot of statistics is about figuring out where the average value
+(called <span class="math inline">\(\mu\)</span>) of a whole group lies,
+based on a certain type of math model. One popular way to do this is by
+using a test number (called a test statistic) that follows something
+known as a t distribution.</p>
 <hr />
 <div id="one-sample-t-test"
 class="section level3 tabset tabset-fade tabset-pills">
@@ -387,9 +384,10 @@ class="section level3 tabset tabset-fade tabset-pills">
 <div style="float:left;width:125px;" align="center">
 <p><a href="index.html#one-quantitative-response-variable-y"><img src="Images/QuantY.png" width=35px;></a></p>
 </div>
-<p>A one sample t test is used when there is a hypothesized value for
-the population mean <span class="math inline">\(\mu\)</span> of a single
-quantitative variable.</p>
+<p>A one-sample t test is used when you have a guess (called a
+hypothesis) about the average value (<span
+class="math inline">\(\mu\)</span>) of just one number-based
+variable.</p>
 <div id="overview" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
@@ -402,24 +400,26 @@ UT on average?</li>
 <li>Do I spend less than $3 a day, on average, purchasing snacks?</li>
 </ul>
 <p><strong>Requirements</strong></p>
-<p>This test is only appropriate when both of the following are
-satisfied.</p>
+<p>This test only works well if both of the following are true:</p>
 <ol style="list-style-type: decimal">
-<li><p>The sample is <strong>representative</strong> of the population.
-(Having a simple random sample is the best way to do this.)</p></li>
-<li><p>The sampling distribution of the sample mean <span
-class="math inline">\(\bar{x}\)</span> <em>can be assumed to be
-normal</em>. This is a safe assumption when either (a) the population
-data can be assumed to be normally distributed using a Q-Q Plot or (b)
-the size of the sample (n) that was taken from the population is large
-(at least n &gt; 30, but “large” really depends on how badly the data is
-skewed).</p></li>
+<li><p>The sample represents the whole group you’re studying. The best
+way to make sure of this is to randomly choose people or things for the
+sample.</p></li>
+<li><p>The average of the sample, written as <span
+class="math inline">\(\bar{x}\)</span>, can be assumed to follow a
+normal shape. This is usually okay if either:</p></li>
 </ol>
-<p>If the requirements listed above are satisfied, then the results of
-the test can be trusted to give meaningful inference about the
-population. If the requirements are not met, then that doesn’t mean the
-results of the test are necessarily bad, but there is no guarantee that
-they are good.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The data from the whole group looks like a normal distribution
+when you check it using a Q-Q Plot, or</p></li>
+<li><p>The sample size is pretty big (at least <span
+class="math inline">\(n &gt; 30\)</span>), though what counts as “big”
+depends on how uneven or skewed the data is.</p></li>
+</ol>
+<p>If these two things are true, then you can trust the test to give
+useful info about the whole group. If not, that doesn’t automatically
+mean the test results are wrong—but you can’t be sure they’re right
+either.</p>
 <p><strong>Hypotheses</strong></p>
 <div style="padding-left:15px;">
 <div
@@ -597,52 +597,53 @@ class="tooltiprtext">Click to View Output.</span> </span></p>
 <div id="explanation" class="section level4">
 <h4>Explanation</h4>
 <div style="padding-left:125px;">
-<p>In many cases where it is of interest to test a claim about a single
-population mean <span class="math inline">\(\mu\)</span>, the one sample
-t test is used. This is an appropriate decision whenever the sampling
-distribution of the sample mean can be assumed to be normal and the data
-represents a simple random sample from the population.</p>
-<p>In the figure below, the null hypothesis <span
-class="math inline">\(H_0: \mu = \mu_0\)</span> is represented by the
-normal distribution (gray) centered at <span
-class="math inline">\(\mu_0\)</span>. Note that <span
-class="math inline">\(\mu_0\)</span> is just some specified number. This
-shows how the null hypothesis represents the assumption about the center
-of the distribution of the data.</p>
+<p>A one-sample t test is often used when you want to test a guess about
+the average (<span class="math inline">\(\mu\)</span>) of a single
+group. It’s the right choice when the average of the sample is expected
+to follow a normal shape, and the sample is a simple random pick from
+the whole group.</p>
+<p>In the picture below, the null hypothesis (<span
+class="math inline">\(H_0: \mu = \mu_0\)</span>) is shown as a normal
+(bell-shaped) curve in gray, centered at <span
+class="math inline">\(\mu_0\)</span>. Here, <span
+class="math inline">\(\mu_0\)</span> is just a number that we’re
+guessing might be the true average. This picture shows that the null
+hypothesis is basically saying, “we think the middle (average) of the
+data is at <span class="math inline">\(\mu_0\)</span>.”</p>
 <p><img src="tTests_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>After a hypothesis (null) is established and an alternative
-hypothesis similarly declared, a simple random sample of data of size
-<span class="math inline">\(n\)</span> is obtained from the population
-of interest. In the plot above, this is depicted by the points (blue
-dots) which are centered around their sample mean <span
+<p>Once you’ve made a null hypothesis and also stated the alternative
+hypothesis, you take a simple random sample of size <span
+class="math inline">\(n\)</span> from the group you’re studying. In the
+picture above, the blue dots show this sample, and they are centered
+around their average, written as <span
 class="math inline">\(\bar{x}\)</span>.</p>
-<p>Above the points (blue dots) is shown a second normal distribution
-(blue dashed line) which represents the idea that the alternative
-hypothesis allows for a normal distribution which is potentially more
-consistent with the data than the one specified under the null
-hypothesis.</p>
-<p>The role of the one sample t test is to measure the probability of a
-sample mean being as extreme or more extreme from the hypothesized value
-of <span class="math inline">\(\mu_0\)</span> than the one observed
-assuming the null hypothesis is true. This probability is of course the
-p-value of the test. This works because the sampling distribution of the
-sample mean has been assumed to be normal. In this case, the
-distribution of the test statistic t, <span class="math display">\[
+<p>Above those dots is a second bell-shaped curve (the blue dashed line)
+that represents what the data might look like if the alternative
+hypothesis were true. It shows the idea that maybe this new curve fits
+the data better than the one we assumed with the null hypothesis.</p>
+<p>The job of the one-sample t test is to figure out how likely it is to
+get a sample average as far away from the guessed value (<span
+class="math inline">\(\mu_0\)</span>) as the one we actually got—or even
+more extreme—if the null hypothesis is true. That likelihood is called
+the p-value.</p>
+<p>This all works because we’re assuming the average of the sample
+follows a normal distribution. That’s why the test uses something called
+the t distribution. In this case, the distribution of the test statistic
+t, <span class="math display">\[
   t = \frac{\bar{x}-\mu}{s/\sqrt{n}}
 \]</span><br />
 is known to follow a t distribution with <span
-class="math inline">\(n-1\)</span> degrees of freedom. (The mathematics
-that provide this result are phenominal! You can consult any advanced
-statistical textbook for the details.)</p>
-<p>The p-value of the one sample t test represents the probability that
-the test statistic <span class="math inline">\(t\)</span> is as extreme
-or more extreme than the one observed according to a t-distribution with
-<span class="math inline">\(n-1\)</span> degrees of freedom.</p>
-<p>If the probability (the p-value) is close enough to zero (smaller
-than <span class="math inline">\(\alpha\)</span>) then it is determined
-that the most <em>plausible</em> hypothesis is the alternative
-hypothesis, and thus the null is “rejected” in favor of the
-alternative.</p>
+class="math inline">\(n-1\)</span> degrees of freedom. (The math behind
+this is amazing! You can check out an advanced stats textbook if you’re
+curious about how it works.)</p>
+<p>The p-value in a one-sample t test is the chance of getting a t value
+as extreme—or more extreme—than the one from your sample, assuming it
+follows a t distribution with <span class="math inline">\(n - 1\)</span>
+degrees of freedom.</p>
+<p>If this p-value is really small (smaller than a cutoff number called
+<span class="math inline">\(\alpha\)</span>), then we say the
+alternative hypothesis seems more believable, and we reject the null
+hypothesis in its favor.</p>
 </div>
 <hr />
 </div>
@@ -653,10 +654,9 @@ class="section level3 tabset tabset-fade tabset-pills">
 <div style="float:left;width:125px;" align="center">
 <p><a href="index.html#one-quantitative-response-variable-y"><img src="Images/QuantY.png" width=35px;></a></p>
 </div>
-<p>The paired samples t test is used when a value is hypothesized for
-the popluation mean of the differences, <span
-class="math inline">\(\mu_d\)</span>, obtained from paired
-observations.</p>
+<p>The paired samples t test is used when you have two related sets of
+data, and you’re testing a guess about the average difference between
+them, written as <span class="math inline">\(\mu_d\)</span>.</p>
 <div id="overview-1" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
@@ -673,18 +673,20 @@ infected with a nosocomial infection compared to those who were not
 infected?</li>
 </ul>
 <p><strong>Requirements</strong></p>
-<p>The test is only appropriate when both of the following are
-satisfied.</p>
+<p>This test only works well if both of the following are true:</p>
 <ol style="list-style-type: decimal">
-<li><p>The sample of differences is representative of the population
-differences.</p></li>
-<li><p>The sampling distribution of the sample mean of the differences
-<span class="math inline">\(\bar{d}\)</span> (<span
-class="math inline">\(\bar{x}\)</span> of the differences) can be
-assumed to be normal. (This second requirement can be assumed to be
-satisfied when (a) the differences themselves can be assumed to be
-normal from a Q-Q Plot, or (b) when the sample size <span
-class="math inline">\(n\)</span> of the differences is large.)</p></li>
+<li><p>The sample of differences (the differences between the paired
+values) should represent the whole population of differences.</p></li>
+<li><p>The average of those differences, written as <span
+class="math inline">\(\bar{d}\)</span> (which is like <span
+class="math inline">\(\bar{x}\)</span> but for the differences), should
+be normally distributed. This is usually okay if:</p></li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li><p>A Q-Q Plot shows the differences look like a normal distribution,
+or</p></li>
+<li><p>The number of differences (<span
+class="math inline">\(n\)</span>) is large enough.</p></li>
 </ol>
 <p><strong>Hypotheses</strong></p>
 <div style="padding-left:15px;">
@@ -1043,23 +1045,21 @@ class="tooltiprtext">Click to View Output.</span> </span></p>
 <div id="explanation-1" class="section level4">
 <h4>Explanation</h4>
 <div style="padding-left:125px;">
-<p>The paired samples t test considers the single mean of all the
-differences from the paired values. Thus, the paired samples t test
-essentially becomes a one sample t test on the differences between
-paired observations. Hence the requirement is that the sampling
-distribution of the sample mean of the differences, <span
-class="math inline">\(\bar{d}\)</span>, can be assumed to be normally
-distributed. (It is also required that the obtained differences
-represent a simple random sample of the full population of possible
-differences.)</p>
-<p>The paired samples t test is similar to the independent samples t
-test scenario, except that there is extra information that allows values
-from one sample to be paired with a value from the other sample. This
-pairing of values allows for a more direct analysis of the change or
-difference individuals experience between the two samples.</p>
-<p>The points in the plot below demonstrate how points are paired
-together, and the only thing of interest are the differences between the
-paired points.</p>
+<p>The paired samples t test looks at the average of all the differences
+between the paired values. So, it basically becomes a one-sample t test,
+but just on those differences. That’s why we still need to assume that
+the average of the differences, written as <span
+class="math inline">\(\bar{d}\)</span>, follows a normal distribution.
+(Also, the differences should come from a simple random sample of all
+the possible differences.)</p>
+<p>This test is similar to the independent samples t test, but with a
+key difference: here, we have extra info that lets us pair each value in
+one group with a matching value in the other group. This pairing helps
+us clearly see the change or difference each individual went through
+between the two sets.</p>
+<p>In the picture below, the dots show how values are matched up
+(paired), and what really matters are the differences between those
+pairs.</p>
 <p><img src="tTests_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="tTests_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 </div>
 <hr />
@@ -1072,9 +1072,9 @@ Test</h3>
 <div style="float:left;width:125px;" align="center">
 <p><a href="index.html#quantitative-y-categorical-x-2-groups"><img src="Images/QuantYQualXg2.png" width=62px;></a></p>
 </div>
-<p>The independent samples t test is used when a value is hypothesized
-for the difference between two (possibly) different population means,
-<span class="math inline">\(\mu_1 - \mu_2\)</span>.</p>
+<p>The independent samples t test is used when you want to test a guess
+about the difference between the averages of two different groups,
+written as <span class="math inline">\(\mu_1 - \mu_2\)</span>.</p>
 <div id="overview-2" class="section level4">
 <h4>Overview</h4>
 <div style="padding-left:125px;">
@@ -1088,19 +1088,19 @@ average than those who don’t?</li>
 <li>Do you take more steps on average on weekdays or on weekends?</li>
 </ul>
 <p><strong>Requirements</strong></p>
-<p>The test is only appropriate when both of the following are
-satisfied.</p>
+<p>This test only works well if both of the following are true:</p>
 <ol style="list-style-type: decimal">
-<li><p>Both samples are <strong>representative</strong> of the
-population. (Simple random samples are the best way to do
-this.)</p></li>
-<li><p>The sampling distribution of the difference of the sample means
-<span class="math inline">\((\bar{x}_1 - \bar{x}_2)\)</span> <em>can be
-assumed to be normal</em>. (This is a safe assumption when the sample
-size of each group is <span class="math inline">\(30\)</span> or greater
-or when the population data from each group can be assumed to be normal
-with a Q-Q Plot.)</p></li>
+<li><p>Both samples should represent the whole population. The best way
+to make sure of this is to use simple random samples.</p></li>
+<li><p>The difference between the sample averages, written as <span
+class="math inline">\((\bar{x}_1 - \bar{x}_2)\)</span>, should be
+normally distributed. This is usually safe to assume if:</p></li>
 </ol>
+<ul>
+<li><p>Each group has at least 30 data points, or</p></li>
+<li><p>The data from each group looks normal when checked with a Q-Q
+Plot.</p></li>
+</ul>
 <p><strong>Hypotheses</strong></p>
 <div style="padding-left:15px;">
 <div
@@ -1455,40 +1455,39 @@ class="tooltiprtext">Click to View Output.</span> </span></p>
 <div id="explanation-2" class="section level4">
 <h4>Explanation</h4>
 <div style="padding-left:125px;">
-<p>The first figure below depicts the scenario where the difference in
-means of two separate normal distributions is non-zero. In other words,
-the two distributions have different means, <span
+<p>The first picture below shows a case where the two normal curves
+(distributions) have different averages, called <span
 class="math inline">\(\mu_1\)</span> and <span
-class="math inline">\(\mu_2\)</span>, respectively. It is worth
-emphasizing that the values of <span
-class="math inline">\(\mu_1\)</span> and <span
-class="math inline">\(\mu_2\)</span> are unknown to the researcher. The
-only thing observed are two separate samples of data (blue dots) of
-sizes <span class="math inline">\(n_1\)</span> and <span
-class="math inline">\(n_2\)</span>, respectively. For the scenario
-depicted, the null hypothesis that <span class="math inline">\(H_0:
-\mu_1 - \mu_2 = 0\)</span> (i.e., that <span
-class="math inline">\(\mu_1=\mu_2\)</span>) is rejected in favor of the
-alternative that <span class="math inline">\(H_a: \mu_1 - \mu_2 \neq
-0\)</span> based on the sample data observed. This dicision would be
-correct as the true difference in means, <span
-class="math inline">\(\mu_1-\mu_2\)</span> is non-zero in this case.</p>
+class="math inline">\(\mu_2\)</span>. That means the real difference
+between the two groups is not zero.</p>
+<p>It’s important to know that we don’t actually know the exact values
+of <span class="math inline">\(\mu_1\)</span> and <span
+class="math inline">\(\mu_2\)</span>. All we have are two separate
+samples of data (the blue dots) with sizes <span
+class="math inline">\(n_1\)</span> and <span
+class="math inline">\(n_2\)</span>.</p>
+<p>In this example, the null hypothesis—<span class="math inline">\(H_0:
+\mu_1 - \mu_2 = 0\)</span> (which means we think both group averages are
+equal)—gets rejected. Instead, we go with the alternative hypothesis:
+<span class="math inline">\(H_a: \mu_1 - \mu_2 \neq 0\)</span>, which
+says the averages are not equal.</p>
+<p>That’s the right choice in this case, because the true difference
+between the two group averages (<span class="math inline">\(\mu_1 -
+\mu_2\)</span>) really isn’t zero.</p>
 <p><img src="tTests_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>When the null hypothesis is true, that <span
-class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span>, then it follows
-that the test statistic <span class="math inline">\(t\)</span> that is
-obtained by measuring the distance between the two sample means, <span
-class="math inline">\(\bar{x}_1-\bar{x}_2\)</span>, and appropriately
-standardizing the result follows a <span
-class="math inline">\(t\)</span> distribution with degrees of freedom
-less than or equal to <span class="math inline">\(n_1+n_2-2\)</span>.
-Thus, the <span class="math inline">\(p\)</span>-value of the
-independent samples <span class="math inline">\(t\)</span> test is
-obtained by using this <span class="math inline">\(t\)</span>
-distribution to calculate the probability of a test statistic <span
-class="math inline">\(t\)</span> being as extreme or more extreme than
-the one observed assuming the null hypothesis is true. <span
-class="math display">\[
+<p>When the null hypothesis is true, meaning <span
+class="math inline">\(H_0: \mu_1 - \mu_2 = 0\)</span> (the group
+averages are equal), then the test statistic <span
+class="math inline">\(t\)</span>—which is found by comparing the two
+sample means (<span class="math inline">\(\bar{x}_1 -
+\bar{x}_2\)</span>) and adjusting for sample size—follows a t
+distribution.</p>
+<p>The number of degrees of freedom is less than or equal to <span
+class="math inline">\(n_1 + n_2 - 2\)</span>.</p>
+<p>The p-value in the independent samples t test comes from this t
+distribution. It tells us the chance of getting a test statistic as
+extreme—or even more extreme—than the one we got, assuming the null
+hypothesis is true. <span class="math display">\[
   t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 -
 \mu_2)}{\sqrt{s_1/n_1+s_2/n_2 }}
 \]</span></p>

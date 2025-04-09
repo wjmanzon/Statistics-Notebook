@@ -31,7 +31,8 @@ header-includes:
 
 ----
 
-An ANOVA is for testing the equality of several means simultaneously. A single *quantitative* response variable is required with one or more *qualitative* explanatory variables, i.e., factors. 
+An ANOVA is used to test if several group averages (means) are equal all at once.
+You need one number-based (quantitative) outcome and one or more category-based (qualitative) explanatory variables, also called factors.
 
 <div style="font-size:0.8em;">Note: A factor is defined as a qualitative variable containing at least two categories. The categories of the factor are referred to as the "levels" of the factor.</div>
 
@@ -44,7 +45,12 @@ An ANOVA is for testing the equality of several means simultaneously. A single *
 <img src="./Images/QuantYQualXg3plus.png" width=58px;>
 </div>
 
-Each experimental unit is assigned to exactly one factor-level combination. Another way to say this is "one measurement per individual" (no repeated measures) and "equal numbers of individuals per group".
+Each person or thing in the experiment is put into only one group based on the factor levels.
+Another way to say this is:
+
+- There's one measurement per individual (no repeated tests), and
+
+- There are equal numbers of individuals in each group.
 
 #### Overview
 
@@ -334,14 +340,25 @@ text(3-.1, (y$yi[25]+ai[3])/2, expression(epsilon[3][","][5]), pos=2, cex=0.8)
 
 ###### Hypotheses
 
-The aim of ANOVA is to determine which hypothesis is more plausible, that the means of the different distributions are all equal (the null), or that at least one group mean differs (the alternative). Mathematically,
+The goal of ANOVA is to figure out which idea makes more sense:
+
+The null hypothesis says that all the group means are equal.
+
+The alternative hypothesis says that at least one group mean is different.
+
+In math terms, it looks like this:
+
 $$
   H_0: \mu_1 = \mu_2 = \ldots = \mu_m = \mu 
 $$
 $$
   H_a: \mu_i \neq \mu \quad \text{for at least one}\ i\in\{1,\ldots,m\}.
 $$
-In other words, the goal is to determine if it is more plausible that each of the $m$ different samples (where each sample is of size $n$) came from the same normal distribution (this is what the null hypothesis claims) or that at least one of the samples (and possibly several or all) come from different normal distributions (this is what the alternative hypothesis claims). 
+In simple terms, the goal is to figure out which makes more sense:
+
+The null hypothesis says that all $m$ different samples (each with size $n$) came from the same normal distribution.
+
+The alternative hypothesis says that at least one sample (maybe more) came from a different normal distribution.
 
 ###### Visualizing the Hypotheses
 
@@ -664,7 +681,9 @@ A two-way ANOVA is only appropriate when all of the following are satisfied.
 
 **Hypotheses**
 
-With a two-way ANOVA there are three sets of hypotheses. Writing out the hypotheses can be very involved depending on whether you use the official "effects model" notation (very mathematically correct) or a simplified "means model" notation (which isn't very mathematically correct, but gets the idea across in an acceptable way).
+In a two-way ANOVA, there are three sets of hypotheses to test.
+Writing them out can get pretty complicated, especially if you use the official "effects model" notation (which is the most mathematically accurate).
+But you can also use a simpler "means model" version—it’s not as precise, but it gets the point across clearly enough.
 
 
 
@@ -712,11 +731,22 @@ A mathematically correct way to state the two-way ANOVA model is with the equati
 $$
   Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk}
 $$
-In this model, $\mu$ is the grand mean (which is the average Y-value ignoring all information contained in the factors); $\alpha_i$ is the first factor $X1$ with levels $A$ and $B$ (though there could be more levels in $X1$ depending on your data); $\beta_j$ is the second factor with levels $C$, $D$, and $E$ (though there could be fewer or more levels to this factor depending on your data); $\alpha\beta_{ij}$ is the interaction of the two factors which has $2\times3=6$ (may differ for your data) levels; and $\epsilon_{ijk} \sim N(0,\sigma^2)$ is the normally distributed error term for each point $k$ found within level $i$ of $X1$ and level $j$ of $X2$. 
+In this model:
 
-This model allows us to more formally state the hypotheses as
+$\mu$ is the grand mean, which is the overall average of the outcome ($Y$), ignoring the effects of any groups or factors.
 
-1. First factor $X1$ having say, levels $A$ and $B$.
+$\alpha_i$ represents the first factor ($X1$), which could have levels like A and B (but your data might have more).
+
+$\beta_j$ represents the second factor ($X2$), which could have levels like C, D, and E (again, this can vary depending on your data).
+
+$\alpha\beta_{ij}$ represents the interaction between the two factors—in this case, there are $2 \times 3 = 6$ interaction levels (though this number depends on how many levels your factors have).
+
+$\epsilon_{ijk} \sim N(0,\sigma^2)$ is the random error for each observation, assumed to follow a normal distribution with mean 0 and variance $\sigma^2$. Each error is tied to a specific level $i$ of $X1$ and level $j$ of $X2$.
+
+This setup helps us clearly write the hypotheses for a two-way ANOVA.
+
+1. First factor $X1$ (with levels like A and B):
+
 $$
   H_0: \alpha_A = \alpha_B = 0
 $$

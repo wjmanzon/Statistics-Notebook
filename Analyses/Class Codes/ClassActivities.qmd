@@ -269,6 +269,7 @@ ggplot(Kids3, aes(x=season,fill=sex))+
 ## Week 4 Day 1
 
 ### T-Test
+One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 ```{r}
 # Libraries used: MOSAIC
@@ -324,6 +325,7 @@ t.test(length~sex,
 ## Week 4 Day 2
 
 ### T-Test
+One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 ```{r}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE, CAR
@@ -345,7 +347,11 @@ pander(t.test(KidsFeet$length, mu=28, alternative="two.sided",conf.level=0.95))
 # We have sufficient evidence to say that the mean is different than 28.
 
 # Note: Because of the Central Limit Theorem, we can assume the distribution of sample means is normal because we have a large sample size (n>30).
+```
 
+Paired sample t test: This test is typically used when you have two related measurements on the same subject or matched subjects, and you want to compare the means of these two measurements.
+
+```{r}
 # PAIRED T-TEST
 KidsFeet3 <- KidsFeet %>% 
   mutate(width3 = 3*width,difference = length -width3) 
@@ -364,7 +370,11 @@ t.test(KidsFeet3$difference, mu=0,
 # We have sufficient evidence to say that there is a difference between (width*3) and length.
   
 # Note: Because of the Central Limit Theorem, we can assume the distribution of sample means is normal because we have a large sample size (n>30).
-  
+```
+
+Independent sample t test: The sources describe a situation where you have a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups ("A" and "B"). An independent samples t-test would be used to compare the means of the quantitative variable between these two independent groups.
+
+```{r}
 # INDEPENDENT SAMPLES T-TEST
 t.test(length~sex, 
        data=KidsFeet, 
@@ -424,6 +434,13 @@ pander(favstats(length~sex,data=KidsFeet))
 
 ### Wilcoxon Test
 
+Wilcoxon Signed Rank test for one sample: The sources do not specifically mention non-parametric alternatives like the Wilcoxon tests in the main descriptions of data scenarios. This test is a non-parametric alternative to the one-sample t-test, used when the data are not normally distributed.
+
+
+Wilcoxon Signed Rank test for paired: Similar to the paired sample t-test, the sources do not explicitly describe a paired data scenario in the context of non-parametric tests. This test is a non-parametric alternative to the paired t-test.
+
+
+
 ```{r}
 # Libraries used: MOSAIC, CAR
 # Dataset:        KIDSFEET
@@ -442,7 +459,12 @@ wilcox.test(KidsFeet$length,
 # Ha: median neq 25
 # What does the alternative hypothesis means?
 # Alternative hypothesis: true location shift is not equal to 0
+```
 
+
+Wilcoxon Rank sum test for independent: The sources describe a situation with a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups. The Wilcoxon Rank Sum test (also known as the Mann-Whitney U test) is a non-parametric alternative to the independent samples t-test used when the assumptions of the t-test are not met.
+
+```{r}
 # Five steps of doing the Wilcoxon RANKED-SUM test (Mann-Whitney)
 
 t.test(length ~ sex, 
@@ -480,6 +502,8 @@ wilcox.test(length ~ sex,
 ## Week 6 Day 1
 
 ### One Way ANOVA
+
+One Way ANOVA: The sources describe a scenario with a single quantitative variable of interest (Y) and a categorical (qualitative) variable (X) with three or more groups. One-way ANOVA is used to compare the means of the quantitative variable across these multiple independent groups.
 
 ```{r}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE, LATTICE
@@ -609,9 +633,15 @@ plot(warp.aov, which=1:2, pch=16)
 
 ```
 
+Two Way ANOVA: The sources describe a situation with a single quantitative variable of interest (Y) and multiple categorical (qualitative) variables (X1, X2, etc.), each with at least two levels. Two-way ANOVA is used to examine the effects of two or more categorical independent variables on a single quantitative dependent variable, as well as their interactions. The example mentions "gender" (e.g., "boy" and "girl") and "Classrank" (e.g., "Freshman", "Sophomore", and "Junior") as potential categorical variables. The notebook has a section titled "My Two-way ANOVA", suggesting this topic is covered elsewhere within the full notebook.
+
+NEED EXAMPLE
+
+
 ## Week 7 Day 2
 
 ### Kruskal Wallis
+Kruskal Wallis Test: The sources do not specifically mention this test in the main descriptions of data scenarios. The Kruskal-Wallis test is a non-parametric alternative to one-way ANOVA, used when the assumptions of ANOVA are not met and you want to compare the medians of a quantitative variable across three or more independent groups.
 
 ```{r}
 # Libraries used: MOSAIC, PANDER, CAR
@@ -687,8 +717,8 @@ kruskal.test(weight~feed,
 
 ## Week 8 Day 1
 
-### Simple Linear?
-
+### Simple Linear Regression
+Simple Linear Regression: The sources describe a scenario with a single quantitative variable of interest (Y) and another single quantitative variable of interest (X) used to explain Y. Simple linear regression is used to model the linear relationship between these two quantitative variables. The notebook has a section titled "My Simple Linear Regression", indicating further content on this topic.
 ```{r}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE, DT, CAR
 # Dataset:        DAVIS, KIDSFEET
@@ -808,7 +838,7 @@ plot(kidsfeet.lm$residuals)
 
 ## Week 8 Day 2
 
-### Simple Linear?
+### Simple Linear
 
 ```{r}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE, DT, CAR
@@ -852,7 +882,8 @@ plot(kidsfeet.lm$residuals)
 
 ## Week 9 Day 1
 
-### Multiple Linear?
+### Multiple Linear
+Multiple Linear Regression: The sources describe a scenario with a single quantitative variable of interest (Y) and multiple x-variables (X1, X2, etc.), which can be quantitative or potentially categorical (though not explicitly stated here but common in regression) used to explain Y. Multiple linear regression extends simple linear regression to model the linear relationship between a quantitative dependent variable and two or more independent variables.
 
 ```{r}
 # Libraries used: TIDYVERSE, CAR, PANDER
@@ -1013,7 +1044,7 @@ plot(lm.2lines$residuals)
 
 ## Week 9 Day 2
 
-### Multiple Linear?
+### Multiple Linear
 
 ```{r}
 # 1)	Each student draw a sketch of the two-line model and explain to one other person
@@ -1094,7 +1125,8 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 
 ## Week 10 Day 1
 
-### Logistic Regression?
+### Logistic Regression
+Simple Logistic Regression: The sources describe a scenario where the response variable (Y) is a single categorical (qualitative) variable with two possible values (1 for success, 0 for failure) and the explanatory variable (X) is quantitative. Simple logistic regression is used to model the probability of a binary outcome (Y) based on a quantitative predictor (X). The notebook has a section titled "My Logistic Regression", suggesting more details are available.
 
 ```{r}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE, DT, ALR4, RESOURCESELECTION
@@ -1160,7 +1192,9 @@ predict(chall.glm, newdata = data.frame(temp = 64.75), type = "response") %>%
 
 ## Week 10 Day 2
 
-### Logistic Regression?
+### Logistic Regression
+
+Multiple Logistic Regression: The sources describe a scenario where the response variable (Y) is a single categorical (qualitative) variable with two possible values (1 for success, 0 for failure) and there are multiple explanatory variables (X1, X2, etc.), which can be quantitative or categorical. Multiple logistic regression extends simple logistic regression to model the probability of a binary outcome based on multiple predictor variables.
 
 ```{r}
 # Libraries used: PANDER, TIDYVERSE, RESOURCESELECTION
@@ -1211,6 +1245,8 @@ exp(b[2]) %>%
 ## Week 12 Day 1
 
 ### Chi-squared Test
+
+Chi Squared Test: The sources describe a scenario where both the response variable (Y) and the explanatory variable (X) are categorical (qualitative). Chi-squared tests are used to examine the association between two or more categorical variables. The notebook mentions "Chi Squared Tests" and "My Chi-sqaured Test", implying further discussion within the notebook.
 
 ```{r}
 # Libraries used: TIDYVERSE
@@ -1398,6 +1434,8 @@ mtchi$residuals %>%
 
 ## Week 13 Day 1
 ### Permutation Testing
+
+Permutation Test: The sources mention "Randomization", which is a principle underlying permutation tests. Permutation tests are non-parametric tests that involve rearranging the observed data to assess the likelihood of obtaining the observed results under a null hypothesis. They can be applied to various scenarios.
 
 ```{r}
 # 1)	Go through the Lego Example in the textbook
