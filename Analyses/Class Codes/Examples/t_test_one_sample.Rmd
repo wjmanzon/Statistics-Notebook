@@ -1,5 +1,5 @@
 ---
-title: "randomization"
+title: "t_test_one_sample"
 output: html_document
 ---
 
