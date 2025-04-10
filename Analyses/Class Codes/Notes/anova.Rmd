@@ -180,4 +180,38 @@ F = \frac{\text{MS effect}}{\text{MS residual}}
 
 - Use p-values from `summary(myaov)`
 - For each effect:
-  - If **p**
+  - If **p ≤ α**, conclude significance
+  - If interaction is significant:
+    - Main effects must be interpreted **with caution**
+    - Explore means by factor combinations
+
+### Assumptions
+
+Same as one-way ANOVA:
+1. **Representative Samples**
+2. **Normality** of residuals: `plot(myaov, which = 2)`
+3. **Equal variances** across groups: `plot(myaov, which = 1)`
+
+### Other Considerations
+
+- ANOVA model:  
+  \[
+  Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk}
+  \]  
+  where \(\epsilon_{ijk} \sim N(0, \sigma^2)\)
+
+- For 3+ factors:  
+  `aov(Y ~ X1 + X2 + X3 + X1:X2 + ... , data = ...)`
+
+- If interaction is **not significant**, you can simplify the model.
+
+- **Blocking variable**: Include with  
+  ```r
+  aov(Y ~ Block + X1 + X2 + X1:X2, data = ...)
+  ```
+
+- For violations of assumptions, **nonparametric alternatives** exist (e.g., Kruskal-Wallis for one-way).
+
+---
+
+> ANOVA is a powerful method for comparing group means when assumptions are met. Always check diagnostics and consider post-hoc or nonparametric tests as needed.

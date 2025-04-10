@@ -12,6 +12,8 @@ format:
     toc-search: true
     code-fold: false
     code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -33,6 +35,90 @@ pacman::p_load(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelect
 ::: {.cell}
 
 ```{.r .cell-code}
+# ONE SAMPLE T TEST
+# t.test(NameOfYourData$Y, mu = YourNull, alternative = "two.sided" / "greater" / "less", conf.level = 0.95)
+
+# PAIRED SAMPLES T TEST
+# t.test(NameOfYourData$Y1, NameOfYourData$Y2, paired = TRUE, mu = YourNull, alternative = "two.sided" / "greater" / "less", conf.level = 0.95)
+
+# INDEPENDENT SAMPLES T TEST
+# t.test(Y ~ X, data = YourData, mu = YourNull, alternative = "two.sided" / "greater" / "less", conf.level = 0.95)
+
+# WILCOXON SIGNED RANK TEST - ONE SAMPLE
+# wilcox.test(object, mu = YourNull, alternative = YourAlternative, conf.level = 0.95)
+
+# WILCOXON SIGNED RANK TEST - PAIRED
+# wilcox.test(Y1, Y2, mu = YourNull, alternative = YourAlternative, paired = TRUE, conf.level = 0.95)
+
+# WILCOXON RANK SUM TEST - INDEPENDENT (MANN-WHITNEY)
+# option 1:
+# wilcox.test(Y ~ X, data = YourData, mu = YourNull, alternative = YourAlternative, conf.level = 0.95)
+# option 2:
+# wilcox.test(object1, object2, mu = YourNull, alternative = YourAlternative, conf.level = 0.95)
+
+# ONE WAY ANOVA
+# myaov <- aov(Y ~ X, data=YourDataSet)
+# summary(myaov)
+
+
+# # TWO WAY ANOVA
+# myaov <- aov(Y ~ X1+X2+X1:X2, data=YourDataSet) 
+# summary(myaov)
+
+# KRUSKAL WALLIS
+# kruskal.test(x ~ g, data=YourDataSet)
+
+# SIMPLE LINEAR REGRESSION
+# mylm <- lm(Y ~ X, data = NameOfYourDataset)
+# summary(mylm)
+
+# MULTIPLE LINEAR REGRESSION
+# mylm <- lm(Y ~ X1 + X2 + X1:X2 + …, data = YourDataSet)
+# summary(mylm)
+
+
+# SIMPLE LOGISTIC REGRESSION
+# YourGlmName <- glm(Y ~ X, data = NameOfYourDataset,
+#  family=binomial)
+# summary(YourGlmName)
+
+
+# MULTIPLE LOGISTIC REGRESSION
+# YourGlmName <- glm(Y ~ X1*X2 …, data = NameOfYourDataset,
+# family=binomial)
+# summary(YourGlmName)
+
+# CHI-SQUARED TEST
+# chisq.test(x) # x must be a table or matrix
+# if you have a data set that you want to turn into a table, use the table command:
+# x <- table(Dataset$Variable, Dataset$Variable)
+
+# CHI SQUARED TEST NON PARAMETRIC
+# chisq.test(x, simulate.p.value =TRUE)
+
+# PERMUTATION TEST
+#Step 1
+# myTest <- …perform the initial test…
+# observedTestStat <- …get the test statistic…
+# observedTestStat
+# Step 2
+# N <- 2000      
+# permutedTestStats <- rep(NA, N)
+# for (i in  1:N){
+#   permutedTest <- …perform test with permutedData…
+#  permutedTestStats[i] <- …get test statistic…
+# }
+# hist(permutedTestStats)
+# abline(v=observedTestStat)
+# Step 3
+# sum(permutedTestStats >= observedTestStat)/N
+# sum(permutedTestStats <= observedTestStat)/N
+```
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Libraries used: MOSAIC, PANDER, TIDYVERSE
 # Dataset:        KIDSFEET
 
@@ -41,7 +127,7 @@ boxplot(length~sex,data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-2-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-3-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -103,7 +189,7 @@ barplot(table(KidsFeet$sex))
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-2-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-3-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -112,7 +198,7 @@ plot(length~width, data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-2-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-3-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -156,7 +242,7 @@ hist(airquality$Wind,main="La Guardia Airport from May to September, 1973",
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -168,7 +254,7 @@ ggplot(airquality, aes(x=Wind))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -179,7 +265,7 @@ boxplot(Wind~Month,main="Wind by Month", xlab="Month",
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -192,7 +278,7 @@ ggplot(data=airquality,aes(y=Wind,x=Month,group=Month))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -206,7 +292,7 @@ plot(Ozone~Temp,data=airquality,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -218,7 +304,7 @@ ggplot(airquality,aes(x=Temp,y=Ozone))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-3-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-4-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -322,7 +408,7 @@ barplot(table(KidsFeet$sex))
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -351,7 +437,7 @@ boxplot(KidsFeet$length,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -363,7 +449,7 @@ ggplot(data=KidsFeet, aes(x=length)) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -399,7 +485,7 @@ boxplot(
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -412,7 +498,7 @@ ggplot(KidsFeet, aes(x=sex, y=length,fill=sex)) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -464,7 +550,7 @@ boxplot(length~birthmonth,data=KidsFeet,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -477,7 +563,7 @@ ggplot(data=KidsFeet, aes(x=as.factor(birthmonth), y=length)) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-7.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-7.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -507,7 +593,7 @@ plot(length~width,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-8.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-8.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -520,7 +606,7 @@ ggplot(KidsFeet,aes(x=width, y=length))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-9.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-9.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -533,7 +619,7 @@ ggplot(KidsFeet,aes(x=width,y=length,color=sex))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-10.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-10.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -585,7 +671,7 @@ barplot(table(Kids3$sex, Kids3$season),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-11.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-11.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -595,7 +681,7 @@ ggplot(Kids3, aes(x=season,fill=sex))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-4-12.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-5-12.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -608,7 +694,7 @@ ggplot(Kids3, aes(x=season,fill=sex))+
 ## Week 4 Day 1
 
 ### T-Test
-One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
+__One sample t test:__ The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 
 
@@ -669,18 +755,29 @@ mean of x
 # p-value > alpha, therefore we fail to reject the Ho
 # We have insufficient evidence to say that the mean is different than 25.1.
 
-pander(t.test(KidsFeet$length, mu=25.1, alternative="less",conf.level=0.95))
+less <- t.test(KidsFeet$length, 
+               mu=25.1, 
+               alternative="less",
+               conf.level=0.95)
+
+less
 ```
 
-::: {.cell-output-display}
+::: {.cell-output .cell-output-stdout}
 
---------------------------------------------------------------------
- Test statistic   df   P value   Alternative hypothesis   mean of x 
----------------- ---- --------- ------------------------ -----------
-     -1.787       38   0.041 *            less              24.72   
---------------------------------------------------------------------
+```
 
-Table: One Sample t-test: `KidsFeet$length`
+	One Sample t-test
+
+data:  KidsFeet$length
+t = -1.7865, df = 38, p-value = 0.041
+alternative hypothesis: true mean is less than 25.1
+95 percent confidence interval:
+     -Inf 25.07878
+sample estimates:
+mean of x 
+ 24.72308 
+```
 
 
 :::
@@ -694,11 +791,13 @@ Table: One Sample t-test: `KidsFeet$length`
 
 # Note: Because of the Central Limit Theorem, we can assume the distribution of sample means is normal because we have a large sample size (n>=30).
 
-t.test(length~sex,
+greater <- t.test(length~sex,
        data=KidsFeet, 
        mu=0, 
        alternative = "greater",
        conf.level=0.95)
+
+greater
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -726,7 +825,7 @@ mean in group B mean in group G
 ## Week 4 Day 2
 
 ### T-Test
-One sample t test: The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
+__One sample t test:__ The sources describe a scenario with a single quantitative variable of interest (Y). A one-sample t-test would be used to compare the mean of this single sample to a known or hypothesized population mean.
 
 
 
@@ -772,7 +871,7 @@ Table: One Sample t-test: `KidsFeet$length`
 
 
 
-Paired sample t test: This test is typically used when you have two related measurements on the same subject or matched subjects, and you want to compare the means of these two measurements.
+__Paired sample t test:__ This test is typically used when you have two related measurements on the same subject or matched subjects, and you want to compare the means of these two measurements.
 
 
 
@@ -844,7 +943,7 @@ mean of x
 
 
 
-Independent sample t test: The sources describe a situation where you have a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups ("A" and "B"). An independent samples t-test would be used to compare the means of the quantitative variable between these two independent groups.
+__Independent sample t test:__ The sources describe a situation where you have a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups ("A" and "B"). An independent samples t-test would be used to compare the means of the quantitative variable between these two independent groups.
 
 
 
@@ -894,7 +993,7 @@ qqPlot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -912,7 +1011,7 @@ qqPlot(KidsFeet3$length-KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-2.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -930,7 +1029,7 @@ qqPlot(length~sex,data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -940,7 +1039,7 @@ boxplot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -949,7 +1048,7 @@ ggplot(data=KidsFeet, aes(x=length))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -958,7 +1057,7 @@ boxplot(KidsFeet3$length-KidsFeet3$width3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -967,7 +1066,7 @@ ggplot(data=KidsFeet3, aes(x=difference))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-7.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-7.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -976,7 +1075,7 @@ boxplot(length~sex,data=KidsFeet)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-8.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-8.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -985,7 +1084,7 @@ ggplot(data=KidsFeet, aes(y=length, x=sex))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-8-9.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-9-9.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1050,10 +1149,10 @@ pander(favstats(length~sex,data=KidsFeet))
 
 ### Wilcoxon Test
 
-Wilcoxon Signed Rank test for one sample: The sources do not specifically mention non-parametric alternatives like the Wilcoxon tests in the main descriptions of data scenarios. This test is a non-parametric alternative to the one-sample t-test, used when the data are not normally distributed.
+__Wilcoxon Signed Rank test for one sample:__ This test is a non-parametric alternative to the one-sample t-test, used when the data are not normally distributed.
 
 
-Wilcoxon Signed Rank test for paired: Similar to the paired sample t-test, the sources do not explicitly describe a paired data scenario in the context of non-parametric tests. This test is a non-parametric alternative to the paired t-test.
+__Wilcoxon Signed Rank test for paired:__ This test is a non-parametric alternative to the paired t-test.
 
 
 
@@ -1068,7 +1167,7 @@ Wilcoxon Signed Rank test for paired: Similar to the paired sample t-test, the s
 # Five steps of doing the Wilcoxon SIGNED-RANK test
 
 # Performing T-TEST
-t.test(KidsFeet$length, mu=25)
+t.test(KidsFeet$length, mu=25) #mean of x : 24.72308 
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -1095,7 +1194,7 @@ qqPlot(KidsFeet$length)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-9-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-10-1.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1110,7 +1209,7 @@ qqPlot(KidsFeet$length)
 ```{.r .cell-code}
 # Performing WILCOXON TEST
 wilcox.test(KidsFeet$length, 
-            mu=25)
+            mu=25) # V = 298.5, p-value = 0.2037
 ```
 
 ::: {.cell-output .cell-output-stdout}
@@ -1138,7 +1237,7 @@ alternative hypothesis: true location is not equal to 25
 
 
 
-Wilcoxon Rank sum test for independent: The sources describe a situation with a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups. The Wilcoxon Rank Sum test (also known as the Mann-Whitney U test) is a non-parametric alternative to the independent samples t-test used when the assumptions of the t-test are not met.
+__Wilcoxon Rank sum test for independent:__ The sources describe a situation with a single quantitative response variable (Y) and a qualitative (categorical) variable (X) with just two groups. The Wilcoxon Rank Sum test (also known as the Mann-Whitney U test) is a non-parametric alternative to the independent samples t-test used when the assumptions of the t-test are not met.
 
 
 
@@ -1230,7 +1329,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 ### One Way ANOVA
 
-One Way ANOVA: The sources describe a scenario with a single quantitative variable of interest (Y) and a categorical (qualitative) variable (X) with three or more groups. One-way ANOVA is used to compare the means of the quantitative variable across these multiple independent groups.
+__One Way ANOVA:__ The sources describe a scenario with a single quantitative variable of interest (Y) and a categorical (qualitative) variable (X) with three or more groups. One-way ANOVA is used to compare the means of the quantitative variable across these multiple independent groups.
 
 
 
@@ -1253,7 +1352,7 @@ boxplot(Wind~Month,data=airquality)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1262,7 +1361,7 @@ ggplot(data=airquality, aes(x=as.factor(Month), y=Wind))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1318,7 +1417,7 @@ plot(airq.aov,which=1:2)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1334,7 +1433,7 @@ boxplot(weight~feed,data=chickwts)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1343,7 +1442,7 @@ ggplot(data=chickwts, aes(y=weight, x=feed))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1357,7 +1456,7 @@ xyplot(weight ~ feed,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1416,7 +1515,7 @@ plot(chickwt.aov,which=1:2)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-7.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-7.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1534,7 +1633,7 @@ xyplot(breaks ~ wool, data=warpbreaks, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-8.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-8.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1544,7 +1643,7 @@ xyplot(breaks ~ tension, data=warpbreaks, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-9.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-9.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1554,7 +1653,7 @@ xyplot(breaks ~ tension, data=warpbreaks, groups=wool, type=c("p","a"),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-10.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-10.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1591,7 +1690,7 @@ plot(warp.aov, which=1:2, pch=16)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-12-11.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-13-11.png){width=672}
 :::
 :::
 
@@ -1631,7 +1730,7 @@ boxplot(correct ~ condition, data=Friendly, col='grey', ylab="# of Correct Answe
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1640,7 +1739,7 @@ ggplot(data=Friendly, aes(x=condition, y=correct))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1698,7 +1797,7 @@ qqPlot(sharky.aov$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-3.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1738,7 +1837,7 @@ boxplot(weight~feed,data=chickwts)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1747,7 +1846,7 @@ ggplot(data=chickwts, aes(x=feed, y=weight))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1809,7 +1908,7 @@ qqPlot(sharky.aov$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-13-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-14-6.png){width=672}
 :::
 
 ::: {.cell-output .cell-output-stdout}
@@ -1948,7 +2047,7 @@ abline(davis.lm,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -1960,7 +2059,7 @@ ggplot(Davis2, aes(x = repht, y = height))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2003,7 +2102,7 @@ plot(davis.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2069,7 +2168,7 @@ par(mfrow=c(1,3))
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2079,7 +2178,7 @@ plot(kidsfeet.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-14-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-15-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2154,7 +2253,7 @@ abline(kidsfeet.lm,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-15-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2166,7 +2265,7 @@ ggplot(KidsFeet, aes(x = width, y = length))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-15-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2179,7 +2278,7 @@ plot(kidsfeet.lm$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-15-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-16-3.png){width=672}
 :::
 :::
 
@@ -2441,7 +2540,7 @@ curve((b[1]) + (b[2] + b[3]) * x,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2463,7 +2562,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2480,7 +2579,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2496,7 +2595,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2508,7 +2607,7 @@ ggplot(mtcars, aes(y=mpg, x=qsec, color=factor(am))) +
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-5.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-5.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2534,7 +2633,7 @@ plot(lm.2lines$residuals)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-16-6.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-17-6.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2628,7 +2727,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-18-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2695,7 +2794,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-18-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2744,7 +2843,7 @@ legend("topleft", legend=c("automatic","manual"), pch=1, col=palette(), title="T
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-17-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-18-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2839,7 +2938,7 @@ curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-18-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-19-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -2991,7 +3090,7 @@ curve(exp(b[1]+b[2]*x)/(1+exp(b[1]+b[2]*x)), add=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-19-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-20-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3143,7 +3242,7 @@ barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3151,7 +3250,7 @@ barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3186,7 +3285,7 @@ ggplot(data=mtcars,aes(x=as.factor(cyl),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3199,7 +3298,7 @@ barplot(table(mtcars$am, mtcars$cyl),
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-20-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-21-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3415,7 +3514,7 @@ barplot(Fruitrow,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-21-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3423,7 +3522,7 @@ barplot(Fruitcolumn,beside = TRUE, legend.text=TRUE)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-21-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3455,7 +3554,7 @@ ggplot(data=mtcars,aes(x=as.factor(cyl),fill=as.factor(am)))+
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-21-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-3.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3465,7 +3564,7 @@ barplot(table(mtcars$am, mtcars$cyl), beside=TRUE,
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-21-4.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-22-4.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3675,7 +3774,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-22-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-23-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3686,7 +3785,7 @@ sum(permutedTestStats >= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.0348
+[1] 0.0302
 ```
 
 
@@ -3699,7 +3798,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.9652
+[1] 0.9698
 ```
 
 
@@ -3712,7 +3811,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.0696
+[1] 0.0604
 ```
 
 
@@ -3747,7 +3846,7 @@ abline(v = observedTestStat, col = "red", lwd = 3)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-22-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-23-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3757,7 +3856,7 @@ sum(permutedTestStats >= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.9595
+[1] 0.9545
 ```
 
 
@@ -3770,7 +3869,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.041
+[1] 0.046
 ```
 
 
@@ -3783,7 +3882,7 @@ sum(permutedTestStats <= observedTestStat)/N
 ::: {.cell-output .cell-output-stdout}
 
 ```
-[1] 0.082
+[1] 0.092
 ```
 
 
@@ -3834,7 +3933,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-23-1.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-24-1.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3907,7 +4006,7 @@ abline(v=observedTestStat)
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-23-2.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-24-2.png){width=672}
 :::
 
 ```{.r .cell-code}
@@ -3980,7 +4079,7 @@ abline(v=observedTestStat, col="red")
 ```
 
 ::: {.cell-output-display}
-![](ClassActivities_files/figure-html/unnamed-chunk-23-3.png){width=672}
+![](ClassActivities_files/figure-html/unnamed-chunk-24-3.png){width=672}
 :::
 
 ```{.r .cell-code}

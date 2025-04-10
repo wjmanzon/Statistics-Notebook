@@ -69,7 +69,8 @@ __- This test would not be appropriate for this data because of the small sample
 
 # Load required packages  
 library(car)      # For qqPlot function  
-  
+data("Highway1")
+
 # We assume the variable 'rate' represents the 1973 accident rate per million vehicle miles,  
 # and the variable 'lane' represents the number of lanes.  
 # For this example, we consider lane==2 as 2-lane highways and lane==4 as 4-lane highways.  
@@ -154,8 +155,513 @@ Use the Highway1 dataset in R for this question.
 
 Compute the average accident rate (per million vehicle miles) in 1973 for each type of roadway: `MC`, `FAI`, `PA`, and `MA`.
 
+__htype     rate__
+__1   FAI 2.872000__
+__2    MA 4.870000__
+__3    MC 3.585000__
+__4    PA 3.608421__
 ```{r}
-?Highway1
+#?Highway1
+#View(Highway1)
+
+library(car)
+data(Highway1)
+
 View(Highway1)
+
+aggregate(rate ~ htype, data = Highway1, FUN = mean)
+
 ```
+
+## 7
+Consider the barplot below and the hypothesis that gender and preference for DC or Marvel comics is independent.
+
+If this hypothesis is tested with an appropriate test using the data of this plot, what is the p-value of the test?
+
+Note: DC comics include Superman, Batman, Green Latern, The Flash, and Wonder Woman. Marvel comics include Spiderman, Ironman, Captain America, Thor, and The X-Men.
+
+| Comic Preference | Male | Female |
+|------------------|------|--------|
+| Marvel           | 22   | 43     |
+| DC               | 27   | 8      |
+
+
+```{r}
+# Create a matrix with the observed counts
+comic_data <- matrix(c(22, 27, 43, 8), 
+                     nrow = 2, 
+                     byrow = TRUE)
+
+# Add row and column names
+rownames(comic_data) <- c("Male", "Female")
+colnames(comic_data) <- c("Marvel", "DC")
+
+# View the table
+comic_data
+
+# Chi-square test of independence
+test_result <- chisq.test(comic_data)
+
+# View the p-value
+test_result$p.value
+```
+
+## 8
+
+In the KidsFeet dataset in R, there are three names of the children that occur twice, while all the other names occur only once. Compute the average foot width for the three names that occur more than once. Select the answer below that shows these three averages.
+
+```{r}
+# Load the Dataset
+library(mosaicData)
+data(KidsFeet)
+
+# Find Duplicated Names
+name_counts <- table(KidsFeet$name)
+name_counts
+
+duplicated_names <- names(name_counts[name_counts > 1])
+duplicated_names
+
+# Filter the Dataset for Duplicated Names
+dup_data <- subset(KidsFeet, name %in% duplicated_names)
+dup_data
+
+# Compute the Average Width for Each Duplicated Name
+aggregate(width ~ name, data = dup_data, FUN = mean)
+```
+
+## 9
+
+Use the iris dataset in R and the image below to come up with the regression equation for the versicolor species.
+```{r}
+## Subset iris dataset to only versicolor species
+versicolor_data <- subset(iris, Species == 'versicolor')
+
+## Build a linear regression model predicting Sepal.Length using Sepal.Width
+model_sepal_corrected <- lm(Sepal.Length ~ Sepal.Width, data = versicolor_data)
+
+## Print model summary
+model_sepal_summary <- summary(model_sepal_corrected)
+print(model_sepal_summary)
+
+# Extract coefficients
+coeff_sepal <- coef(model_sepal_corrected)
+cat('The regression equation for predicting Sepal.Length is:\
+')
+cat(sprintf('Sepal.Length = %.4f + %.4f * Sepal.Width\
+', coeff_sepal[1], coeff_sepal[2]))
+```
+
+## 10
+
+Select the test that would be most appropriate to use in answering the following question for students here at BYU-Idaho.
+
+Are Business majors more likely to be married than Data Analysis, Biostatistics, or Mathematics majors?
+	
+- One-way ANOVA
+	
+- Independent Samples t Test
+
+__- Chi-squared Test__
+	
+- Kruskal-Wallis Test
+
+## 11
+
+Use the cars dataset in R for this question.
+
+Predict how fast a car (from 1920, see ?cars) was going if it took 130 feet for it to come to a complete stop after applying the brakes.
+
+	
+Roughly 35 mph
+
+Roughly 30 mph
+	
+Roughly 40 mph
+	
+Roughly 25 mph
+
+```{r}
+# Create a linear regression model
+model <- lm(speed ~ dist, data = cars)
+
+# Summary of the model
+summary(model)
+
+# Plot the data and the regression line
+plot(cars$dist, cars$speed, 
+     main = "Speed vs. Stopping Distance",
+     xlab = "Stopping Distance (feet)", 
+     ylab = "Speed (mph)",
+     pch = 19, col = "blue")
+abline(model, col = "red", lwd = 2)
+
+# Predict the speed for a stopping distance of 130 feet
+new_data <- data.frame(dist = 130)
+predicted_speed <- predict(model, newdata = new_data)
+print(paste("Predicted speed for a stopping distance of 130 feet:", round(predicted_speed, 1), "mph"))
+```
+
+
+## 12
+
+Use the Galton dataset to answer this question.
+
+Perform a permutation test to determine if the average height of Males is different that the average height of Females.
+
+How does the observed test statistic compare to the distribution of test statistics from the permutated data (i.e., the "permuted test statistics")?
+
+__The observed test statistic is much lower than the lowest permuted test statistic, p-value ≈ 0.__
+
+```{r}
+# Load the dataset
+data("Galton")
+
+# View structure to ensure 'sex' and 'height' are present
+str(Galton)
+
+# Observed test statistic: difference in means
+observed_diff <- mean(Galton$height[Galton$sex == "M"]) - mean(Galton$height[Galton$sex == "F"])
+
+# Permutation test
+set.seed(123)  # for reproducibility
+n_permutations <- 10000
+perm_diffs <- replicate(n_permutations, {
+  permuted_sex <- sample(Galton$sex)
+  mean(Galton$height[permuted_sex == "M"]) - mean(Galton$height[permuted_sex == "F"])
+})
+
+abs(observed_diff)
+
+# Calculate p-value
+p_value <- mean(abs(perm_diffs) >= abs(observed_diff))
+
+p_value
+```
+
+## 13
+
+Use the Highway1 dataset in R for this question.
+
+Use an appropriate Wilcoxon Test to test if the median 1973 accident rate (per million vehicle miles) on 2 lane highways is different than the median 1973 accident rate (per million vehicle miles) on 4 lane highways.
+
+Select the answer showing the test statistic and p-value of your test.
+
+- W = 113, p-value = 0.3526
+	
+- W = 253, p-value = 0.5281
+	
+- W = 195, p-value = 0.9925
+
+__- W = 176, p-value = 0.8669__
+
+```{r}
+data("Highway1")
+# View(Highway1)
+# glimpse(Highway1)
+
+# Check the structure of the data
+str(Highway1)
+
+# Preview key variables
+head(Highway1[, c("rate", "lane")])
+
+# Subset data based on number of lanes
+rate_2lane <- Highway1$rate[Highway1$lane == 2]
+rate_4lane <- Highway1$rate[Highway1$lane == 4]
+
+is.numeric(rate_2lane)
+is.numeric(rate_4lane)
+
+# Perform the Wilcoxon rank-sum test
+wilcox.test(rate_2lane, rate_4lane)
+```
+
+# 14
+
+Run the following code in R.
+
+  > plot(rate ~ slim, data=Highway1, pch=16, xlab="", ylab="", main="")
+
+Which set of plot labels would provide the most correct and most useful information for the graphic produced by this code?
+ 
+- xlab="Speed Limit", ylab="Accident Rate", main="Speed Limit and Accident Rates"
+	
+- xlab="Accident Rate", ylab="Speed Limit", main="Speed Limit and Accident Rates"
+	
+- xlab="Accident Rate", ylab="Speed Limit", main="1973 Minnesoty Highway Safety Study"
+
+__- xlab="Speed Limit", ylab="Accident Rate", main="1973 Minnesota Highway Safety Study"__
+
+
+```{r}
+plot(rate ~ slim, data=Highway1, pch=16, xlab="", ylab="", main="")
+```
+
+
+# 15
+
+Use an appropriate test and graphic for the singer dataset in R (?singer) to determine if and how the median height differs for different voice parts.
+
+__- The median heights differ significantly for the different voice parts with bases being the tallest and sopranos being the shortest (p < 0.001).__
+
+- The median heights differ significantly for the different voice parts with tenors being the tallest and altos being the shortest (p < 0.001).
+
+- The median heights are all apparently about the same for the different voice parts (p = 0.22016)
+
+- The median heights are all apparently about the same for the different voice parts (p = 0.06216).
+
+```{r}
+library(lattice)
+data(singer)
+kruskal.test(height ~ voice.part, data = singer)
+
+boxplot(height ~ voice.part, data = singer, las = 2, col = "lightblue",
+        main = "Heights by Voice Part", ylab = "Height (inches)")
+
+```
+
+
+## 16
+
+
+Run the following code in R.
+
+  > plot(speed > 15 ~ dist, data=cars, ylab="Probability Speed > 15 mph", xlab="Stopping Distance (feet)")
+
+What is the estimated probability that the speed of the car is greater than 15 mph if the car takes 70 feet to stop?
+
+(Note this data is from the 1920's, see ?cars for details.)
+	
+- 0.9632993
+	
+- 0.9234143
+	
+- 0.9401975
+	
+- 0.8927474
+
+```{r}
+plot(speed > 15 ~ dist, data=cars, ylab="Probability Speed > 15 mph", xlab="Stopping Distance (feet)")
+```
+
+```{r}
+# To estimate the probability that speed > 15 when dist = 70, we should:
+# Fit a logistic regression model:
+model <- glm((speed > 15) ~ dist, data = cars, family = binomial)
+
+# Predict for dist = 70:
+predict(model, newdata = data.frame(dist = 70), type = "response")
+```
+
+
+# 17
+
+Which of the following is a nonparametric test?
+	
+Chi-squared Test
+
+Independent Samples t Test
+
+__Permutation Test__
+	
+Two-way ANOVA
+
+## 18
+
+Perform a two-way ANOVA using the KidsFeet dataset in R that will allow you to test if the pattern shown in the following plot is real. Use the  α=0.05
+  level and report the p-value of the test.
+
+  > xyplot(length ~ sex, data=KidsFeet, group=domhand, type=c("p","a"), auto.key=TRUE)
+
+	
+No, the pattern shown is not real (p = 0.0526)
+	
+Yes, the pattern shown is real (p = 0.0415)
+
+No, the pattern shown is not real (p = 0.2892)
+
+__Yes, the pattern is real (p = 0.0487)__
+
+```{r}
+xyplot(length ~ sex, data = KidsFeet, group = domhand, type = c("p", "a"), auto.key = TRUE)
+
+```
+
+```{r}
+# Perform a Two-Way ANOVA: We want to test:
+
+# Main effect of sex
+
+# Main effect of domhand
+
+# Interaction: sex:domhand
+
+# Load package and data
+data(KidsFeet)
+
+# Two-way ANOVA with interaction
+model <- aov(length ~ sex * domhand, data = KidsFeet)
+summary(model)
+
+# Interpret Results: The interaction term (sex:domhand) tests whether the effect of sex on foot length depends on dominant hand. This is what the plot suggests, and what we test at α = 0.05.
+```
+
+# 19
+
+Run the following code in R.
+
+  > hist(islands, xlab="Area in Thousands of Square Miles", main="Areas of the World's Major Landmasses")
+
+Which set of statistics would be most meaningful to include in an analysis containing this histogram?
+
+median(islands) and sd(islands)
+	
+mean(islands) and sd(islands)
+
+__summary(islands)__
+	
+var(islands) and max(islands)
+
+
+
+```{r}
+hist(islands, xlab="Area in Thousands of Square Miles", main="Areas of the World's Major Landmasses")
+```
+
+## 20
+
+Using mtcars dataset in r, create a chart that shows the distribution of cylinders per transmission type.
+
+```{r}
+# Load required package
+library(ggplot2)
+
+# Load and prepare data
+data(mtcars)
+mtcars$am <- as.factor(mtcars$am)  # X-axis: 0 = automatic, 1 = manual
+mtcars$cyl <- as.factor(mtcars$cyl)  # Legend: 4, 6, 8 cylinders
+
+# Create plot
+ggplot(mtcars, aes(x = am, fill = cyl)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Cylinder Distribution by Transmission Type",
+       x = "Transmission (0 = Automatic, 1 = Manual)",
+       y = "Count",
+       fill = "Cylinders") +
+  theme_minimal()
+```
+
+## 21
+
+What two things are needed to compute a p-value?
+
+	
+A parametric test and a nonparametric test.
+
+Normal data and R.
+	
+__A test statistic and a distribution of the test statistic.__
+	
+A donkey and a hula-hoop.
+
+
+## 22
+
+A logistic regression was performed to determine how cholesterol levels of adult men (X) impact their probability of having a heart attack (Y=1 denoting a heart attack). The value of  β0 in the model was estimated to be 56.4146 while the value of  β1 in the model was estimated to be 0.251.
+
+Interpret the estimate for  β1 in context of the odds of an adult male having a heart attack.
+
+```{r}
+# To interpret the logistic regression coefficient β₁ = 0.251 in context, we need to relate it to how a 1-unit increase in cholesterol (X) affects the odds of a heart attack (Y = 1). β1=0.251 is the change in the log-odds of a heart attack for every 1-unit increase in cholesterol
+```
+
+```{r}
+# Given coefficient
+beta1 <- 0.251
+
+# Calculate the odds ratio
+odds_ratio <- exp(beta1)
+
+# Calculate percent increase in odds
+percent_increase <- (odds_ratio - 1) * 100
+
+# Display results
+cat("Odds Ratio:", round(odds_ratio, 3), "\n")
+cat("Percent increase in odds per unit increase in cholesterol:", round(percent_increase, 1), "%\n")
+```
+
+
+# 23
+
+An ANOVA is performed with the following output, but the F value is missing.
+| Source     | Df | Sum Sq | Mean Sq | F value | Pr(>F)     | Signif |
+|------------|----|--------|---------|---------|------------|--------|
+| feed       |  5 | 231129 |   46226 |         | 5.94e-10   | ***    |
+| Residuals  | 65 | 195556 |    3009 |         |            |        |
+
+
+What must be the value of the F-statistic for this test? __15.37__
+
+```{r}
+# F = Mean SQ (between groups - 46226) / mean sq (residuals - 3009)
+
+# Load dataset
+data(chickwts)
+
+# Perform one-way ANOVA
+anova_model <- aov(weight ~ feed, data = chickwts)
+
+# Show ANOVA table
+summary(anova_model)
+```
+
+
+## 24
+Suppose a permutation test is performed and the following histogram of 2,000 permuted test statistics is obtained. The observed test statistic is denoted by the vertical line. What is the p-value of the test?
+
+
+```{r}
+# If You Only Have the Histogram Image
+# If you don’t have the data used to generate the histogram:
+
+# Estimate the observed statistic from the position of the vertical line (e.g., obs_stat ≈ 7.5).
+
+# Count how many bars (bins) in the histogram are to the right of that line.
+
+# Estimate the number of permutations that fall into those bins (by approximating bar heights).
+
+# Divide that number by 2000 to get the p-value.
+
+# Rough estimate from image: maybe ~40 out of 2000 values ≥ 7.5 →
+# Estimated p-value = 40 / 2000 = 0.02
+```
+
+## 25
+
+```{r}
+# Load the dataset
+data("ToothGrowth")
+
+# Preview the first few rows
+head(ToothGrowth)
+
+# Check how the data is distributed between the two supplement types:
+table(ToothGrowth$supp)
+
+# You can also visualize the differences:
+boxplot(len ~ supp, data = ToothGrowth,
+        main = "Tooth Growth by Supplement Type",
+        xlab = "Supplement Type",
+        ylab = "Tooth Length",
+        col = c("orange", "cyan"))
+
+# Run t test
+t.test(len ~ supp, data = ToothGrowth)
+
+
+```
+
+
+
 

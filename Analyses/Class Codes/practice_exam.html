@@ -87,6 +87,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#question-1" id="toc-question-1" class="nav-link active" data-scroll-target="#question-1">Question 1</a></li>
   <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">3</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">4</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">5</a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">6</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">7</a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">8</a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">9</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">10</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">11</a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9">12</a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10">13</a></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11">14</a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12">15</a>
+  <ul class="collapse">
+  <li><a href="#section-13" id="toc-section-13" class="nav-link" data-scroll-target="#section-13">16</a></li>
+  </ul></li>
+  <li><a href="#section-14" id="toc-section-14" class="nav-link" data-scroll-target="#section-14">17</a>
+  <ul class="collapse">
+  <li><a href="#section-15" id="toc-section-15" class="nav-link" data-scroll-target="#section-15">18</a></li>
+  </ul></li>
+  <li><a href="#section-16" id="toc-section-16" class="nav-link" data-scroll-target="#section-16">19</a>
+  <ul class="collapse">
+  <li><a href="#section-17" id="toc-section-17" class="nav-link" data-scroll-target="#section-17">20</a></li>
+  <li><a href="#section-18" id="toc-section-18" class="nav-link" data-scroll-target="#section-18">21</a></li>
+  <li><a href="#section-19" id="toc-section-19" class="nav-link" data-scroll-target="#section-19">22</a></li>
+  </ul></li>
+  <li><a href="#section-20" id="toc-section-20" class="nav-link" data-scroll-target="#section-20">23</a>
+  <ul class="collapse">
+  <li><a href="#section-21" id="toc-section-21" class="nav-link" data-scroll-target="#section-21">24</a></li>
+  <li><a href="#section-22" id="toc-section-22" class="nav-link" data-scroll-target="#section-22">25</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -118,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection, dplyr, AER)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="question-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
@@ -211,14 +241,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Load required packages  </span></span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="fu">library</span>(car)      <span class="co"># For qqPlot function  </span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  </span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co"># We assume the variable 'rate' represents the 1973 accident rate per million vehicle miles,  </span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># and the variable 'lane' represents the number of lanes.  </span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># For this example, we consider lane==2 as 2-lane highways and lane==4 as 4-lane highways.  </span></span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># SAMPLE SIZES:</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>n_2lane <span class="ot">&lt;-</span> <span class="fu">sum</span>(Highway1<span class="sc">$</span>lane <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb5-12"><a href="#cb5-12"></a>n_2lane <span class="co">#20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="fu">data</span>(<span class="st">"Highway1"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># We assume the variable 'rate' represents the 1973 accident rate per million vehicle miles,  </span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># and the variable 'lane' represents the number of lanes.  </span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co"># For this example, we consider lane==2 as 2-lane highways and lane==4 as 4-lane highways.  </span></span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># SAMPLE SIZES:</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>n_2lane <span class="ot">&lt;-</span> <span class="fu">sum</span>(Highway1<span class="sc">$</span>lane <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>n_2lane <span class="co">#20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 20</code></pre>
 </div>
@@ -274,6 +305,723 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># PLOT SHOWS heteroscedasticity. MEANING, Constant Variance Assumption is Violated</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">4</h2>
+<p>Which analysis would allow you to predict whether or not it will rain on a given day based on the low temperature of that day?</p>
+<p>Chi-squared Test</p>
+<p>Paired Samples t Test</p>
+<p><strong>Logistic Regression</strong></p>
+<p>Linear Regression</p>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">5</h2>
+<p>Use the sample of children’s feet contained in the KidsFeet dataset to answer this question.</p>
+<p>Why might a Wilcoxon Rank Sum Test not be appropriate for testing to see if the median width of a child’s foot differs for boys and girls?</p>
+<ul>
+<li>The data is paired so a Wilcoxon Signed-Rank Test should be used instead.</li>
+</ul>
+<p><strong>- There are many ties in the data so the exact p-value cannot be computed.</strong></p>
+<ul>
+<li><p>Foot width is quantitative so only a t Test could be used for this data.</p></li>
+<li><p>The data is not normal so the requirements of the test are not satisfied.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Check number of ties in the 'width' column</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">table</span>(KidsFeet<span class="sc">$</span>width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+7.9 8.1 8.3 8.4 8.5 8.6 8.7 8.8 8.9   9 9.1 9.2 9.3 9.4 9.5 9.6 9.7 9.8 
+  2   1   1   1   1   4   1   5   3   4   1   1   4   1   3   1   2   3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># The Wilcoxon Rank Sum Test (also known as the Mann-Whitney U test) is a non-parametric test used to compare two independent groups when the assumption of normality may not be met.</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># However, it assumes that the ranks of the data can be meaningfully ordered. When many tied values exist (as might happen in small datasets or datasets with limited numeric precision), it complicates the rank-based calculations, and the exact p-value cannot be computed.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3">6</h2>
+<p>Use the Highway1 dataset in R for this question.</p>
+<p>Compute the average accident rate (per million vehicle miles) in 1973 for each type of roadway: <code>MC</code>, <code>FAI</code>, <code>PA</code>, and <code>MA</code>.</p>
+<p><strong>htype rate</strong> <strong>1 FAI 2.872000</strong> <strong>2 MA 4.870000</strong> <strong>3 MC 3.585000</strong> <strong>4 PA 3.608421</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#?Highway1</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#View(Highway1)</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="fu">library</span>(car)</span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="fu">data</span>(Highway1)</span>
+<span id="cb18-6"><a href="#cb18-6"></a></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="fu">View</span>(Highway1)</span>
+<span id="cb18-8"><a href="#cb18-8"></a></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="fu">aggregate</span>(rate <span class="sc">~</span> htype, <span class="at">data =</span> Highway1, <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["htype"],"name":[1],"type":["fct"],"align":["left"]},{"label":["rate"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"FAI","2":"2.872000"},{"1":"MA","2":"4.870000"},{"1":"MC","2":"3.585000"},{"1":"PA","2":"3.608421"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4">7</h2>
+<p>Consider the barplot below and the hypothesis that gender and preference for DC or Marvel comics is independent.</p>
+<p>If this hypothesis is tested with an appropriate test using the data of this plot, what is the p-value of the test?</p>
+<p>Note: DC comics include Superman, Batman, Green Latern, The Flash, and Wonder Woman. Marvel comics include Spiderman, Ironman, Captain America, Thor, and The X-Men.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Comic Preference</th>
+<th>Male</th>
+<th>Female</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Marvel</td>
+<td>22</td>
+<td>43</td>
+</tr>
+<tr class="even">
+<td>DC</td>
+<td>27</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Create a matrix with the observed counts</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>comic_data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">27</span>, <span class="dv">43</span>, <span class="dv">8</span>), </span>
+<span id="cb19-3"><a href="#cb19-3"></a>                     <span class="at">nrow =</span> <span class="dv">2</span>, </span>
+<span id="cb19-4"><a href="#cb19-4"></a>                     <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-5"><a href="#cb19-5"></a></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co"># Add row and column names</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="fu">rownames</span>(comic_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="fu">colnames</span>(comic_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Marvel"</span>, <span class="st">"DC"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9"></a></span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="co"># View the table</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>comic_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Marvel DC
+Male       22 27
+Female     43  8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Chi-square test of independence</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>test_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(comic_data)</span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co"># View the p-value</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>test_result<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.804708e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5">8</h2>
+<p>In the KidsFeet dataset in R, there are three names of the children that occur twice, while all the other names occur only once. Compute the average foot width for the three names that occur more than once. Select the answer below that shows these three averages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Load the Dataset</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">library</span>(mosaicData)</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">data</span>(KidsFeet)</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="co"># Find Duplicated Names</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>name_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(KidsFeet<span class="sc">$</span>name)</span>
+<span id="cb23-7"><a href="#cb23-7"></a>name_counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Abby   Alisha     Andy  Caitlin      Cal      Cam Caroline    Damon 
+       1        1        1        2        1        1        1        1 
+Danielle    David   Dwayne    Dylan   Edward  Eleanor    Erica     Glen 
+       1        2        1        1        1        1        1        1 
+  Hannah   Hayley  Heather     Josh    Julie     Kate     Lang     Lars 
+       1        1        1        2        1        1        1        1 
+   Laura      Lee    Leigh   Maggie     Mark     Mike    Peggy    Peter 
+       1        1        1        1        1        1        1        1 
+     Ray   Scotty Teshanna     Zach 
+       1        1        1        1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>duplicated_names <span class="ot">&lt;-</span> <span class="fu">names</span>(name_counts[name_counts <span class="sc">&gt;</span> <span class="dv">1</span>])</span>
+<span id="cb25-2"><a href="#cb25-2"></a>duplicated_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Caitlin" "David"   "Josh"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Filter the Dataset for Duplicated Names</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>dup_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(KidsFeet, name <span class="sc">%in%</span> duplicated_names)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>dup_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["fct"],"align":["left"]},{"label":["birthmonth"],"name":[2],"type":["int"],"align":["right"]},{"label":["birthyear"],"name":[3],"type":["int"],"align":["right"]},{"label":["length"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["width"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[6],"type":["fct"],"align":["left"]},{"label":["biggerfoot"],"name":[7],"type":["fct"],"align":["left"]},{"label":["domhand"],"name":[8],"type":["fct"],"align":["left"]}],"data":[{"1":"David","2":"5","3":"88","4":"24.4","5":"8.4","6":"B","7":"L","8":"R","_rn_":"1"},{"1":"Josh","2":"1","3":"88","4":"25.2","5":"9.8","6":"B","7":"L","8":"R","_rn_":"4"},{"1":"Caitlin","2":"6","3":"88","4":"23.0","5":"8.8","6":"G","7":"L","8":"R","_rn_":"8"},{"1":"Josh","2":"7","3":"88","4":"24.4","5":"8.6","6":"B","7":"L","8":"R","_rn_":"22"},{"1":"David","2":"12","3":"87","4":"25.5","5":"9.5","6":"B","7":"R","8":"R","_rn_":"28"},{"1":"Caitlin","2":"7","3":"88","4":"22.5","5":"8.6","6":"G","7":"R","8":"R","_rn_":"32"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Compute the Average Width for Each Duplicated Name</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">aggregate</span>(width <span class="sc">~</span> name, <span class="at">data =</span> dup_data, <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["name"],"name":[1],"type":["fct"],"align":["left"]},{"label":["width"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Caitlin","2":"8.70"},{"1":"David","2":"8.95"},{"1":"Josh","2":"9.20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6">9</h2>
+<p>Use the iris dataset in R and the image below to come up with the regression equation for the versicolor species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="do">## Subset iris dataset to only versicolor species</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>versicolor_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species <span class="sc">==</span> <span class="st">'versicolor'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="do">## Build a linear regression model predicting Sepal.Length using Sepal.Width</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>model_sepal_corrected <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Length <span class="sc">~</span> Sepal.Width, <span class="at">data =</span> versicolor_data)</span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="do">## Print model summary</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>model_sepal_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_sepal_corrected)</span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="fu">print</span>(model_sepal_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sepal.Length ~ Sepal.Width, data = versicolor_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.73497 -0.28556 -0.07544  0.43666  0.83805 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   3.5397     0.5629   6.289 9.07e-08 ***
+Sepal.Width   0.8651     0.2019   4.284 8.77e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4436 on 48 degrees of freedom
+Multiple R-squared:  0.2766,    Adjusted R-squared:  0.2615 
+F-statistic: 18.35 on 1 and 48 DF,  p-value: 8.772e-05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Extract coefficients</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>coeff_sepal <span class="ot">&lt;-</span> <span class="fu">coef</span>(model_sepal_corrected)</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="fu">cat</span>(<span class="st">'The regression equation for predicting Sepal.Length is:\</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The regression equation for predicting Sepal.Length is:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">'Sepal.Length = %.4f + %.4f * Sepal.Width\</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="st">'</span>, coeff_sepal[<span class="dv">1</span>], coeff_sepal[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sepal.Length = 3.5397 + 0.8651 * Sepal.Width</code></pre>
+</div>
+</div>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7">10</h2>
+<p>Select the test that would be most appropriate to use in answering the following question for students here at BYU-Idaho.</p>
+<p>Are Business majors more likely to be married than Data Analysis, Biostatistics, or Mathematics majors?</p>
+<ul>
+<li><p>One-way ANOVA</p></li>
+<li><p>Independent Samples t Test</p></li>
+</ul>
+<p><strong>- Chi-squared Test</strong></p>
+<ul>
+<li>Kruskal-Wallis Test</li>
+</ul>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8">11</h2>
+<p>Use the cars dataset in R for this question.</p>
+<p>Predict how fast a car (from 1920, see ?cars) was going if it took 130 feet for it to come to a complete stop after applying the brakes.</p>
+<p>Roughly 35 mph</p>
+<p>Roughly 30 mph</p>
+<p>Roughly 40 mph</p>
+<p>Roughly 25 mph</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># Create a linear regression model</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(speed <span class="sc">~</span> dist, <span class="at">data =</span> cars)</span>
+<span id="cb35-3"><a href="#cb35-3"></a></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="co"># Summary of the model</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = speed ~ dist, data = cars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.5293 -2.1550  0.3615  2.4377  6.4179 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  8.28391    0.87438   9.474 1.44e-12 ***
+dist         0.16557    0.01749   9.464 1.49e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.156 on 48 degrees of freedom
+Multiple R-squared:  0.6511,    Adjusted R-squared:  0.6438 
+F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># Plot the data and the regression line</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">plot</span>(cars<span class="sc">$</span>dist, cars<span class="sc">$</span>speed, </span>
+<span id="cb37-3"><a href="#cb37-3"></a>     <span class="at">main =</span> <span class="st">"Speed vs. Stopping Distance"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4"></a>     <span class="at">xlab =</span> <span class="st">"Stopping Distance (feet)"</span>, </span>
+<span id="cb37-5"><a href="#cb37-5"></a>     <span class="at">ylab =</span> <span class="st">"Speed (mph)"</span>,</span>
+<span id="cb37-6"><a href="#cb37-6"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Predict the speed for a stopping distance of 130 feet</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">dist =</span> <span class="dv">130</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a>predicted_speed <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> new_data)</span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Predicted speed for a stopping distance of 130 feet:"</span>, <span class="fu">round</span>(predicted_speed, <span class="dv">1</span>), <span class="st">"mph"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Predicted speed for a stopping distance of 130 feet: 29.8 mph"</code></pre>
+</div>
+</div>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9">12</h2>
+<p>Use the Galton dataset to answer this question.</p>
+<p>Perform a permutation test to determine if the average height of Males is different that the average height of Females.</p>
+<p>How does the observed test statistic compare to the distribution of test statistics from the permutated data (i.e., the “permuted test statistics”)?</p>
+<p><strong>The observed test statistic is much lower than the lowest permuted test statistic, p-value ≈ 0.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">data</span>(<span class="st">"Galton"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3"></a></span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="co"># View structure to ensure 'sex' and 'height' are present</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="fu">str</span>(Galton)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   898 obs. of  6 variables:
+ $ family: Factor w/ 197 levels "1","10","100",..: 1 1 1 1 108 108 108 108 123 123 ...
+ $ father: num  78.5 78.5 78.5 78.5 75.5 75.5 75.5 75.5 75 75 ...
+ $ mother: num  67 67 67 67 66.5 66.5 66.5 66.5 64 64 ...
+ $ sex   : Factor w/ 2 levels "F","M": 2 1 1 1 2 2 1 1 2 1 ...
+ $ height: num  73.2 69.2 69 69 73.5 72.5 65.5 65.5 71 68 ...
+ $ nkids : int  4 4 4 4 4 4 4 4 2 2 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Observed test statistic: difference in means</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>observed_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(Galton<span class="sc">$</span>height[Galton<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"M"</span>]) <span class="sc">-</span> <span class="fu">mean</span>(Galton<span class="sc">$</span>height[Galton<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"F"</span>])</span>
+<span id="cb42-3"><a href="#cb42-3"></a></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="co"># Permutation test</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a>n_permutations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>perm_diffs <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_permutations, {</span>
+<span id="cb42-8"><a href="#cb42-8"></a>  permuted_sex <span class="ot">&lt;-</span> <span class="fu">sample</span>(Galton<span class="sc">$</span>sex)</span>
+<span id="cb42-9"><a href="#cb42-9"></a>  <span class="fu">mean</span>(Galton<span class="sc">$</span>height[permuted_sex <span class="sc">==</span> <span class="st">"M"</span>]) <span class="sc">-</span> <span class="fu">mean</span>(Galton<span class="sc">$</span>height[permuted_sex <span class="sc">==</span> <span class="st">"F"</span>])</span>
+<span id="cb42-10"><a href="#cb42-10"></a>})</span>
+<span id="cb42-11"><a href="#cb42-11"></a></span>
+<span id="cb42-12"><a href="#cb42-12"></a><span class="fu">abs</span>(observed_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.118656</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># Calculate p-value</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(perm_diffs) <span class="sc">&gt;=</span> <span class="fu">abs</span>(observed_diff))</span>
+<span id="cb44-3"><a href="#cb44-3"></a></span>
+<span id="cb44-4"><a href="#cb44-4"></a>p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10">13</h2>
+<p>Use the Highway1 dataset in R for this question.</p>
+<p>Use an appropriate Wilcoxon Test to test if the median 1973 accident rate (per million vehicle miles) on 2 lane highways is different than the median 1973 accident rate (per million vehicle miles) on 4 lane highways.</p>
+<p>Select the answer showing the test statistic and p-value of your test.</p>
+<ul>
+<li><p>W = 113, p-value = 0.3526</p></li>
+<li><p>W = 253, p-value = 0.5281</p></li>
+<li><p>W = 195, p-value = 0.9925</p></li>
+</ul>
+<p><strong>- W = 176, p-value = 0.8669</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">data</span>(<span class="st">"Highway1"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="co"># View(Highway1)</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="co"># glimpse(Highway1)</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="co"># Check the structure of the data</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="fu">str</span>(Highway1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   39 obs. of  12 variables:
+ $ rate : num  4.58 2.86 3.02 2.29 1.61 6.87 3.85 6.12 3.29 5.88 ...
+ $ len  : num  4.99 16.11 9.75 10.65 20.01 ...
+ $ adt  : int  69 73 49 61 28 30 46 25 43 23 ...
+ $ trks : int  8 8 10 13 12 6 8 9 12 7 ...
+ $ sigs1: num  0.2004 0.0621 0.1026 0.0939 0.05 ...
+ $ slim : int  55 60 60 65 70 55 55 55 50 50 ...
+ $ shld : int  10 10 10 10 10 10 8 10 4 5 ...
+ $ lane : int  8 4 4 6 4 4 4 4 4 4 ...
+ $ acpt : num  4.6 4.4 4.7 3.8 2.2 24.8 11 18.5 7.5 8.2 ...
+ $ itg  : num  1.2 1.43 1.54 0.94 0.65 0.34 0.47 0.38 0.95 0.12 ...
+ $ lwid : int  12 12 12 12 12 12 12 12 12 12 ...
+ $ htype: Factor w/ 4 levels "FAI","MA","MC",..: 1 1 1 1 1 4 4 4 4 4 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># Preview key variables</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">head</span>(Highway1[, <span class="fu">c</span>(<span class="st">"rate"</span>, <span class="st">"lane"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["rate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["lane"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"4.58","2":"8","_rn_":"1"},{"1":"2.86","2":"4","_rn_":"2"},{"1":"3.02","2":"4","_rn_":"3"},{"1":"2.29","2":"6","_rn_":"4"},{"1":"1.61","2":"4","_rn_":"5"},{"1":"6.87","2":"4","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Subset data based on number of lanes</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>rate_2lane <span class="ot">&lt;-</span> Highway1<span class="sc">$</span>rate[Highway1<span class="sc">$</span>lane <span class="sc">==</span> <span class="dv">2</span>]</span>
+<span id="cb49-3"><a href="#cb49-3"></a>rate_4lane <span class="ot">&lt;-</span> Highway1<span class="sc">$</span>rate[Highway1<span class="sc">$</span>lane <span class="sc">==</span> <span class="dv">4</span>]</span>
+<span id="cb49-4"><a href="#cb49-4"></a></span>
+<span id="cb49-5"><a href="#cb49-5"></a><span class="fu">is.numeric</span>(rate_2lane)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">is.numeric</span>(rate_4lane)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># Perform the Wilcoxon rank-sum test</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">wilcox.test</span>(rate_2lane, rate_4lane)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  rate_2lane and rate_4lane
+W = 176, p-value = 0.8669
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="section-11" class="level1">
+<h1>14</h1>
+<p>Run the following code in R.</p>
+<blockquote class="blockquote">
+<p>plot(rate ~ slim, data=Highway1, pch=16, xlab=““, ylab=”“, main=”“)</p>
+</blockquote>
+<p>Which set of plot labels would provide the most correct and most useful information for the graphic produced by this code?</p>
+<ul>
+<li><p>xlab=“Speed Limit”, ylab=“Accident Rate”, main=“Speed Limit and Accident Rates”</p></li>
+<li><p>xlab=“Accident Rate”, ylab=“Speed Limit”, main=“Speed Limit and Accident Rates”</p></li>
+<li><p>xlab=“Accident Rate”, ylab=“Speed Limit”, main=“1973 Minnesoty Highway Safety Study”</p></li>
+</ul>
+<p><strong>- xlab=“Speed Limit”, ylab=“Accident Rate”, main=“1973 Minnesota Highway Safety Study”</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">plot</span>(rate <span class="sc">~</span> slim, <span class="at">data=</span>Highway1, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">main=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-12" class="level1">
+<h1>15</h1>
+<p>Use an appropriate test and graphic for the singer dataset in R (?singer) to determine if and how the median height differs for different voice parts.</p>
+<p><strong>- The median heights differ significantly for the different voice parts with bases being the tallest and sopranos being the shortest (p &lt; 0.001).</strong></p>
+<ul>
+<li><p>The median heights differ significantly for the different voice parts with tenors being the tallest and altos being the shortest (p &lt; 0.001).</p></li>
+<li><p>The median heights are all apparently about the same for the different voice parts (p = 0.22016)</p></li>
+<li><p>The median heights are all apparently about the same for the different voice parts (p = 0.06216).</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">data</span>(singer)</span>
+<span id="cb56-3"><a href="#cb56-3"></a><span class="fu">kruskal.test</span>(height <span class="sc">~</span> voice.part, <span class="at">data =</span> singer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  height by voice.part
+Kruskal-Wallis chi-squared = 141.84, df = 7, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">boxplot</span>(height <span class="sc">~</span> voice.part, <span class="at">data =</span> singer, <span class="at">las =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb58-2"><a href="#cb58-2"></a>        <span class="at">main =</span> <span class="st">"Heights by Voice Part"</span>, <span class="at">ylab =</span> <span class="st">"Height (inches)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="section-13" class="level2">
+<h2 class="anchored" data-anchor-id="section-13">16</h2>
+<p>Run the following code in R.</p>
+<blockquote class="blockquote">
+<p>plot(speed &gt; 15 ~ dist, data=cars, ylab=“Probability Speed &gt; 15 mph”, xlab=“Stopping Distance (feet)”)</p>
+</blockquote>
+<p>What is the estimated probability that the speed of the car is greater than 15 mph if the car takes 70 feet to stop?</p>
+<p>(Note this data is from the 1920’s, see ?cars for details.)</p>
+<ul>
+<li><p>0.9632993</p></li>
+<li><p>0.9234143</p></li>
+<li><p>0.9401975</p></li>
+<li><p>0.8927474</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">plot</span>(speed <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">~</span> dist, <span class="at">data=</span>cars, <span class="at">ylab=</span><span class="st">"Probability Speed &gt; 15 mph"</span>, <span class="at">xlab=</span><span class="st">"Stopping Distance (feet)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="co"># To estimate the probability that speed &gt; 15 when dist = 70, we should:</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="co"># Fit a logistic regression model:</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>((speed <span class="sc">&gt;</span> <span class="dv">15</span>) <span class="sc">~</span> dist, <span class="at">data =</span> cars, <span class="at">family =</span> binomial)</span>
+<span id="cb60-4"><a href="#cb60-4"></a></span>
+<span id="cb60-5"><a href="#cb60-5"></a><span class="co"># Predict for dist = 70:</span></span>
+<span id="cb60-6"><a href="#cb60-6"></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">dist =</span> <span class="dv">70</span>), <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1 
+0.9234143 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="section-14" class="level1">
+<h1>17</h1>
+<p>Which of the following is a nonparametric test?</p>
+<p>Chi-squared Test</p>
+<p>Independent Samples t Test</p>
+<p><strong>Permutation Test</strong></p>
+<p>Two-way ANOVA</p>
+<section id="section-15" class="level2">
+<h2 class="anchored" data-anchor-id="section-15">18</h2>
+<p>Perform a two-way ANOVA using the KidsFeet dataset in R that will allow you to test if the pattern shown in the following plot is real. Use the α=0.05 level and report the p-value of the test.</p>
+<blockquote class="blockquote">
+<p>xyplot(length ~ sex, data=KidsFeet, group=domhand, type=c(“p”,“a”), auto.key=TRUE)</p>
+</blockquote>
+<p>No, the pattern shown is not real (p = 0.0526)</p>
+<p>Yes, the pattern shown is real (p = 0.0415)</p>
+<p>No, the pattern shown is not real (p = 0.2892)</p>
+<p><strong>Yes, the pattern is real (p = 0.0487)</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">xyplot</span>(length <span class="sc">~</span> sex, <span class="at">data =</span> KidsFeet, <span class="at">group =</span> domhand, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"p"</span>, <span class="st">"a"</span>), <span class="at">auto.key =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># Perform a Two-Way ANOVA: We want to test:</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a></span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="co"># Main effect of sex</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a></span>
+<span id="cb63-5"><a href="#cb63-5"></a><span class="co"># Main effect of domhand</span></span>
+<span id="cb63-6"><a href="#cb63-6"></a></span>
+<span id="cb63-7"><a href="#cb63-7"></a><span class="co"># Interaction: sex:domhand</span></span>
+<span id="cb63-8"><a href="#cb63-8"></a></span>
+<span id="cb63-9"><a href="#cb63-9"></a><span class="co"># Load package and data</span></span>
+<span id="cb63-10"><a href="#cb63-10"></a><span class="fu">data</span>(KidsFeet)</span>
+<span id="cb63-11"><a href="#cb63-11"></a></span>
+<span id="cb63-12"><a href="#cb63-12"></a><span class="co"># Two-way ANOVA with interaction</span></span>
+<span id="cb63-13"><a href="#cb63-13"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(length <span class="sc">~</span> sex <span class="sc">*</span> domhand, <span class="at">data =</span> KidsFeet)</span>
+<span id="cb63-14"><a href="#cb63-14"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+sex          1   5.99   5.988   4.026 0.0526 .
+domhand      1   1.72   1.723   1.158 0.2892  
+sex:domhand  1   6.20   6.205   4.172 0.0487 *
+Residuals   35  52.05   1.487                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="co"># Interpret Results: The interaction term (sex:domhand) tests whether the effect of sex on foot length depends on dominant hand. This is what the plot suggests, and what we test at α = 0.05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="section-16" class="level1">
+<h1>19</h1>
+<p>Run the following code in R.</p>
+<blockquote class="blockquote">
+<p>hist(islands, xlab=“Area in Thousands of Square Miles”, main=“Areas of the World’s Major Landmasses”)</p>
+</blockquote>
+<p>Which set of statistics would be most meaningful to include in an analysis containing this histogram?</p>
+<p>median(islands) and sd(islands)</p>
+<p>mean(islands) and sd(islands)</p>
+<p><strong>summary(islands)</strong></p>
+<p>var(islands) and max(islands)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">hist</span>(islands, <span class="at">xlab=</span><span class="st">"Area in Thousands of Square Miles"</span>, <span class="at">main=</span><span class="st">"Areas of the World's Major Landmasses"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="section-17" class="level2">
+<h2 class="anchored" data-anchor-id="section-17">20</h2>
+<p>Using mtcars dataset in r, create a chart that shows the distribution of cylinders per transmission type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co"># Load required package</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb67-3"><a href="#cb67-3"></a></span>
+<span id="cb67-4"><a href="#cb67-4"></a><span class="co"># Load and prepare data</span></span>
+<span id="cb67-5"><a href="#cb67-5"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb67-6"><a href="#cb67-6"></a>mtcars<span class="sc">$</span>am <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mtcars<span class="sc">$</span>am)  <span class="co"># X-axis: 0 = automatic, 1 = manual</span></span>
+<span id="cb67-7"><a href="#cb67-7"></a>mtcars<span class="sc">$</span>cyl <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mtcars<span class="sc">$</span>cyl)  <span class="co"># Legend: 4, 6, 8 cylinders</span></span>
+<span id="cb67-8"><a href="#cb67-8"></a></span>
+<span id="cb67-9"><a href="#cb67-9"></a><span class="co"># Create plot</span></span>
+<span id="cb67-10"><a href="#cb67-10"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> am, <span class="at">fill =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb67-11"><a href="#cb67-11"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb67-12"><a href="#cb67-12"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cylinder Distribution by Transmission Type"</span>,</span>
+<span id="cb67-13"><a href="#cb67-13"></a>       <span class="at">x =</span> <span class="st">"Transmission (0 = Automatic, 1 = Manual)"</span>,</span>
+<span id="cb67-14"><a href="#cb67-14"></a>       <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb67-15"><a href="#cb67-15"></a>       <span class="at">fill =</span> <span class="st">"Cylinders"</span>) <span class="sc">+</span></span>
+<span id="cb67-16"><a href="#cb67-16"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-18" class="level2">
+<h2 class="anchored" data-anchor-id="section-18">21</h2>
+<p>What two things are needed to compute a p-value?</p>
+<p>A parametric test and a nonparametric test.</p>
+<p>Normal data and R.</p>
+<p><strong>A test statistic and a distribution of the test statistic.</strong></p>
+<p>A donkey and a hula-hoop.</p>
+</section>
+<section id="section-19" class="level2">
+<h2 class="anchored" data-anchor-id="section-19">22</h2>
+<p>A logistic regression was performed to determine how cholesterol levels of adult men (X) impact their probability of having a heart attack (Y=1 denoting a heart attack). The value of β0 in the model was estimated to be 56.4146 while the value of β1 in the model was estimated to be 0.251.</p>
+<p>Interpret the estimate for β1 in context of the odds of an adult male having a heart attack.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># To interpret the logistic regression coefficient β₁ = 0.251 in context, we need to relate it to how a 1-unit increase in cholesterol (X) affects the odds of a heart attack (Y = 1). β1=0.251 is the change in the log-odds of a heart attack for every 1-unit increase in cholesterol</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="co"># Given coefficient</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.251</span></span>
+<span id="cb69-3"><a href="#cb69-3"></a></span>
+<span id="cb69-4"><a href="#cb69-4"></a><span class="co"># Calculate the odds ratio</span></span>
+<span id="cb69-5"><a href="#cb69-5"></a>odds_ratio <span class="ot">&lt;-</span> <span class="fu">exp</span>(beta1)</span>
+<span id="cb69-6"><a href="#cb69-6"></a></span>
+<span id="cb69-7"><a href="#cb69-7"></a><span class="co"># Calculate percent increase in odds</span></span>
+<span id="cb69-8"><a href="#cb69-8"></a>percent_increase <span class="ot">&lt;-</span> (odds_ratio <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb69-9"><a href="#cb69-9"></a></span>
+<span id="cb69-10"><a href="#cb69-10"></a><span class="co"># Display results</span></span>
+<span id="cb69-11"><a href="#cb69-11"></a><span class="fu">cat</span>(<span class="st">"Odds Ratio:"</span>, <span class="fu">round</span>(odds_ratio, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Odds Ratio: 1.285 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">cat</span>(<span class="st">"Percent increase in odds per unit increase in cholesterol:"</span>, <span class="fu">round</span>(percent_increase, <span class="dv">1</span>), <span class="st">"%</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percent increase in odds per unit increase in cholesterol: 28.5 %</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="section-20" class="level1">
+<h1>23</h1>
+<p>An ANOVA is performed with the following output, but the F value is missing. | Source | Df | Sum Sq | Mean Sq | F value | Pr(&gt;F) | Signif | |————|—-|——–|———|———|————|——–| | feed | 5 | 231129 | 46226 | | 5.94e-10 | *** | | Residuals | 65 | 195556 | 3009 | | | |</p>
+<p>What must be the value of the F-statistic for this test? <strong>15.37</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="co"># F = Mean SQ (between groups - 46226) / mean sq (residuals - 3009)</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a></span>
+<span id="cb73-3"><a href="#cb73-3"></a><span class="co"># Load dataset</span></span>
+<span id="cb73-4"><a href="#cb73-4"></a><span class="fu">data</span>(chickwts)</span>
+<span id="cb73-5"><a href="#cb73-5"></a></span>
+<span id="cb73-6"><a href="#cb73-6"></a><span class="co"># Perform one-way ANOVA</span></span>
+<span id="cb73-7"><a href="#cb73-7"></a>anova_model <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> feed, <span class="at">data =</span> chickwts)</span>
+<span id="cb73-8"><a href="#cb73-8"></a></span>
+<span id="cb73-9"><a href="#cb73-9"></a><span class="co"># Show ANOVA table</span></span>
+<span id="cb73-10"><a href="#cb73-10"></a><span class="fu">summary</span>(anova_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+feed         5 231129   46226   15.37 5.94e-10 ***
+Residuals   65 195556    3009                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="section-21" class="level2">
+<h2 class="anchored" data-anchor-id="section-21">24</h2>
+<p>Suppose a permutation test is performed and the following histogram of 2,000 permuted test statistics is obtained. The observed test statistic is denoted by the vertical line. What is the p-value of the test?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="co"># If You Only Have the Histogram Image</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="co"># If you don’t have the data used to generate the histogram:</span></span>
+<span id="cb75-3"><a href="#cb75-3"></a></span>
+<span id="cb75-4"><a href="#cb75-4"></a><span class="co"># Estimate the observed statistic from the position of the vertical line (e.g., obs_stat ≈ 7.5).</span></span>
+<span id="cb75-5"><a href="#cb75-5"></a></span>
+<span id="cb75-6"><a href="#cb75-6"></a><span class="co"># Count how many bars (bins) in the histogram are to the right of that line.</span></span>
+<span id="cb75-7"><a href="#cb75-7"></a></span>
+<span id="cb75-8"><a href="#cb75-8"></a><span class="co"># Estimate the number of permutations that fall into those bins (by approximating bar heights).</span></span>
+<span id="cb75-9"><a href="#cb75-9"></a></span>
+<span id="cb75-10"><a href="#cb75-10"></a><span class="co"># Divide that number by 2000 to get the p-value.</span></span>
+<span id="cb75-11"><a href="#cb75-11"></a></span>
+<span id="cb75-12"><a href="#cb75-12"></a><span class="co"># Rough estimate from image: maybe ~40 out of 2000 values ≥ 7.5 →</span></span>
+<span id="cb75-13"><a href="#cb75-13"></a><span class="co"># Estimated p-value = 40 / 2000 = 0.02</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-22" class="level2">
+<h2 class="anchored" data-anchor-id="section-22">25</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># Load the dataset</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a><span class="fu">data</span>(<span class="st">"ToothGrowth"</span>)</span>
+<span id="cb76-3"><a href="#cb76-3"></a></span>
+<span id="cb76-4"><a href="#cb76-4"></a><span class="co"># Preview the first few rows</span></span>
+<span id="cb76-5"><a href="#cb76-5"></a><span class="fu">head</span>(ToothGrowth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["len"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["supp"],"name":[2],"type":["fct"],"align":["left"]},{"label":["dose"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"4.2","2":"VC","3":"0.5","_rn_":"1"},{"1":"11.5","2":"VC","3":"0.5","_rn_":"2"},{"1":"7.3","2":"VC","3":"0.5","_rn_":"3"},{"1":"5.8","2":"VC","3":"0.5","_rn_":"4"},{"1":"6.4","2":"VC","3":"0.5","_rn_":"5"},{"1":"10.0","2":"VC","3":"0.5","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="co"># Check how the data is distributed between the two supplement types:</span></span>
+<span id="cb77-2"><a href="#cb77-2"></a><span class="fu">table</span>(ToothGrowth<span class="sc">$</span>supp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+OJ VC 
+30 30 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="co"># You can also visualize the differences:</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a><span class="fu">boxplot</span>(len <span class="sc">~</span> supp, <span class="at">data =</span> ToothGrowth,</span>
+<span id="cb79-3"><a href="#cb79-3"></a>        <span class="at">main =</span> <span class="st">"Tooth Growth by Supplement Type"</span>,</span>
+<span id="cb79-4"><a href="#cb79-4"></a>        <span class="at">xlab =</span> <span class="st">"Supplement Type"</span>,</span>
+<span id="cb79-5"><a href="#cb79-5"></a>        <span class="at">ylab =</span> <span class="st">"Tooth Length"</span>,</span>
+<span id="cb79-6"><a href="#cb79-6"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"cyan"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_exam_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="co"># Run t test</span></span>
+<span id="cb80-2"><a href="#cb80-2"></a><span class="fu">t.test</span>(len <span class="sc">~</span> supp, <span class="at">data =</span> ToothGrowth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  len by supp
+t = 1.9153, df = 55.309, p-value = 0.06063
+alternative hypothesis: true difference in means between group OJ and group VC is not equal to 0
+95 percent confidence interval:
+ -0.1710156  7.5710156
+sample estimates:
+mean in group OJ mean in group VC 
+        20.66333         16.96333 </code></pre>
+</div>
+</div>
+</section>
 </section>
 
 </main>

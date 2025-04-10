@@ -570,9 +570,46 @@ F = \frac{\text{MS effect}}{\text{MS residual}}
 <li>Use p-values from <code>summary(myaov)</code></li>
 <li>For each effect:
 <ul>
-<li>If <strong>p</strong></li>
+<li>If <strong>p ≤ α</strong>, conclude significance</li>
+<li>If interaction is significant:
+<ul>
+<li>Main effects must be interpreted <strong>with caution</strong></li>
+<li>Explore means by factor combinations</li>
+</ul></li>
 </ul></li>
 </ul>
+</div>
+<div id="assumptions-1" class="section level3">
+<h3>Assumptions</h3>
+<p>Same as one-way ANOVA: 1. <strong>Representative Samples</strong> 2.
+<strong>Normality</strong> of residuals:
+<code>plot(myaov, which = 2)</code> 3. <strong>Equal variances</strong>
+across groups: <code>plot(myaov, which = 1)</code></p>
+</div>
+<div id="other-considerations-1" class="section level3">
+<h3>Other Considerations</h3>
+<ul>
+<li><p>ANOVA model:<br />
+<span class="math display">\[
+Y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk}
+\]</span><br />
+where <span class="math inline">\(\epsilon_{ijk} \sim N(0,
+\sigma^2)\)</span></p></li>
+<li><p>For 3+ factors:<br />
+<code>aov(Y ~ X1 + X2 + X3 + X1:X2 + ... , data = ...)</code></p></li>
+<li><p>If interaction is <strong>not significant</strong>, you can
+simplify the model.</p></li>
+<li><p><strong>Blocking variable</strong>: Include with</p>
+<pre class="r"><code>aov(Y ~ Block + X1 + X2 + X1:X2, data = ...)</code></pre></li>
+<li><p>For violations of assumptions, <strong>nonparametric
+alternatives</strong> exist (e.g., Kruskal-Wallis for one-way).</p></li>
+</ul>
+<hr />
+<blockquote>
+<p>ANOVA is a powerful method for comparing group means when assumptions
+are met. Always check diagnostics and consider post-hoc or nonparametric
+tests as needed.</p>
+</blockquote>
 </div>
 </div>
 </div>
