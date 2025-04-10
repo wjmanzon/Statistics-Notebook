@@ -1,0 +1,165 @@
+---
+title: "chi_squared_test"
+output: html_document
+---
+
+# Chi-squared Tests
+
+Chi-squared tests are used to assess associations between **two categorical (qualitative)** variables. There are two main forms:
+
+---
+
+## When to Use Each Chi-squared Test
+
+### 1. **Chi-squared Test of Independence**
+- Use when analyzing the relationship between **two categorical variables**.
+- Each variable should have **at least two levels**.
+- Tests whether the two variables are **independent** or **associated**.
+
+### 2. **Nonparametric Chi-squared Test**
+- Also used for **two categorical variables**.
+- Used when the assumptions for the standard test are **not fully met**, particularly when **expected counts are low**.
+- Requires **all observed counts to be at least 1**.
+
+---
+
+## Hypotheses
+
+For both standard and nonparametric tests:
+
+- **Null Hypothesis (H₀)**: The row and column variables are **independent**.
+- **Alternative Hypothesis (Hₐ)**: The variables are **associated**.
+
+**Example (Titanic Data)**:
+- H₀: Class and Survival are independent.
+- Hₐ: Class and Survival are associated.
+
+---
+
+## Performing the Test in R
+
+### 1. **Create Contingency Table**
+
+```r
+table(Dataset$FirstVariable, Dataset$SecondVariable)
+```
+
+### 2. **Standard Chi-squared Test**
+
+```r
+chisq.test(contingency_table)
+```
+
+### 3. **Nonparametric Chi-squared Test (with simulation)**
+
+```r
+chisq.test(contingency_table, simulate.p.value = TRUE)
+```
+
+---
+
+## Steps to Perform the Test
+
+1. **Create a contingency table** of observed counts using `table()`.
+2. **Run the test** using `chisq.test()`. Use `simulate.p.value = TRUE` if expected counts are low.
+3. **Examine the output**: Includes the test statistic, degrees of freedom, and p-value.
+4. **Interpret the result** based on p-value and hypothesis test decision rules.
+
+---
+
+## Test Statistic
+
+### Pearson’s Chi-squared Statistic
+
+\[
+\chi^2 = \sum_{i=1}^m \frac{(O_i - E_i)^2}{E_i}
+\]
+
+- \( O_i \): Observed count  
+- \( E_i \): Expected count  
+- \( m \): Number of cells = rows × columns  
+
+### Expected Count Formula
+
+\[
+E_i = \frac{(\text{row total}) \times (\text{column total})}{\text{grand total}}
+\]
+
+### For Nonparametric Test
+
+- Uses the **same statistic**, but the **p-value** is calculated via **simulation** (permutation test).
+
+---
+
+## Interpreting the Results
+
+- **p-value ≤ α**: Reject H₀ → There **is** an association.
+- **p-value > α**: Fail to reject H₀ → No significant association detected.
+
+- **Chi-squared statistic (χ²)**: Measures the discrepancy between observed and expected counts.
+- **Degrees of Freedom (df)**:
+  \[
+  df = (\text{number of rows} - 1) \times (\text{number of columns} - 1)
+  \]
+
+---
+
+## Checking Assumptions
+
+- **Expected Counts**:
+  - All expected counts ≥ 5 → standard test is fine.
+  - All expected counts ≥ 1 and average ≥ 5 → still acceptable.
+  - Otherwise, use the **nonparametric** test with simulation.
+
+- **Qualitative Variables**: Both variables must be categorical.
+
+---
+
+## Additional Insights
+
+### Observed and Expected Counts
+
+- Use:
+```r
+result$expected
+```
+
+### Residuals
+
+- **Pearson residuals**:
+  \[
+  r_i = \frac{O_i - E_i}{\sqrt{E_i}}
+  \]
+- Use:
+```r
+result$residuals
+```
+- Larger residuals → Greater deviation from independence
+
+---
+
+## Notes on Interpretation
+
+- Chi-squared tests only indicate **association**, not **causation**.
+- They do **not** measure the **strength** or **direction** of the association.
+- For deeper insight, examine **residuals** or use **visualizations** (e.g., mosaic plots).
+
+---
+
+## Nonparametric Approach
+
+- Involves **permutation** (random shuffling) to generate test statistic distribution under H₀.
+- Helps obtain a more **reliable p-value** when standard assumptions are violated.
+
+---
+
+## Summary Table
+
+| Test | Use Case | Assumptions | R Command |
+|------|----------|-------------|------------|
+| **Chi-squared Test of Independence** | Association between two categorical variables | Expected counts ≥ 5 | `chisq.test(table)` |
+| **Nonparametric Chi-squared Test** | Same as above, but with low expected counts | All observed counts ≥ 1 | `chisq.test(table, simulate.p.value = TRUE)` |
+
+---
+
+> Chi-squared tests are simple yet powerful tools for analyzing categorical data. Always inspect expected counts and residuals to ensure reliable and interpretable results.

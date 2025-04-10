@@ -1,0 +1,137 @@
+---
+title: "WHEN_TO_USE_WHICH"
+output: html_document
+---
+
+| Goal                             | Variable Type (Y)        | Variable Type (X)              | Recommended Test                                               |
+|----------------------------------|---------------------------|--------------------------------|----------------------------------------------------------------|
+| Compare one group to known value | Quantitative              | None                           | One-sample t-test, Wilcoxon, Permutation                       |
+| Compare 2 groups                 | Quantitative              | Categorical (2)                | t-test, Wilcoxon, Permutation                                  |
+| Compare 3+ groups                | Quantitative              | Categorical (3+)               | ANOVA, Kruskal-Wallis, Permutation                             |
+| Paired sample comparison         | Quantitative              | Categorical (paired)           | Paired t-test, Wilcoxon, Permutation                           |
+| Relationship                    | Quantitative              | Quantitative                   | Regression, Permutation                                        |
+| Association                     | Categorical               | Categorical                    | Chi-squared, Permutation                                       |
+| Predict binary outcome           | Categorical (binary)      | Quantitative and/or Categorical| Logistic Regression, Permutation                               |
+| Predict categorical outcome      | Categorical (multi-class) | Quantitative and/or Categorical| Multinomial Logistic Regression, Permutation                   |
+
+
+# I. Nature of Your Response Variable (Y)
+
+## A. Quantitative (Numerical Data)
+
+### 1. No Explanatory Variable (X) - Describing a Single Group
+- **Goal**: Infer about the population mean or median.
+- **Parametric**: One Sample t-test  
+  - **Hypotheses**:  
+    - H₀: μ = some number  
+    - Hₐ: μ ≠, >, < some number
+- **Nonparametric**: Wilcoxon Signed-Rank Test  
+  - **Goal**: Test hypotheses about the median of one sample or the median of differences in paired data.  
+  - **Hypotheses**:  
+    - H₀: median = some number (often 0 for differences)  
+    - Hₐ: median ≠, >, < some number
+- **Permutation Test**: Can test hypotheses about the mean or median without distributional assumptions.
+
+### 2. One Categorical Explanatory Variable (X) - Comparing Groups
+#### a. Two Groups
+- **Goal**: Compare the means of two independent groups.
+- **Parametric**: Independent Samples t-test  
+  - **Hypotheses**:  
+    - H₀: μ₁ - μ₂ = some number (often 0)  
+    - Hₐ: μ₁ - μ₂ ≠, >, < some number
+- **Nonparametric**: Wilcoxon Rank Sum Test (Mann-Whitney)  
+  - **Goal**: Compare medians or stochastic dominance.  
+  - **Hypotheses**:  
+    - H₀: medians are equal  
+    - Hₐ: medians are not equal (or one is greater/less)
+- **Paired Data (Related Samples)**  
+  - **Parametric**: Paired Samples t-test  
+    - **Hypotheses**:  
+      - H₀: μ_d = some number (often 0)  
+      - Hₐ: μ_d ≠, >, < some number  
+  - **Nonparametric**: Wilcoxon Signed-Rank Test (on differences)  
+    - **Hypotheses**:  
+      - H₀: median of differences = some number (often 0)  
+      - Hₐ: median of differences ≠, >, < some number
+- **Permutation Test**: Used for both independent or paired data.
+
+#### b. Three or More Groups
+- **Goal**: Compare the means of multiple independent groups.
+- **Parametric**: One-way ANOVA  
+  - **Hypotheses**:  
+    - H₀: μ₁ = μ₂ = ... = μₘ  
+    - Hₐ: μᵢ ≠ μ for at least one i
+- **Nonparametric**: Kruskal-Wallis Test  
+  - **Goal**: Determine if groups come from the same distribution.  
+  - **Hypotheses**:  
+    - H₀: All samples from the same distribution / μ₁ = μ₂ = ... = μ  
+    - Hₐ: At least one group is stochastically different / μᵢ ≠ μ
+- **Permutation Test**: Used to compare multiple groups without assumptions.
+
+### 3. Multiple Categorical Explanatory Variables (X)
+- **Goal**: Examine effects of multiple factors on a quantitative response, including interactions.
+- **Parametric**: Factorial ANOVA (e.g., Two-way ANOVA)  
+  - **Example Model** (Two-way):  
+    Yₗᵢⱼₖ = μ + Bₗ + αᵢ + βⱼ + αβᵢⱼ + εᵢⱼₗₖ
+- **Permutation Test**: Adapted for factorial designs.
+
+### 4. One Quantitative Explanatory Variable (X)
+- **Goal**: Model the linear relationship between two quantitative variables.
+- **Parametric**: Simple Linear Regression  
+  - **Hypotheses**:  
+    - H₀: β₁ = 0 (no linear relationship)  
+    - Hₐ: β₁ ≠, >, < 0 (linear relationship exists)  
+  - **Test Statistic**: t-statistic (slope), or F-statistic
+- **Permutation Test**: Test regression slope by permuting Y.
+
+### 5. Multiple Explanatory Variables (Quantitative and/or Categorical)
+- **Goal**: Model the relationship between Y and multiple predictors.
+- **Parametric**: Multiple Linear Regression  
+  - **Hypotheses**:  
+    - H₀: βⱼ = 0 (no effect of predictor j)  
+    - Hₐ: βⱼ ≠ 0  
+  - **Test Statistics**:  
+    - t-tests (individual coefficients)  
+    - F-test (overall or group significance)
+- **Permutation Test**: Used for overall model or individual predictors.
+
+---
+
+## B. Categorical (Qualitative/Factor Data)
+
+### 1. Y is Binary (e.g., Success/Failure)
+- **Goal**: Model the probability of an outcome based on X.
+- **One Quantitative X**: Logistic Regression  
+  - **Hypotheses**:  
+    - H₀: β₁ = 0 (no association)  
+    - Hₐ: β₁ ≠ 0
+- **Multiple X Variables**: Multiple Logistic Regression
+
+### 2. Y is Categorical (Two or More Levels)
+- **Goal**: Examine association between categorical variables.
+- **Categorical X**: Chi-squared Test of Independence  
+  - **Hypotheses**:  
+    - H₀: Variables are independent  
+    - Hₐ: Variables are associated  
+  - **Test Statistic**:  
+    χ² = Σ [(Oᵢ - Eᵢ)² / Eᵢ]
+- **Permutation Test**: Permute categories to test independence.
+
+---
+
+## Important Considerations
+
+- **Checking Assumptions**:  
+  - For parametric tests, assess normality, homogeneity of variances, and independence. Use Q-Q plots and diagnostic plots.
+- **Nonparametric Alternatives**:  
+  - Use Wilcoxon, Kruskal-Wallis, and permutation tests when assumptions are violated.
+- **Permutation Tests**:  
+  - Valuable when assumptions are questionable. Align permutation method with null hypothesis.
+- **Sample Size**:  
+  - Larger samples may justify parametric tests (Central Limit Theorem).
+- **R Implementation**:  
+  - Use functions like `t.test()`, `aov()`, `kruskal.test()`, `wilcox.test()`, `chisq.test()`, `lm()`, `glm()`, or loop/sample for permutations.
+
+---
+
+This tree map serves as a guide for choosing statistical tests based on your response and explanatory variable types. Always check assumptions and consider nonparametric alternatives when needed.

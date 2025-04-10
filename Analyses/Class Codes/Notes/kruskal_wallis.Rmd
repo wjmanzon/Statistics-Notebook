@@ -1,0 +1,144 @@
+---
+title: "kruskal_wallis"
+output: html_document
+---
+
+# Kruskal-Wallis Test
+
+The **Kruskal-Wallis Rank Sum Test** is a **nonparametric test** used to compare the distributions of **two or more independent groups**. It is the nonparametric equivalent of the **one-way ANOVA** and an extension of the **Wilcoxon Rank Sum Test** to multiple groups.
+
+---
+
+## When to Use
+
+- When comparing **two or more independent groups**.
+- When **ANOVA assumptions** (like normality) are violated.
+- Suitable for:
+  - **Ordinal data**
+  - **Skewed quantitative data**
+- Requires:
+  - One **quantitative response variable**
+  - One **qualitative grouping variable** with 2+ levels
+
+---
+
+## Hypotheses
+
+### Distribution-based (typical)
+- **H₀**: All groups are from the same distribution  
+- **Hₐ**: At least one group differs stochastically
+
+### Central Tendency-based (similar to ANOVA)
+- **H₀**:  
+  \[
+  \mu_1 = \mu_2 = \ldots = \mu_k
+  \]
+- **Hₐ**:  
+  \[
+  \mu_i \ne \mu \quad \text{for at least one } i
+  \]
+
+---
+
+## R Syntax
+
+### Method 1: Using a formula
+```r
+kruskal.test(response_variable ~ grouping_variable, data = YourDataSet)
+```
+
+### Method 2: Using separate vectors
+```r
+kruskal.test(list(group1_data, group2_data, group3_data, ...))
+```
+
+### Example Using `chickwts` Dataset
+```r
+kruskal.test(weight ~ feed, data = chickwts)
+```
+
+### Example Using Grouped Vectors
+```r
+library(tidyverse)
+feed1 <- filter(chickwts, feed == "horsebean")
+feed2 <- filter(chickwts, feed == "linseed")
+feed3 <- filter(chickwts, feed == "soybean")
+feed4 <- filter(chickwts, feed == "sunflower")
+feed5 <- filter(chickwts, feed == "meatmeal")
+feed6 <- filter(chickwts, feed == "casein")
+kruskal.test(list(feed1$weight, feed2$weight, feed3$weight, feed4$weight, feed5$weight, feed6$weight))
+```
+
+---
+
+## Test Procedure (Conceptual Steps)
+
+1. **Rank all observations** across all groups together.
+2. **Assign average ranks** in case of ties.
+3. **Sum the ranks** for each group.
+4. **Compute the test statistic (H)** using:
+   - Total sample size
+   - Group sizes
+   - Rank sums per group
+
+---
+
+## Test Statistic
+
+- Denoted as **H**
+- Follows an approximate **Chi-squared distribution** with:
+  \[
+  df = k - 1
+  \]
+  where \( k \) is the number of groups.
+
+R output includes:
+- Kruskal-Wallis chi-squared statistic
+- Degrees of freedom
+- p-value
+
+---
+
+## Interpretation
+
+- Compare **p-value** to significance level \( \alpha \) (e.g., 0.05)
+- **If p ≤ α**: Reject H₀ → At least one group differs
+- **If p > α**: Fail to reject H₀ → No evidence of group difference
+
+---
+
+## Assumptions & Requirements
+
+- **Independent samples** across and within groups
+- **Same shape and spread** of distributions under H₀
+- Designed to detect differences in **location** (central tendency)
+- Does **not require normality**
+
+---
+
+## Additional Notes
+
+- If significant, **post-hoc tests** (e.g., **Dunn’s Test**) are needed to identify **which groups differ**
+- Kruskal-Wallis is **more robust** than ANOVA when:
+  - Distributions are skewed
+  - Outliers are present
+- With **large samples (n ≥ 5/group)**, the test statistic follows chi-squared distribution more closely
+
+---
+
+## Summary
+
+| Feature | Kruskal-Wallis Test |
+|--------|---------------------|
+| Purpose | Compare 2+ independent groups |
+| Response variable | Quantitative or ordinal |
+| Grouping variable | Categorical (factor) |
+| Assumes | Same shape/distribution, independent samples |
+| Null Hypothesis | All group distributions are the same |
+| Alternative | At least one group differs |
+| Output | Chi-squared value, df, p-value |
+| Post-hoc | Required if significant (e.g., Dunn’s Test) |
+
+---
+
+> **Tip:** Use Kruskal-Wallis when ANOVA assumptions are violated or your data is ordinal or non-normally distributed.

@@ -1,0 +1,183 @@
+---
+title: "anova"
+output: html_document
+---
+
+# Analysis of Variance (ANOVA)
+
+**ANOVA** is used to test the **equality of several means** simultaneously. It involves:
+- A **single quantitative response** variable
+- One or more **qualitative explanatory variables** (factors)
+
+A **factor** is a categorical variable with at least two categories, known as **levels**.
+
+---
+
+## One-Way ANOVA
+
+### When to Use
+Use when:
+- One **quantitative response** variable
+- One **qualitative explanatory variable (factor)** with **three or more levels**
+
+If you're only comparing two means, a t-test may be more appropriate, but ANOVA is still valid.
+
+### Variables
+- **Response**: Quantitative
+- **Explanatory**: One qualitative factor
+
+### Hypotheses
+
+- **Null Hypothesis (H₀)**:  
+  \[
+  \mu_1 = \mu_2 = \ldots = \mu_m = \mu
+  \]  
+  (All group means are equal)
+
+- **Alternative Hypothesis (Hₐ)**:  
+  \[
+  \mu_i \ne \mu \quad \text{for at least one } i \in \{1, \ldots, m\}
+  \]  
+  (At least one mean is different)
+
+### R Syntax
+
+```r
+myaov <- aov(Y ~ X, data = YourDataSet)
+summary(myaov)
+```
+
+### Steps (Conceptual)
+
+1. Calculate each group mean.
+2. Calculate the **grand mean**.
+3. Compute **between-group variance**:
+   - Between-group SS / (m−1)
+4. Compute **within-group variance**:
+   - Error SS / (n−m)
+5. Compute **F-statistic**:  
+   \[
+   F = \frac{\text{Between-group variance}}{\text{Within-group variance}}
+   \]
+6. Get the p-value from the F-distribution with (m−1, n−m) degrees of freedom.
+
+### Test Statistic
+- **F-statistic** = Ratio of between-group variance to within-group variance
+
+### Interpretation
+
+- Look at the p-value from `summary(myaov)`
+- If **p ≤ α**, reject H₀: **at least one group mean differs**
+- If **p > α**, fail to reject H₀
+- The ANOVA table includes:
+  - Degrees of freedom (Df)
+  - Sum of Squares (Sum Sq)
+  - Mean Squares (Mean Sq)
+  - F value
+  - p-value (Pr(>F))
+
+### Assumptions
+
+1. **Representative samples**
+2. **Normality** of residuals:  
+   - Check with Q-Q plot: `plot(myaov, which = 2)`
+3. **Equal variances** across groups:  
+   - Check with residuals vs. fitted plot: `plot(myaov, which = 1)`
+
+### Other Considerations
+
+- ANOVA doesn't tell you **which** groups differ. Use **post-hoc tests** for that.
+- If normality is violated, use **Kruskal-Wallis Test**
+- ANOVA model:  
+  \[
+  Y_{ij} = \mu_i + \epsilon_{ij}, \quad \epsilon_{ij} \sim N(0, \sigma^2)
+  \]
+
+---
+
+## Two-Way ANOVA
+
+### When to Use
+
+Use when:
+- One **quantitative response** variable
+- Two **qualitative explanatory** variables (factors)
+
+Allows testing:
+- **Main effect** of each factor
+- **Interaction effect** between factors
+
+### Variables
+- **Response**: Quantitative
+- **Factors**: Two qualitative
+
+### Hypotheses
+
+#### 1. Main effect of first factor (X₁)
+
+- H₀:  
+  \[
+  \mu_A = \mu_B = \mu
+  \]  
+- Hₐ:  
+  \[
+  \mu_A \ne \mu_B
+  \]
+
+#### 2. Main effect of second factor (X₂)
+
+- H₀:  
+  \[
+  \mu_C = \mu_D = \mu_E = \mu
+  \]  
+- Hₐ:  
+  \[
+  \mu_i \ne \mu \quad \text{for at least one } i
+  \]
+
+#### 3. Interaction Effect (X₁ × X₂)
+
+- H₀:  
+  \[
+  \alpha\beta_{ij} = 0 \quad \text{for all } i,j
+  \]
+- Hₐ:  
+  \[
+  \alpha\beta_{ij} \ne 0 \quad \text{for at least one } i,j
+  \]
+
+### R Syntax
+
+```r
+myaov <- aov(Y ~ X1 + X2 + X1:X2, data = YourDataSet)
+summary(myaov)
+```
+
+Shorthand using interaction:
+```r
+aov(Y ~ X1 * X2, data = YourDataSet)
+```
+
+### Steps (Conceptual)
+
+1. Variance from factor X₁
+2. Variance from factor X₂
+3. Variance from interaction X₁ × X₂
+4. Residual variance
+
+Compute **F-statistics** for each source:
+\[
+F = \frac{\text{MS effect}}{\text{MS residual}}
+\]
+
+### Test Statistic
+- **F-statistics** for:
+  - Main effect of X₁
+  - Main effect of X₂
+  - Interaction effect X₁ × X₂
+
+### Interpretation
+
+- Use p-values from `summary(myaov)`
+- For each effect:
+  - If **p**

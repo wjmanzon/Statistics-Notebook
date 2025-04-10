@@ -1,0 +1,145 @@
+---
+title: "wilcoxon_test"
+output: html_document
+---
+
+# Understanding Wilcoxon Tests
+
+The Wilcoxon tests are nonparametric alternatives to t-tests. They do **not** assume a normal distribution and are especially useful for ordinal data or when the assumptions of t-tests are violated.
+
+There are two main types:
+
+- **Wilcoxon Signed-Rank Test** (for one-sample or paired data)
+- **Wilcoxon Rank Sum Test** (also known as the **Mann-Whitney U Test**, for independent samples)
+
+---
+
+## Wilcoxon Signed-Rank Test
+
+### When to Use
+- Testing the median of **one sample** of quantitative data.
+- Testing the median of **differences in paired** data (e.g., before/after measurements).
+
+### Variables
+- **Quantitative data**, or **differences between paired observations**.
+
+### Hypotheses
+- **One Sample**  
+  - H₀: median = YourNull  
+  - Hₐ: median ≠ YourNull, > YourNull, or < YourNull
+
+- **Paired Data**  
+  - H₀: median of differences = YourNull (typically 0)  
+  - Hₐ: median of differences ≠ YourNull, > YourNull, or < YourNull
+
+### R Syntax
+
+**Paired Data Example**:
+```r
+wilcox.test(Y1, Y2, mu = 0, paired = TRUE, alternative = "two.sided", conf.level = 0.95)
+```
+
+**One Sample Example**:
+```r
+wilcox.test(mtcars$mpg, mu = 20, alternative = "two.sided", conf.level = 0.95)
+```
+
+### Manual Steps
+1. **Calculate differences** between pairs (or from the hypothesized median).
+2. **Order absolute differences** from smallest to largest.
+3. **Rank** the absolute values (average ranks for ties).
+4. **Assign original signs** (+/−) to ranks.
+5. **Sum** ranks of positive and negative differences.
+6. **Test statistic (V)** = smaller of the two sums (or sum of positive ranks).
+
+### Test Statistic
+- Denoted as **V** or **W**
+- Based on **signed ranks** of the differences
+
+### Interpreting Results
+- Check **p-value** from `wilcox.test()`.
+- If **p ≤ α**, reject H₀.
+- Output includes:
+  - Test statistic
+  - p-value
+  - Direction of alternative hypothesis
+  - Group ordering (important for one-sided tests)
+
+> ⚠️ If you see the warning “Cannot compute exact p-value with ties,” it means a **normal approximation** was used.
+
+### Assumptions
+- Symmetric distribution of data or differences around the median.
+- Ordinal or quantitative data.
+
+### Additional Notes
+- **Continuity correction** is sometimes applied for large samples.
+- **Ties** may affect exact p-value accuracy.
+- For **large n (≥ 50)**, the test statistic approximates a normal distribution.
+
+---
+
+## Wilcoxon Rank Sum (Mann-Whitney U) Test
+
+### When to Use
+- Comparing **medians** of two **independent** samples.
+- Nonparametric alternative to the **independent samples t-test**.
+
+### Variables
+- One **quantitative response** variable (Y)
+- One **categorical grouping** variable (X) with two levels
+
+### Hypotheses
+- H₀: median₁ = median₂  
+- Hₐ: median₁ ≠ median₂, > median₂, or < median₂
+
+### R Syntax
+
+**Formula Notation**:
+```r
+wilcox.test(length ~ sex, data = KidsFeet, mu = 0, alternative = "two.sided", conf.level = 0.95)
+```
+
+**Separate Vectors**:
+```r
+wilcox.test(group1, group2, mu = 0, alternative = "two.sided", conf.level = 0.95)
+```
+
+### Manual Steps
+1. Combine both groups’ data.
+2. Order values and **rank** them (handle ties with average ranks).
+3. **Sum ranks** for each group.
+4. Test statistic = sum of ranks for one group (often the smaller group).
+
+### Test Statistic
+- Denoted as **W**, **U**, or **V**
+- Based on the **sum of ranks** for one of the groups
+
+### Interpreting Results
+- Use the **p-value** from `wilcox.test()` output.
+- If **p ≤ α**, reject H₀ and conclude a difference in medians.
+- Output includes:
+  - Test statistic
+  - Group identities (important for one-sided tests)
+
+### Assumptions
+- **Independent samples**
+- Data is **ordinal or quantitative**
+- Under H₀, the two groups have the same **shape and spread**
+
+### Additional Notes
+- **Continuity correction** may be applied for normal approximation.
+- **Ties** are adjusted using average ranks.
+- The test checks **stochastic ordering**, which often implies median difference if distributions are similar in shape.
+
+> ⚠️ The **location shift** estimated may differ slightly from the median difference depending on distribution properties, but this is often ignored in practical applications.
+
+---
+
+## Summary
+
+| Test | Use Case | Assumptions | Data Type |
+|------|----------|-------------|------------|
+| **Wilcoxon Signed-Rank** | One sample or paired data | Symmetry of distribution or differences | Quantitative |
+| **Wilcoxon Rank Sum (Mann-Whitney)** | Two independent samples | Same shape/spread, independence | Quantitative or ordinal |
+
+Wilcoxon tests are robust and effective for small samples, ordinal data, and when t-test assumptions are not met. They work by **ranking** the data and comparing those ranks rather than relying on means or standard deviations.

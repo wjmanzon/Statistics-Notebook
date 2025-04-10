@@ -1,0 +1,161 @@
+---
+title: "Practice Exam"
+author: "Wilson Jr Manzon"
+execute:
+  keep-md: true
+  df-print: paged
+  warning: false
+format:
+  html:
+    theme: cerulean
+    toc: true
+    toc-search: true
+    code-fold: false
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+pacman::p_load(mosaic, pander, tidyverse, car, lattice, DT, alr4, ResourceSelection, dplyr, AER)
+```
+
+## Question 1
+Use an appropriate test and the starwars dataset in R to determine if, on average, the species of Wookiees, Gungans, or Kaminoans are taller.
+```{r}
+# 3 CATEGORICAL VARIABLES + 1 QUANTITATIVE = ANOVA
+
+# Load the tidyverse
+library(tidyverse)
+
+# Filter the starwars dataset to only include the 3 species of interest
+sw_subset <- starwars %>%
+  filter(species %in% c("Wookiee", "Gungan", "Kaminoan")) %>%
+  select(name, species, height) %>%
+  drop_na(height)
+
+# Check how many individuals per group
+table(sw_subset$species)
+
+# Run the ANOVA test
+anova_result <- aov(height ~ species, data = sw_subset)
+
+# View the results
+summary(anova_result) %>%
+  pander()
+```
+
+## Question 2
+Use the Highway1 dataset in R to answer this question. Suppose someone wanted to perform a t Test of the hypotheses
+
+ H0:μ2 Lanes=μ4 Lanes
+
+ Ha:μ2 Lanes≠μ4 Lanes
+ 
+where  μ2 Lanes represents the 1973 accident rate (per million vehicle miles) on 2 lane highways, and  μ4 Lanes  represents the 1973 accident rate (per million vehicle miles) on 4 lane highways.
+
+Which of the following statements would be most correct concerning the appropriateness of performing this test for this data?
+	
+- This test is appropriate for these data because even though the data is not normal, the sample size is over 30.
+
+- This test would not be appropriate for this data because there are too many ties in the data so the p-value is not exact.
+	
+__- This test would not be appropriate for this data because of the small sample sizes of each group and non-normality of the data.__
+
+- This test is appropriate for these data because there is only one tie in the data, so the non exact p-value is still meaningful.
+
+```{r}
+# CHECKING ASSUMPTIONS FOR INDEPENDENT SAMPLE T TEST
+
+# Load required packages  
+library(car)      # For qqPlot function  
+  
+# We assume the variable 'rate' represents the 1973 accident rate per million vehicle miles,  
+# and the variable 'lane' represents the number of lanes.  
+# For this example, we consider lane==2 as 2-lane highways and lane==4 as 4-lane highways.  
+
+# SAMPLE SIZES:
+n_2lane <- sum(Highway1$lane == 2)
+n_2lane #20
+
+n_4lane <- sum(Highway1$lane == 4)
+n_4lane #17
+
+# NORMALITY CHECKS:
+# Set up side-by-side plots for QQ plots:  
+par(mfrow = c(1, 2))  
+  
+# QQ Plot for 2-lane highways  
+qqPlot(Highway1$rate[Highway1$lane == 2])  
+  
+# QQ Plot for 4-lane highways  
+qqPlot(Highway1$rate[Highway1$lane == 4])
+```
+
+## 3 
+
+Run the following code in R.
+
+  > plot(height ~ age, data=Loblolly)
+
+Is it appropriate to perform a simple linear regression on this data?
+
+__- No, there is a strong non-linear pattern in the residual plot.__
+
+- No, while the data is linear, there is non-constant variance.
+
+- Yes, the regression requirements all appear to be well satisfied.
+
+- Yes, but there is some difficulty with the normality of the residuals.
+
+```{r}
+plot(height ~ age, data=Loblolly)
+
+# PLOT SHOWS heteroscedasticity. MEANING, Constant Variance Assumption is Violated
+```
+
+## 4
+
+Which analysis would allow you to predict whether or not it will rain on a given day based on the low temperature of that day?
+
+Chi-squared Test
+
+Paired Samples t Test
+
+__Logistic Regression__
+	
+Linear Regression
+
+## 5
+
+Use the sample of children's feet contained in the KidsFeet dataset to answer this question.
+
+Why might a Wilcoxon Rank Sum Test not be appropriate for testing to see if the median width of a child's foot differs for boys and girls?
+
+- The data is paired so a Wilcoxon Signed-Rank Test should be used instead.
+
+__- There are many ties in the data so the exact p-value cannot be computed.__
+
+- Foot width is quantitative so only a t Test could be used for this data.
+
+- The data is not normal so the requirements of the test are not satisfied.
+```{r}
+# Check number of ties in the 'width' column
+table(KidsFeet$width)
+
+# The Wilcoxon Rank Sum Test (also known as the Mann-Whitney U test) is a non-parametric test used to compare two independent groups when the assumption of normality may not be met.
+
+# However, it assumes that the ranks of the data can be meaningfully ordered. When many tied values exist (as might happen in small datasets or datasets with limited numeric precision), it complicates the rank-based calculations, and the exact p-value cannot be computed.
+```
+
+
+## 6
+Use the Highway1 dataset in R for this question.
+
+Compute the average accident rate (per million vehicle miles) in 1973 for each type of roadway: `MC`, `FAI`, `PA`, and `MA`.
+
+```{r}
+?Highway1
+View(Highway1)
+```
+

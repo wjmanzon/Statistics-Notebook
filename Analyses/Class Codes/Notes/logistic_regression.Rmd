@@ -1,0 +1,180 @@
+---
+title: "logistic_regression"
+output: html_document
+---
+
+# Logistic Regression
+
+Logistic regression is used when the response variable is **binary** (e.g., success/failure, yes/no, 0/1). It models the **probability** that the response variable equals 1, given the values of one or more explanatory variables.
+
+---
+
+## When to Use Logistic Regression
+
+- **Simple Logistic Regression**:
+  - Binary response variable \( Y \in \{0, 1\} \)
+  - Single explanatory variable \( X \) (quantitative or binary/ordinal categorical)
+  - Goal: Model \( P(Y_i = 1 \mid X_i) \)
+
+- **Multiple Logistic Regression**:
+  - Binary response variable \( Y \in \{0, 1\} \)
+  - Multiple explanatory variables \( X_1, X_2, \ldots, X_p \) (quantitative or qualitative)
+  - Goal: Model \( P(Y_i = 1 \mid X_1, \ldots, X_p) \)
+
+---
+
+## Hypotheses
+
+- For a coefficient \( \beta_1 \) associated with \( X_1 \):
+
+  - **Null Hypothesis (H₀)**:  
+    \( \beta_1 = 0 \) → No relationship between \( X_1 \) and log-odds of \( Y = 1 \)
+
+  - **Alternative Hypothesis (Hₐ)**:  
+    \( \beta_1 \ne 0 \) → There is a relationship
+
+- If \( \beta_1 = 0 \): \( X_1 \) is not useful in predicting the probability of success  
+- If \( \beta_1 \ne 0 \): \( X_1 \) adds predictive value
+
+---
+
+## Performing Logistic Regression in R
+
+### Function
+
+Use the `glm()` function with `family = binomial`.
+
+### Simple Logistic Regression
+
+```r
+YourGlmName <- glm(Y ~ X, data = NameOfYourDataset, family = binomial)
+summary(YourGlmName)
+```
+
+### Multiple Logistic Regression
+
+```r
+glm(Y ~ X1 + X2 + ..., data = YourDataSet, family = binomial)
+```
+
+- Use `*` for interactions: `X1*X2` = `X1 + X2 + X1:X2`
+
+---
+
+## Plotting Logistic Regression
+
+### Base R
+
+- Plot fitted logistic curves manually based on estimated coefficients
+
+### ggplot2
+
+- Use `geom_smooth(method = "glm", method.args = list(family = "binomial"))`
+
+---
+
+## Steps in Performing the Test
+
+1. **Specify the model** using `glm()` with `family = binomial`
+2. **Fit the model** using Maximum Likelihood Estimation
+3. **Examine summary** with `summary(glm_object)`
+4. **Interpret results** via coefficient significance
+5. **Check goodness of fit**
+
+---
+
+## Test Statistics
+
+- **z-value**:  
+  \[
+  z = \frac{\hat{\beta}_j}{SE(\hat{\beta}_j)}
+  \]  
+  Tests the null that \( \beta_j = 0 \)
+
+- **Deviance**:
+  - **Null Deviance**: model with only intercept
+  - **Residual Deviance**: full model
+  - Difference indicates model improvement
+
+- **AIC (Akaike Information Criterion)**:
+  - Lower AIC → better model fit (used for comparing models)
+
+---
+
+## Interpreting Results
+
+- **Coefficients** \( \hat{\beta}_0, \hat{\beta}_1, \ldots \):
+  - Represent **log-odds**
+  - Use `exp(coef())` to interpret in **odds ratio** form
+
+- **Exponentiated Coefficients**:
+  - \( e^{\beta_k} \): Odds ratio for one-unit increase in \( X_k \), holding others constant
+
+- **Standard Error**:
+  - Precision of coefficient estimates
+
+- **P-value**:
+  - If \( p \leq \alpha \): reject H₀ → significant predictor
+  - If \( p > \alpha \): fail to reject H₀
+
+---
+
+## Assessing Goodness of Fit
+
+- **Deviance Goodness of Fit Test**:  
+  - Used when there are replicate \( x_i \) values
+
+- **Hosmer-Lemeshow Test**:  
+  - Used when few/no replicates  
+  - H₀: model fits well  
+  - Large p-value → fail to reject → good fit
+
+- **Deviance Residuals**:  
+  - Examine for randomness and potential outliers
+
+---
+
+## Additional Considerations
+
+### Overdispersion
+
+- When variance > expected under binomial
+- Common in logistic models, often ignored unless critical
+
+### Separation (Perfect Prediction)
+
+- If a predictor perfectly separates outcomes
+- Results in large standard errors and unstable estimates
+
+### Multicollinearity
+
+- High correlation among predictors affects interpretation
+- Check using **VIF (Variance Inflation Factor)**
+
+### Outliers & Influential Points
+
+- Use deviance residuals or influence diagnostics
+
+### Prediction
+
+- Use `predict(glm_object, type = "response")` for predicted probabilities
+
+---
+
+## Summary
+
+| Aspect | Description |
+|--------|-------------|
+| Response Variable | Binary (0 or 1) |
+| Explanatory Variables | Quantitative, Qualitative, or both |
+| Function | `glm(..., family = binomial)` |
+| Coefficient Scale | Log-odds (interpret with `exp()`) |
+| Test Statistic | z-value, Deviance |
+| Model Fit | Deviance, AIC, Hosmer-Lemeshow Test |
+| Output | Coefficients, SEs, z-values, p-values, Deviance |
+| Assumptions | Binary Y, independence, correct model form |
+| Diagnostics | Residual plots, influence, overdispersion check |
+
+---
+
+> Logistic regression is a flexible and widely used technique for modeling binary outcomes. Understanding its assumptions and diagnostics ensures robust, interpretable results.

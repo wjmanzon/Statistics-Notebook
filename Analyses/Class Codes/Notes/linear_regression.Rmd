@@ -1,0 +1,191 @@
+---
+title: "linear_regression"
+output: html_document
+---
+
+# Linear Regression
+
+Linear regression is a method for modeling the relationship between a quantitative response variable and one or more explanatory variables. It uses a mathematical function plus a random error term to estimate this relationship.
+
+---
+
+## When to Use Linear Regression
+
+- **Simple Linear Regression**:  
+  Use when you have one **quantitative response** variable (Y) and one **quantitative explanatory** variable (X). The goal is to determine if X significantly affects the mean of Y.
+
+- **Multiple Linear Regression**:  
+  Use when you have one **quantitative response** variable and **multiple explanatory** variables, which can be **quantitative or qualitative**.
+
+- R automatically recodes qualitative variables (character or factor) into numeric (typically via dummy coding).
+
+---
+
+## Hypotheses
+
+For a model:  
+\[
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
+\]
+
+- Intercept:  
+  - H₀: \( \beta_0 = 0 \)  
+  - Hₐ: \( \beta_0 \ne 0 \)
+
+- Slope:  
+  - H₀: \( \beta_1 = 0 \)  
+  - Hₐ: \( \beta_1 \ne 0 \)
+
+- You can also test:  
+  - H₀: \( \beta_1 = \beta_{10} \) vs. Hₐ: \( \beta_1 \ne \beta_{10} \)
+
+---
+
+## R Syntax
+
+### Simple Linear Regression
+```r
+mylm <- lm(Y ~ X, data = YourDataSet)
+summary(mylm)
+```
+
+### Multiple Linear Regression
+```r
+mylm <- lm(Y ~ X1 + X2 + X3, data = YourDataSet)
+summary(mylm)
+```
+
+### Interaction Terms and Polynomials
+```r
+# Interaction
+lm(Y ~ X1*X2, data = YourDataSet)
+
+# Polynomial
+lm(Y ~ X + I(X^2), data = YourDataSet)
+```
+
+### Adding Regression Line to Plot
+
+#### Base R
+```r
+plot(X, Y)
+abline(mylm)
+```
+
+#### ggplot2
+```r
+ggplot(YourDataSet, aes(x = X, y = Y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1)
+```
+
+---
+
+## Steps in Performing the Test
+
+1. **Specify the model** using `lm()`.
+2. **Fit the model**: R computes coefficients using least squares.
+3. **View summary**: Use `summary(mylm)` to see coefficients, t-values, p-values, and more.
+4. **Interpret the results**: Look at p-values to assess statistical significance.
+5. **Check assumptions** using diagnostic plots.
+
+---
+
+## Test Statistics
+
+- **t-value**: Estimate / Standard Error of the coefficient
+- **F-statistic**: Tests if **all slopes = 0**
+- Used to assess:
+  - Significance of individual predictors
+  - Overall model fit
+
+---
+
+## Interpreting Results
+
+- **Coefficients**:
+  - \( b_1 \): Expected change in Y for one-unit increase in X
+  - \( b_0 \): Predicted Y when X = 0 (context-dependent)
+
+- **Standard Error**: Variability in coefficient estimates
+
+- **P-value (Pr(>|t|))**:
+  - If p ≤ α, reject H₀ → Variable is significant
+  - If p > α, fail to reject H₀ → Not enough evidence
+
+- **R-squared**:
+  - Proportion of variance in Y explained by model
+  - 0 to 1; closer to 1 is better
+
+- **Adjusted R-squared**:
+  - Used in multiple regression to penalize for additional predictors
+
+---
+
+## Assumptions of Linear Regression
+
+1. **Linearity**:
+   - Relationship between X and Y is linear
+   - Check with residual vs. fitted plot
+
+2. **Normality of Errors**:
+   - Errors (\( \epsilon_i \)) ~ N(0, σ²)
+   - Check with Q-Q plot of residuals
+
+3. **Homoscedasticity**:
+   - Constant variance of errors
+   - Residuals should have equal spread across fitted values
+
+4. **Fixed X**:
+   - X values are measured without error
+
+5. **Independence of Errors**:
+   - Check residuals vs. order for patterns
+
+6. **No Omitted Variables**:
+   - All important variables are included
+
+Use:
+```r
+plot(mylm)
+```
+to generate diagnostic plots in R.
+
+---
+
+## Other Considerations
+
+- **Collinearity**:
+  - High correlation between Xs → unstable estimates
+  - Check using **VIF (Variance Inflation Factor)**
+
+- **Outliers**:
+  - Large residuals can influence results
+  - Investigate using plots
+
+- **Influential Points**:
+  - Check **Cook’s Distance**
+
+- **Model Validation**:
+  - Use **train/test split** or **cross-validation**
+
+- **Nonlinearity**:
+  - Consider **transformations** or **polynomial regression**
+
+---
+
+## Summary
+
+| Aspect | Detail |
+|--------|--------|
+| Purpose | Model relationship between Y and X(s) |
+| Method | Least squares estimation |
+| Tools | `lm()`, `summary()`, `plot()` in R |
+| Output | Coefficients, p-values, t-values, R², F-statistic |
+| Diagnostics | Q-Q plot, residuals vs. fitted, Cook’s distance |
+| Assumptions | Linearity, Normality, Homoscedasticity, Independence |
+| Issues | Outliers, multicollinearity, omitted variables |
+
+---
+
+> Linear regression is a powerful and flexible modeling tool. To ensure valid conclusions, always assess model assumptions and verify findings with appropriate diagnostics.
